@@ -1,4 +1,4 @@
-# resposividade
+# responsividade
 
 Corrigindo telas
 
