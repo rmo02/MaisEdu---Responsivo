@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:resposividade/pages/idoma_page.dart';
 import 'package:resposividade/pages/login_page.dart';
+import 'package:resposividade/pages/password_page.dart';
 import 'package:resposividade/style/app_style.dart';
 
 class ConfigPage extends StatefulWidget {
@@ -132,7 +134,7 @@ class _ConfigPageState extends State<ConfigPage> {
                           alignment: Alignment.center,
                           child: ElevatedButton(
                               onPressed: () => Navigator.push(context, PageTransition(
-                              child: const LoginPage(),
+                              child: const PasswordPage(),
                               type: PageTransitionType.fade,
                               duration: const Duration(milliseconds: 10)
                           )),
@@ -152,7 +154,7 @@ class _ConfigPageState extends State<ConfigPage> {
                                 margin: EdgeInsets.only(top: 30),
                                 alignment: Alignment.center,
                                 child: ElevatedButton(onPressed: () => Navigator.push(context, PageTransition(
-                                    child: const LoginPage(),
+                                    child: const IdiomaPage(),
                                     type: PageTransitionType.fade,
                                     duration: const Duration(milliseconds: 10)
                                 )),
