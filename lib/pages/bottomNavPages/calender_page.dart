@@ -73,6 +73,7 @@ class _CalanderPageState extends State<CalanderPage> {
         ],
       ),
       backgroundColor: AppStyle.mainColor,
+      resizeToAvoidBottomInset : false,
       body: LayoutBuilder(
           builder: (_,constraints) {
             return Container(
@@ -81,8 +82,6 @@ class _CalanderPageState extends State<CalanderPage> {
               child: Column(
                 children: [
                   Container(
-                    height: constraints.maxHeight * 0.70,
-                    width: constraints.maxWidth,
                     decoration: BoxDecoration(
                         boxShadow: [BoxShadow(
                             color: AppStyle.shadowMainColor,
@@ -96,58 +95,73 @@ class _CalanderPageState extends State<CalanderPage> {
                             bottomRight: Radius.circular(28),
                             bottomLeft: Radius.circular(28)
                         )),
-                    padding: EdgeInsets.only(bottom: 5, left: 10, right: 10),
-                    child: TableCalendar(
-                      locale: 'pt_BR',
-                      focusedDay: selectedDay,
-                      firstDay: DateTime(1900),
-                      lastDay: DateTime(2500),
-                      calendarFormat: format,
-                      onFormatChanged: (CalendarFormat _format) {
-                        setState(() {
-                          selectedDay = selectedDay;
-                          focusedDay = focusedDay;
-                          restDay = restDay;
-                        });
-                      },
-                      startingDayOfWeek: StartingDayOfWeek.sunday,
-                      daysOfWeekVisible: true,
-                      onDaySelected: (DateTime selectDay, DateTime focusDay) {
-                        setState(() {
-                          selectedDay = selectDay;
-                          focusedDay = focusDay;
-                        });
-                      },
-                      eventLoader: _getEventsfromDay,
-                      calendarStyle: CalendarStyle(
-                          outsideDaysVisible: false,
-                          defaultTextStyle: TextStyle(color: Colors.white),
-                          weekendTextStyle: TextStyle(color: Colors.white),
-                          isTodayHighlighted: true,
-                          selectedDecoration: BoxDecoration(
-                            color: Color(0xff22C1C1),
-                            shape: BoxShape.circle,
-                          ),
-                          selectedTextStyle: TextStyle(color: Colors.white)
+                    padding: EdgeInsets.only(
+                        left: MediaQuery.of(context).size.width * 0.015,
+                        right: MediaQuery.of(context).size.width * 0.015),
+                  ),
+                  Expanded(
+                    child: Container(
+                      width: constraints.maxWidth,
+                      height: constraints.maxHeight/2,
+                      decoration: BoxDecoration(
+                        color: Color(0xff4263EB),
+                        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(28), bottomRight: Radius.circular(28))
                       ),
-                      selectedDayPredicate: (DateTime date) {
-                        return isSameDay(selectedDay, date);
-                      },
-                      headerStyle: HeaderStyle(
-                        titleTextStyle: TextStyle(
-                            color: Colors.white, fontSize: 20),
-                        leftChevronVisible: false,
-                        rightChevronVisible: false,
-                        formatButtonVisible: false,
-                        titleCentered: false,
-                        formatButtonShowsNext: true,
+                      child: TableCalendar(
+                        locale: 'pt_BR',
+                        focusedDay: selectedDay,
+                        firstDay: DateTime(1900),
+                        lastDay: DateTime(2500),
+                        calendarFormat: format,
+                        onFormatChanged: (CalendarFormat _format) {
+                          setState(() {
+                            selectedDay = selectedDay;
+                            focusedDay = focusedDay;
+                            restDay = restDay;
+                          });
+                        },
+                        startingDayOfWeek: StartingDayOfWeek.sunday,
+                        daysOfWeekVisible: true,
+                        onDaySelected: (DateTime selectDay, DateTime focusDay) {
+                          setState(() {
+                            selectedDay = selectDay;
+                            focusedDay = focusDay;
+                          });
+                        },
+                        eventLoader: _getEventsfromDay,
+                        calendarStyle: CalendarStyle(
+                            outsideDaysVisible: false,
+                            defaultTextStyle: TextStyle(color: Colors.white),
+                            weekendTextStyle: TextStyle(color: Colors.white),
+                            isTodayHighlighted: true,
+                            selectedDecoration: BoxDecoration(
+                              color: Color(0xff22C1C1),
+                              shape: BoxShape.circle,
+                            ),
+                            selectedTextStyle: TextStyle(color: Colors.white)
+                        ),
+                        selectedDayPredicate: (DateTime date) {
+                          return isSameDay(selectedDay, date);
+                        },
+                        headerStyle: HeaderStyle(
+                          titleTextStyle: TextStyle(
+                              color: Colors.white, fontSize: 18,
+                              fontWeight: FontWeight.w500),
+                          leftChevronVisible: false,
+                          rightChevronVisible: false,
+                          formatButtonVisible: false,
+                          titleCentered: false,
+                          formatButtonShowsNext: true,
+                        ),
                       ),
                     ),
                   ),
                   SingleChildScrollView(
+                    physics: ClampingScrollPhysics(),
                     child: Container(
-                      padding: EdgeInsets.only(top: 3),
-                      height: constraints.maxHeight * 0.30,
+                      padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.002,
+                          bottom: MediaQuery.of(context).size.height * 0.002),
+                      height: constraints.maxHeight /3,
                       width: constraints.maxWidth,
                       child: Center(
                         child: ListView(

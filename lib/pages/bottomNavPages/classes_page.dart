@@ -92,10 +92,11 @@ class _ClassesPageState extends State<ClassesPage> {
                     Container(
                       height: 165,
                       child: Center(
-
                         child: ListView.builder(
                             scrollDirection: Axis.horizontal,
-                            padding: EdgeInsets.only(left: 20, right: 5),
+                            padding: EdgeInsets.only(
+                                left: MediaQuery.of(context).size.width * 0.000,
+                                right: MediaQuery.of(context).size.width * 0.000),
                             itemCount: 2,
                             itemBuilder: (context, index) => Container(
                               height: 125,
@@ -170,7 +171,9 @@ class _ClassesPageState extends State<ClassesPage> {
                       height: 165,
                       child: ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          padding: EdgeInsets.only(left: 20, right: 3),
+                          padding: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width * 0.000,
+                              right: MediaQuery.of(context).size.width * 0.000),
                           itemCount: 2,
                           itemBuilder: (context, index) => Container(
                             height: 125,
@@ -244,7 +247,9 @@ class _ClassesPageState extends State<ClassesPage> {
                       height: 165,
                       child: ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          padding: EdgeInsets.only(left: 20, right: 3),
+                          padding: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width * 0.000,
+                              right: MediaQuery.of(context).size.width * 0.000),
                           itemCount: 2,
                           itemBuilder: (context, index) => Container(
                             height: 125,
@@ -318,7 +323,9 @@ class _ClassesPageState extends State<ClassesPage> {
                       height: 165,
                       child: ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          padding: EdgeInsets.only(left: 20, right: 3),
+                          padding: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width * 0.000,
+                              right: MediaQuery.of(context).size.width * 0.000),
                           itemCount: 2,
                           itemBuilder: (context, index) => Container(
                             height: 125,
@@ -392,7 +399,9 @@ class _ClassesPageState extends State<ClassesPage> {
                       height: 165,
                       child: ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          padding: EdgeInsets.only(left: 20, right: 3),
+                          padding: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width * 0.000,
+                              right: MediaQuery.of(context).size.width * 0.000),
                           itemCount: 2,
                           itemBuilder: (context, index) => Container(
                             height: 125,
@@ -466,7 +475,9 @@ class _ClassesPageState extends State<ClassesPage> {
                       height: 165,
                       child: ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          padding: EdgeInsets.only(left: 20, right: 3),
+                          padding: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width * 0.000,
+                              right: MediaQuery.of(context).size.width * 0.000),
                           itemCount: 2,
                           itemBuilder: (context, index) => Container(
                             height: 125,
