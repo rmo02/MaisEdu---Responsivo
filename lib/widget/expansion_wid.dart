@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:resposividade/style/app_style.dart';
 import 'package:resposividade/widget/QuestionWidget.dart';
+import 'package:sliding_sheet/sliding_sheet.dart';
 import 'package:video_player/video_player.dart';
 import '../interfaces/atv.dart';
 
@@ -23,7 +24,7 @@ class _ExpansionWidState extends State<ExpansionWid> {
     controller!.setLooping(true);
     controller!.setVolume(1.0);
     super.initState();
-    //controller!.play();
+    controller!.play();
   }
   @override
   void dispose() {
@@ -63,20 +64,69 @@ class _ExpansionWidState extends State<ExpansionWid> {
                   ],
                 ),
               );
-            },body: FutureBuilder(
-          future: _initializeVideoPlayerFuture,
-          builder: (context, snapshot){
-            if(snapshot.connectionState == ConnectionState.done){
+            }, body: FutureBuilder(
+              future: _initializeVideoPlayerFuture,
+              builder: (context, snapshot){
+              if(snapshot.connectionState == ConnectionState.done){
               return Column(
                 children: [
                   SizedBox(
-                    height: MediaQuery.of(context).size.height * .42,
+                    height: MediaQuery.of(context).size.height * .37,
                     width: MediaQuery.of(context).size.width,
                     child: AspectRatio(aspectRatio: controller!.value.aspectRatio,
                       child: VideoPlayer(controller!),
                     ),
                   ),
-                  SizedBox(height: 16),
+                  SizedBox(height: 5),
+                  Row(
+                    children: [
+                      ElevatedButton(
+                        onPressed: (){},
+                        child: Row(
+                          children: [
+                            Icon(Icons.add),
+                            SizedBox(width: 2),
+                            Text("Comentários")
+                          ],
+                        ),
+                        style: ElevatedButton.styleFrom(
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+                            primary: AppStyle.secondColor
+                        ),
+                      ),
+                      ElevatedButton(
+                        onPressed: (){},
+                        child: Row(
+                          children: [
+                            Icon(Icons.add),
+                            SizedBox(width: 5),
+                            Text("Anotações")
+                          ],
+                        ),
+                        style: ElevatedButton.styleFrom(
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+                            primary: AppStyle.secondColor
+                        ),
+                      ),
+                      ElevatedButton(
+                        onPressed: (){},
+                        child: Row(
+                          children: [
+                            Icon(Icons.add),
+                            SizedBox(width: 5),
+                            Text("Favoritos")
+                          ],
+                        ),
+                        style: ElevatedButton.styleFrom(
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+                            primary: AppStyle.secondColor
+                        ),
+                      )
+                    ],
+                  ),
                   ElevatedButton(
                       child: Text(controller!.value.isPlaying ? 'Pause' : 'Play'),
                       onPressed: (){
@@ -107,5 +157,6 @@ class _ExpansionWidState extends State<ExpansionWid> {
         );
       }).toList(),
     );
+
   }
 }
