@@ -68,84 +68,109 @@ class _ExpansionWidState extends State<ExpansionWid> {
               future: _initializeVideoPlayerFuture,
               builder: (context, snapshot){
               if(snapshot.connectionState == ConnectionState.done){
-              return Column(
-                children: [
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * .37,
-                    width: MediaQuery.of(context).size.width,
-                    child: AspectRatio(aspectRatio: controller!.value.aspectRatio,
-                      child: VideoPlayer(controller!),
-                    ),
-                  ),
-                  SizedBox(height: 5),
-                  Row(
+              return Container(
+                width: MediaQuery.of(context).size.width * 0.98,
+                decoration: BoxDecoration(
+                  color: Color(0xffF6FAFF),
+                  borderRadius: BorderRadius.circular(28)
+                ),
+                child: SingleChildScrollView(
+                  child: Column(
                     children: [
-                      ElevatedButton(
-                        onPressed: (){},
-                        child: Row(
-                          children: [
-                            Icon(Icons.add),
-                            SizedBox(width: 2),
-                            Text("Comentários")
-                          ],
-                        ),
-                        style: ElevatedButton.styleFrom(
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-                            primary: AppStyle.secondColor
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * .37,
+                        width: MediaQuery.of(context).size.width,
+                        child: AspectRatio(aspectRatio: controller!.value.aspectRatio,
+                          child: VideoPlayer(controller!),
                         ),
                       ),
-                      ElevatedButton(
-                        onPressed: (){},
-                        child: Row(
+                      SizedBox(height: 5),
+                      Container(
+                        height: 35,
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
                           children: [
-                            Icon(Icons.add),
-                            SizedBox(width: 5),
-                            Text("Anotações")
+                            ElevatedButton(
+                              onPressed: (){},
+                              child: Row(
+                                children: [
+                                  Icon(Icons.chat, color: Color(0xff4263EB),),
+                                  SizedBox(width: 1),
+                                  Text("Comentários", style: TextStyle(
+                                    color: Color(0xff4263EB),
+                                  ),
+                                  )
+                                ],
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                  elevation: 0,
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+                                  primary: Color(0xffBAC8FF),
+                              ),
+                            ),
+                            SizedBox(width: 5,),
+                            ElevatedButton(
+                              onPressed: (){},
+                              child: Row(
+                                children: [
+                                  Icon(Icons.dehaze, color: Color(0xff4263EB),),
+                                  SizedBox(width: 1),
+                                  Text("Anotações", style: TextStyle(
+                                    color: Color(0xff4263EB),
+                                  ),
+                                  )
+                                ],
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                  elevation: 0,
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+                                  primary: Color(0xffBAC8FF),
+                              ),
+                            ),
+                            SizedBox(width: 5,),
+                            ElevatedButton(
+                              onPressed: (){},
+                              child: Row(
+                                children: [
+                                  Icon(Icons.add, color: Color(0xff4263EB),),
+                                  SizedBox(width: 1),
+                                  Text("Favoritos", style: TextStyle(
+                                    color: Color(0xff4263EB),
+                                  ),
+                                  )
+                                ],
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                  elevation: 0,
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+                                  primary: Color(0xffBAC8FF),
+                              ),
+                            )
                           ],
-                        ),
-                        style: ElevatedButton.styleFrom(
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-                            primary: AppStyle.secondColor
                         ),
                       ),
+                      SizedBox(height: 5,),
                       ElevatedButton(
-                        onPressed: (){},
-                        child: Row(
-                          children: [
-                            Icon(Icons.add),
-                            SizedBox(width: 5),
-                            Text("Favoritos")
-                          ],
-                        ),
-                        style: ElevatedButton.styleFrom(
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-                            primary: AppStyle.secondColor
-                        ),
-                      )
+                          child: Text(controller!.value.isPlaying ? 'Pause' : 'Play'),
+                          onPressed: (){
+                            if(controller!.value.isPlaying){
+                              controller!.pause();
+                            }else{
+                              controller!.play();
+                            }
+                          }
+                      ),
+                      TextButton(onPressed: () {
+                        Navigator.push(context, PageTransition(
+                            child: QuestionWidget(),
+                            type:  PageTransitionType.fade,
+                            duration: const Duration(milliseconds: 10)
+                        )
+                        );
+                      }, child: Text("Atividade 1"))
                     ],
                   ),
-                  ElevatedButton(
-                      child: Text(controller!.value.isPlaying ? 'Pause' : 'Play'),
-                      onPressed: (){
-                        if(controller!.value.isPlaying){
-                          controller!.pause();
-                        }else{
-                          controller!.play();
-                        }
-                      }
-                  ),
-                  TextButton(onPressed: () {
-                    Navigator.push(context, PageTransition(
-                        child: QuestionWidget(),
-                        type:  PageTransitionType.fade,
-                        duration: const Duration(milliseconds: 10)
-                    )
-                    );
-                  }, child: Text("Atividade 1"))
-                ],
+                ),
               );
             }  else {
               return Center(
