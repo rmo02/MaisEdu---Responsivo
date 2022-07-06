@@ -86,12 +86,17 @@ class _QualiPageState extends State<QualiPage> {
                                   left: MediaQuery.of(context).size.width * 0.5) ,
                               child: AnimatedTextKit(
                                 animatedTexts: [
-                                  TypewriterAnimatedText('Escola',
+                                  FadeAnimatedText('Escola',
                                   textStyle: const TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.w500,
                                     color: Color(0xff403B91),
-                                  ),)
+                                  ),
+                                  ),
+                                  ScaleAnimatedText(
+                                      'Escola',
+                                      duration: Duration(milliseconds: 4000)
+                                  )
                                 ],
                               ),
                             ),
@@ -304,12 +309,17 @@ class _QualiPageState extends State<QualiPage> {
                                   left: MediaQuery.of(context).size.width * 0.5) ,
                               child: AnimatedTextKit(
                                 animatedTexts: [
-                                  TypewriterAnimatedText('Série',
+                                  FadeAnimatedText('Série',
                                     textStyle: const TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.w500,
                                       color: Color(0xff403B91),
-                                    ),)
+                                    ),
+                                  ),
+                                  ScaleAnimatedText(
+                                      'Série',
+                                      duration: Duration(milliseconds: 4000)
+                                  )
                                 ],
                               ),
                             ),
@@ -539,12 +549,17 @@ class _QualiPageState extends State<QualiPage> {
                                   left: MediaQuery.of(context).size.width * 0.5) ,
                               child: AnimatedTextKit(
                                 animatedTexts: [
-                                  TypewriterAnimatedText('Sala',
+                                  FadeAnimatedText('Sala',
                                     textStyle: const TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.w500,
                                       color: Color(0xff403B91),
-                                    ),)
+                                    ),
+                                  ),
+                                  ScaleAnimatedText(
+                                      'Sala',
+                                      duration: Duration(milliseconds: 4000)
+                                  )
                                 ],
                               ),
                             ),

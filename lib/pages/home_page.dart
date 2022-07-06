@@ -34,12 +34,6 @@ class _HomePageState extends State<HomePage> {
             backgroundColor: AppStyle.secondColor,
             elevation: 0,
             actions: [
-            IconButton(onPressed: (){}, icon: Icon(Icons.search,
-            size: 25,
-            color: Colors.white,
-            ),
-            ),
-
             IconButton(onPressed: (){}, icon: Icon(Icons.notifications_none_outlined,
             size: 25,
             color: Colors.white,
@@ -60,7 +54,7 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: AppStyle.mainColor,
       body: LayoutBuilder(
         builder: (context, constraints) {
-          if(constraints.maxWidth < 400) {
+          if(constraints.maxWidth < 389) {
             return Container(
               width: constraints.maxWidth,
               height: constraints.maxHeight,
@@ -101,7 +95,7 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             Container(
                               child: Padding(padding: EdgeInsets.only(
-                                  top: MediaQuery.of(context).size.height * 0.02,
+                                  top: MediaQuery.of(context).size.height * 0.01,
                                   left: MediaQuery.of(context).size.width * 0.05
                               ),
                                 child:  Text("Últimas Aulas",
@@ -114,33 +108,32 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             Container(
-                              padding: EdgeInsets.only(top: 1),
+                              padding: EdgeInsets.only(),
                               height: 120,
                               child: ListView(
                                 scrollDirection: Axis.horizontal,
-                                padding: EdgeInsets.only(left: 30, right: 3),
+                                padding: EdgeInsets.only(left: 30, right: 3, bottom: 5),
                                 children: [
                                   Container(
-                                    height: 125,
+                                    height: 120,
                                     width: 170,
-                                    margin: EdgeInsets.all(5),
+                                    margin: EdgeInsets.all(4),
                                     child: Center(
                                       child: Image.asset('assets/images/biomas.png'),
                                     ),
                                   ),
                                   Container(
-                                    height: 125,
+                                    height: 120,
                                     width: 170,
-                                    margin: EdgeInsets.all(5),
+                                    margin: EdgeInsets.all(4),
                                     child: Center(
                                       child: Image.asset('assets/images/angulos.png'),
                                     ),
                                   ),
                                   Container(
-                                    height: 125,
+                                    height: 120,
                                     width: 170,
-
-                                    margin: EdgeInsets.all(5),
+                                    margin: EdgeInsets.all(4),
                                     child: Center(
                                       child: Image.asset('assets/images/adverbio.png'),
                                     ),
@@ -164,45 +157,43 @@ class _HomePageState extends State<HomePage> {
                                 child:  Text("Meus Favoritos",
                                     style: GoogleFonts.roboto(
                                         color: AppStyle.titleColor,
-                                        fontSize: 18,
+                                        fontSize: 17.5,
                                         fontWeight: FontWeight.w500
                                     )
                                 ),
                               ),
                             ),
                             Container(
-                              padding: EdgeInsets.only(top: 1),
+                              padding: EdgeInsets.only(top: 1, bottom: 1),
                               height: 120,
                               child: ListView(
                                 scrollDirection: Axis.horizontal,
                                 padding: EdgeInsets.only(left: 30, right: 3),
                                 children: [
                                   Container(
-                                    height: 125,
+                                    height: 120,
                                     width: 170,
-                                    margin: EdgeInsets.all(5),
+                                    margin: EdgeInsets.all(4),
                                     child: Center(
                                       child: Image.asset('assets/images/biomas.png'),
                                     ),
                                   ),
                                   Container(
-                                    height: 125,
+                                    height: 120,
                                     width: 170,
-                                    margin: EdgeInsets.all(5),
+                                    margin: EdgeInsets.all(4),
                                     child: Center(
                                       child: Image.asset('assets/images/angulos.png'),
                                     ),
                                   ),
                                   Container(
-                                    height: 125,
+                                    height: 120,
                                     width: 170,
-
-                                    margin: EdgeInsets.all(5),
+                                    margin: EdgeInsets.all(4),
                                     child: Center(
                                       child: Image.asset('assets/images/adverbio.png'),
                                     ),
                                   ),
-
                                   Container(
                                     width: 185,
                                     child: Center(

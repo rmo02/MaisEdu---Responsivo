@@ -1,9 +1,24 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:resposividade/modules/tag_state.dart';
 import 'package:resposividade/pages/login_page.dart';
 import '../../style/app_style.dart';
+
+
+var suggestTag = [
+  "Matemática",
+  "Português",
+  "Física",
+  "Química",
+  "Inglês",
+  "Espanhol",
+  "Biologia",
+  "Geografia",
+];
 
 class CreateAnotation extends StatefulWidget {
   const CreateAnotation({Key? key}) : super(key: key);
@@ -13,7 +28,11 @@ class CreateAnotation extends StatefulWidget {
 }
 
 class _CreateAnotationState extends State<CreateAnotation> {
-    @override
+
+  final controller = Get.put(TagStateController());
+  final textController = TextEditingController();
+
+  @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
@@ -104,12 +123,97 @@ class _CreateAnotationState extends State<CreateAnotation> {
                     )
                 ),
                 Container(
+                  decoration: BoxDecoration(
+                    color: AppStyle.mainColor
+                  ),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       SizedBox(width: constraints.maxWidth * .25),
                       TextButton(
-                        onPressed: (){},
+                        onPressed: (){
+                          showModalBottomSheet(
+                            isScrollControlled: true,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(topRight: Radius.circular(28), topLeft: Radius.circular(28))
+                            ),
+                              backgroundColor: Color(0xffF1F3F5),
+                              context: context,
+                              builder: (context) => Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    padding: EdgeInsets.only(left: 30, top: 30),
+                                    child: Text("Adicionar Tags",
+                                    style: GoogleFonts.roboto(
+                                      color: AppStyle.secondColor,
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 16
+                                    ),),
+                                  ),
+                                  Column(
+                                    children: [
+                                     SizedBox(height: 10,),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: TypeAheadField(
+                                              suggestionsBoxDecoration: SuggestionsBoxDecoration(
+                                                elevation: 2.0,
+                                              ),
+                                          textFieldConfiguration: TextFieldConfiguration(
+                                            controller: textController,
+                                            onEditingComplete: () {
+                                              controller.ListTags.add(textController.text);
+                                              textController.clear();
+                                            },
+                                            autofocus: false,
+                                            style: DefaultTextStyle.of(context).style.copyWith(
+                                              fontSize: 14,),
+                                            decoration: InputDecoration(
+                                              hintText: 'Nova tag'
+                                            ),
+                                          ),
+                                            suggestionsCallback: (String pattern) {
+                                              return suggestTag.where(
+                                                      (e) => e.toLowerCase().contains(pattern.toLowerCase()));
+                                            },
+                                            itemBuilder: (BuildContext context, String itemData) {
+                                              return ListTile(leading:
+                                                Icon(Icons.tag, color: Color(0xff403B91),),
+                                                focusColor: Color(0xff403B91),
+                                                title: Text(itemData, style: TextStyle(
+                                                    color: Color(0xff403B91)
+                                                ),
+                                                ),
+                                              );
+                                            },
+                                            onSuggestionSelected: (String suggestion) => controller.ListTags.add(suggestion)
+                                        ),
+                                      ),
+                                      SizedBox(height: 10,),
+                                      Obx(() => controller.ListTags.length == 0 ? Center(
+                                        child: Text('Sem tags selecionadas'),): Wrap(
+
+                                                children: controller.ListTags.map(
+                                                (element) => Padding(
+                                                  padding: const EdgeInsets.symmetric(horizontal: 4),
+                                                  child: Chip(label: Text(element, style: TextStyle(
+                                                      color:Color(0xff4263EB),
+                                                  ),
+                                                  ),
+                                                  backgroundColor: AppStyle.mainColor,
+                                                  deleteIcon: Icon(Icons.clear),
+                                                  onDeleted: () => controller.ListTags.remove(element),
+                                                  ),
+                                                )).toList(),
+                                      ))
+
+                                    ],
+                                  )
+                                ],
+                              )
+                          );
+                        },
                         child: Row(
                           children: [
                             Icon(Icons.add),

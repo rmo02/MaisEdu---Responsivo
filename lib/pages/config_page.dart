@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:resposividade/pages/idoma_page.dart';
-import 'package:resposividade/pages/login_page.dart';
 import 'package:resposividade/pages/password_page.dart';
 import 'package:resposividade/style/app_style.dart';
 
@@ -17,22 +17,7 @@ class _ConfigPageState extends State<ConfigPage> {
   bool _toggled1 = false;
   bool _toggled2 = false;
   bool _toggled3 = false;
-  bool _canVibrate = false;
-  final Iterable<Duration> pauses = [
-    const Duration(milliseconds: 500),
-    const Duration(milliseconds: 1000),
-    const Duration(milliseconds: 500),
-  ];
 
-  Future<void> _init() async {
-    bool canVibrate = await Vibrate.canVibrate;
-    setState(() {
-      _canVibrate = canVibrate;
-      _canVibrate
-          ? debugPrint('This device can vibrate')
-          : debugPrint('This device cannot vibrate');
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -204,7 +189,15 @@ class _ConfigPageState extends State<ConfigPage> {
                                   value: _toggled1,
                                   onChanged: (value){
                                     setState(()=>_toggled1=value);
-                                  },),
+                                  },
+                                  secondary: IconButton(
+                                    onPressed: () {
+                                      HapticFeedback.vibrate();
+                                    },
+                                    icon: Icon(Icons.notifications_off),
+
+                                  ),
+                                ),
                               ),
                               SizedBox(height: 20,),
                               Container(
@@ -220,7 +213,15 @@ class _ConfigPageState extends State<ConfigPage> {
                                   value: _toggled2,
                                   onChanged: (value){
                                     setState(()=>_toggled2=value);
-                                  },),
+                                  },
+                                  secondary: IconButton(
+                                    onPressed: () {
+                                      HapticFeedback.heavyImpact();
+                                    },
+                                    icon: Icon(Icons.volume_mute),
+
+                                  ),
+                                ),
                               ),
                               SizedBox(height: 20,),
                               Container(
@@ -234,12 +235,17 @@ class _ConfigPageState extends State<ConfigPage> {
                                 child: SwitchListTile(
                                   title: const Text("Vibração", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
                                   value: _toggled3,
-                                  onChanged: (value){
-                                    setState(() {
-                                      _toggled3 = value;
-                                      if(_canVibrate) Vibrate.vibrate;
-                                    });
-                                  },
+                                  onChanged: (value) =>
+                                    setState(() =>
+                                      _toggled3 = value),
+                                  secondary: IconButton(
+                                    onPressed: () {
+                                      HapticFeedback.heavyImpact();
+                                      },
+                                    icon: Icon(Icons.vibration),
+
+                                  ),
+
 
                                 ),
                               ),

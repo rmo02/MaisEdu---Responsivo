@@ -82,7 +82,8 @@ class _LoginPageState extends State<LoginPage> {
                     height: 15,
                   ),
                   Container(
-                    width: constraints.maxWidth,
+                    width: constraints.maxWidth * 0.70,
+                    height: constraints.maxHeight * 0.07,
                     child: ElevatedButton(
                       onPressed: (){
                         Navigator.push(context, PageTransition(
@@ -93,7 +94,6 @@ class _LoginPageState extends State<LoginPage> {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(horizontal: 150.0, vertical: 20),
                         primary: Color(0xFF364FC7),
                       ),
                       child: Container(
