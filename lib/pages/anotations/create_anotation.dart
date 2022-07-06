@@ -139,87 +139,90 @@ class _CreateAnotationState extends State<CreateAnotation> {
                             ),
                               backgroundColor: Color(0xffF1F3F5),
                               context: context,
-                              builder: (context) => Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    padding: EdgeInsets.only(left: 30, top: 50),
-                                    child: Text("Adicionar Tags",
-                                    style: GoogleFonts.roboto(
-                                      color: AppStyle.secondColor,
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 16
-                                    ),),
-                                  ),
-                                  Column(
-                                    children: [
-                                     SizedBox(height: 10,),
-                                      Padding(
-                                        padding: const EdgeInsets.all(10.0),
-                                        child: TypeAheadField(
-                                              suggestionsBoxDecoration: SuggestionsBoxDecoration(
-                                                elevation: 2.0,
+                              builder: (context) => Container(
+                                height: MediaQuery.of(context).size.height * 0.95,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.only(left: 30, top: 50),
+                                      child: Text("Adicionar Tags",
+                                      style: GoogleFonts.roboto(
+                                        color: AppStyle.secondColor,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 16
+                                      ),),
+                                    ),
+                                    Column(
+                                      children: [
+                                       SizedBox(height: 10,),
+                                        Padding(
+                                          padding: const EdgeInsets.all(10.0),
+                                          child: TypeAheadField(
+                                                suggestionsBoxDecoration: SuggestionsBoxDecoration(
+                                                  elevation: 2.0,
+                                                ),
+                                            textFieldConfiguration: TextFieldConfiguration(
+                                              controller: textController,
+                                              onEditingComplete: () {
+                                                controller.ListTags.add(textController.text);
+                                                textController.clear();
+                                              },
+                                              autofocus: false,
+                                              style: DefaultTextStyle.of(context).style.copyWith(
+                                                fontSize: 14,),
+                                              decoration: InputDecoration(
+                                                  fillColor: Colors.white,
+                                                  filled: true,
+                                                  border: UnderlineInputBorder(
+                                                  borderRadius: BorderRadius.circular(20)
+                                                ),
+                                                hintText: 'Nova tag'
                                               ),
-                                          textFieldConfiguration: TextFieldConfiguration(
-                                            controller: textController,
-                                            onEditingComplete: () {
-                                              controller.ListTags.add(textController.text);
-                                              textController.clear();
-                                            },
-                                            autofocus: false,
-                                            style: DefaultTextStyle.of(context).style.copyWith(
-                                              fontSize: 14,),
-                                            decoration: InputDecoration(
-                                                fillColor: Colors.white,
-                                                filled: true,
-                                                border: UnderlineInputBorder(
-                                                borderRadius: BorderRadius.circular(20)
-                                              ),
-                                              hintText: 'Nova tag'
                                             ),
+                                              suggestionsCallback: (String pattern) {
+                                                return suggestTag.where(
+                                                        (e) => e.toLowerCase().contains(pattern.toLowerCase()));
+                                              },
+                                              itemBuilder: (BuildContext context, String itemData) {
+                                                return ListTile(leading:
+                                                  Icon(Icons.tag, color: Color(0xff403B91),),
+                                                  focusColor: Color(0xff403B91),
+                                                  title: Text(itemData, style: TextStyle(
+                                                      color: Color(0xff403B91)
+                                                  ),
+                                                  ),
+                                                );
+                                              },
+                                              onSuggestionSelected: (String suggestion) => controller.ListTags.add(suggestion)
                                           ),
-                                            suggestionsCallback: (String pattern) {
-                                              return suggestTag.where(
-                                                      (e) => e.toLowerCase().contains(pattern.toLowerCase()));
-                                            },
-                                            itemBuilder: (BuildContext context, String itemData) {
-                                              return ListTile(leading:
-                                                Icon(Icons.tag, color: Color(0xff403B91),),
-                                                focusColor: Color(0xff403B91),
-                                                title: Text(itemData, style: TextStyle(
-                                                    color: Color(0xff403B91)
-                                                ),
-                                                ),
-                                              );
-                                            },
-                                            onSuggestionSelected: (String suggestion) => controller.ListTags.add(suggestion)
                                         ),
-                                      ),
-                                      SizedBox(height: 10,),
-                                      Obx(() => controller.ListTags.length == 0 ? Center(
-                                        child: Text('Sem tags selecionadas', style: GoogleFonts.roboto(
-                                            fontSize: 16,
-                                          color: Color(0xff4263EB)
-                                        ),),
-                                      ): Wrap(
-                                                children: controller.ListTags.map(
-                                                (element) => Padding(
-                                                  padding: const EdgeInsets.symmetric(horizontal: 4),
-                                                  child: Chip(label: Text(element, style: TextStyle(
-                                                      color:Color(0xff4263EB),
-                                                  ),
-                                                  ),
-                                                  backgroundColor: AppStyle.mainColor,
-                                                  elevation: 3,
-                                                  deleteIcon: Icon(Icons.clear),
-                                                  onDeleted: () => controller.ListTags.remove(element),
-                                                  ),
-                                                )).toList(),
-                                      ))
+                                        SizedBox(height: 10,),
+                                        Obx(() => controller.ListTags.length == 0 ? Center(
+                                          child: Text('Sem tags selecionadas', style: GoogleFonts.roboto(
+                                              fontSize: 16,
+                                            color: Color(0xff4263EB)
+                                          ),),
+                                          ): Wrap(
+                                                  children: controller.ListTags.map(
+                                                  (element) => Padding(
+                                                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                                                    child: Chip(label: Text(element, style: TextStyle(
+                                                        color:Color(0xff4263EB),
+                                                    ),
+                                                    ),
+                                                    backgroundColor: AppStyle.mainColor,
+                                                    elevation: 3,
+                                                    deleteIcon: Icon(Icons.clear),
+                                                    onDeleted: () => controller.ListTags.remove(element),
+                                                    ),
+                                                  )).toList(),
+                                        ))
 
-                                    ],
-                                  )
-                                ],
+                                      ],
+                                    )
+                                  ],
+                                ),
                               )
                           );
                         },
