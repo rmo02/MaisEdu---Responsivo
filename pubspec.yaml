@@ -69,6 +69,7 @@ dependencies:
   sliding_sheet: ^0.5.2
   comment_box: ^0.0.17
   get: any
+  elegant_notification: ^1.6.0
 
 
 dev_dependencies:

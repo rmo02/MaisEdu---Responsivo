@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:resposividade/pages/bar_item_page.dart';
 import 'package:resposividade/style/app_style.dart';
+import 'package:elegant_notification/elegant_notification.dart';
 
 
 class LoginPage extends StatefulWidget {
