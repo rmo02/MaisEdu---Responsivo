@@ -679,6 +679,81 @@ class _ClassesPageState extends State<ClassesPage> {
                               height: 125,
                               width: 170,
                               decoration: BoxDecoration(
+                                  gradient: LinearGradient(colors: [Colors.deepPurple, Colors.deepPurpleAccent]),
+                                  borderRadius: BorderRadius.circular(8),
+                                  color: Colors.white
+                              ),
+                              margin: EdgeInsets.all(5),
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    padding: EdgeInsets.all(0.0),
+                                    primary: Colors.white
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      width: 300,
+                                      height: 100,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.only(topLeft: Radius.circular(4), topRight: Radius.circular(4)),
+                                      ),
+                                      child: Image.asset('assets/images/port.jpg',),
+                                    ),
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          margin: EdgeInsets.only(top: 10.0),
+                                          padding: EdgeInsets.symmetric(horizontal: 10.0),
+                                          child: Text(
+                                              "Português",
+                                              style: GoogleFonts.roboto(
+                                                  color: Colors.black54,
+                                                  fontWeight: FontWeight.bold
+                                              )
+                                          ),
+                                        ),
+                                        SizedBox(height: 5.0,),
+                                        Container(
+                                          padding: EdgeInsets.symmetric(horizontal: 12.0),
+                                          child: Text(
+                                              "19 aulas",
+                                              style: GoogleFonts.roboto(
+                                                  color: Colors.black26,
+                                                  fontSize: 11
+                                              )
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                onPressed: (){
+                                  Navigator.push(context, PageTransition(
+                                      child: ListaAtividades(),
+                                      type:  PageTransitionType.fade,
+                                      duration: const Duration(milliseconds: 10)
+                                  )
+                                  );
+                                },
+                              ),
+                            )
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(left: 25),
+                        height: 165,
+                        child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            padding: EdgeInsets.only(
+                                left: MediaQuery.of(context).size.width * 0.000,
+                                right: MediaQuery.of(context).size.width * 0.000),
+                            itemCount: 2,
+                            itemBuilder: (context, index) => Container(
+                              height: 125,
+                              width: 170,
+                              decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(8),
                                   color: Colors.white
                               ),
@@ -696,10 +771,9 @@ class _ClassesPageState extends State<ClassesPage> {
                                         width: 300,
                                         height: 100,
                                         decoration: BoxDecoration(
-                                          gradient: LinearGradient(colors: [AppStyle.grientCard, AppStyle.gradientCart2]),
                                           borderRadius: BorderRadius.only(topLeft: Radius.circular(4), topRight: Radius.circular(4)),
                                         ),
-                                        child: Image.asset('assets/images/calculadora.png',),
+                                        child: Image.asset('assets/images/artes.jpg',),
                                       ),
                                       Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -708,7 +782,7 @@ class _ClassesPageState extends State<ClassesPage> {
                                             margin: EdgeInsets.only(top: 10.0),
                                             padding: EdgeInsets.symmetric(horizontal: 10.0),
                                             child: Text(
-                                                "Matemática",
+                                                "Artes",
                                                 style: GoogleFonts.roboto(
                                                     color: Colors.black54,
                                                     fontWeight: FontWeight.bold
@@ -773,10 +847,10 @@ class _ClassesPageState extends State<ClassesPage> {
                                         width: 300,
                                         height: 100,
                                         decoration: BoxDecoration(
-                                          gradient: LinearGradient(colors: [AppStyle.grientCard, AppStyle.gradientCart2]),
+
                                           borderRadius: BorderRadius.only(topLeft: Radius.circular(4), topRight: Radius.circular(4)),
                                         ),
-                                        child: Image.asset('assets/images/calculadora.png',),
+                                        child: Image.asset('assets/images/ciencia.png',),
                                       ),
                                       Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -785,7 +859,7 @@ class _ClassesPageState extends State<ClassesPage> {
                                             margin: EdgeInsets.only(top: 10.0),
                                             padding: EdgeInsets.symmetric(horizontal: 10.0),
                                             child: Text(
-                                                "Matemática",
+                                                "Ciências",
                                                 style: GoogleFonts.roboto(
                                                     color: Colors.black54,
                                                     fontWeight: FontWeight.bold
@@ -850,10 +924,10 @@ class _ClassesPageState extends State<ClassesPage> {
                                         width: 300,
                                         height: 100,
                                         decoration: BoxDecoration(
-                                          gradient: LinearGradient(colors: [AppStyle.grientCard, AppStyle.gradientCart2]),
+
                                           borderRadius: BorderRadius.only(topLeft: Radius.circular(4), topRight: Radius.circular(4)),
                                         ),
-                                        child: Image.asset('assets/images/calculadora.png',),
+                                        child: Image.asset('assets/images/geo.jpg',),
                                       ),
                                       Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -862,7 +936,7 @@ class _ClassesPageState extends State<ClassesPage> {
                                             margin: EdgeInsets.only(top: 10.0),
                                             padding: EdgeInsets.symmetric(horizontal: 10.0),
                                             child: Text(
-                                                "Matemática",
+                                                "Geografia",
                                                 style: GoogleFonts.roboto(
                                                     color: Colors.black54,
                                                     fontWeight: FontWeight.bold
@@ -927,10 +1001,9 @@ class _ClassesPageState extends State<ClassesPage> {
                                         width: 300,
                                         height: 100,
                                         decoration: BoxDecoration(
-                                          gradient: LinearGradient(colors: [AppStyle.grientCard, AppStyle.gradientCart2]),
                                           borderRadius: BorderRadius.only(topLeft: Radius.circular(4), topRight: Radius.circular(4)),
                                         ),
-                                        child: Image.asset('assets/images/calculadora.png',),
+                                        child: Image.asset('assets/images/histo.jpg',),
                                       ),
                                       Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -939,84 +1012,7 @@ class _ClassesPageState extends State<ClassesPage> {
                                             margin: EdgeInsets.only(top: 10.0),
                                             padding: EdgeInsets.symmetric(horizontal: 10.0),
                                             child: Text(
-                                                "Matemática",
-                                                style: GoogleFonts.roboto(
-                                                    color: Colors.black54,
-                                                    fontWeight: FontWeight.bold
-                                                )
-                                            ),
-                                          ),
-                                          SizedBox(height: 5.0,),
-                                          Container(
-                                            padding: EdgeInsets.symmetric(horizontal: 12.0),
-                                            child: Text(
-                                                "19 aulas",
-                                                style: GoogleFonts.roboto(
-                                                    color: Colors.black26,
-                                                    fontSize: 11
-                                                )
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                onPressed: (){
-                                  Navigator.push(context, PageTransition(
-                                      child: ListaAtividades(),
-                                      type:  PageTransitionType.fade,
-                                      duration: const Duration(milliseconds: 10)
-                                  )
-                                  );
-                                },
-                              ),
-                            )
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(left: 25),
-                        height: 165,
-                        child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            padding: EdgeInsets.only(
-                                left: MediaQuery.of(context).size.width * 0.000,
-                                right: MediaQuery.of(context).size.width * 0.000),
-                            itemCount: 2,
-                            itemBuilder: (context, index) => Container(
-                              height: 125,
-                              width: 170,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                  color: Colors.white
-                              ),
-                              margin: EdgeInsets.all(5),
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    padding: EdgeInsets.all(0.0),
-                                    primary: Colors.white
-                                ),
-                                child: Container(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        width: 300,
-                                        height: 100,
-                                        decoration: BoxDecoration(
-                                          gradient: LinearGradient(colors: [AppStyle.grientCard, AppStyle.gradientCart2]),
-                                          borderRadius: BorderRadius.only(topLeft: Radius.circular(4), topRight: Radius.circular(4)),
-                                        ),
-                                        child: Image.asset('assets/images/calculadora.png',),
-                                      ),
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                            margin: EdgeInsets.only(top: 10.0),
-                                            padding: EdgeInsets.symmetric(horizontal: 10.0),
-                                            child: Text(
-                                                "Matemática",
+                                                "História",
                                                 style: GoogleFonts.roboto(
                                                     color: Colors.black54,
                                                     fontWeight: FontWeight.bold

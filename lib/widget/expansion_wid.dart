@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:resposividade/quizz/startQuizz.dart';
 import 'package:resposividade/style/app_style.dart';
 import 'package:resposividade/widget/QuestionWidget.dart';
 import 'package:sliding_sheet/sliding_sheet.dart';
@@ -460,7 +461,7 @@ class _ExpansionWidState extends State<ExpansionWid> {
                         ),
                         TextButton(onPressed: () {
                           Navigator.push(context, PageTransition(
-                              child: QuestionWidget(),
+                              child: StartQuizz(),
                               type:  PageTransitionType.fade,
                               duration: const Duration(milliseconds: 10)
                           )
