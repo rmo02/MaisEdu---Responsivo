@@ -197,10 +197,10 @@ class _ClassesPageState extends State<ClassesPage> {
                                         width: 300,
                                         height: 100,
                                         decoration: BoxDecoration(
-                                          gradient: LinearGradient(colors: [AppStyle.grientCard, AppStyle.gradientCart2]),
+                                          gradient: LinearGradient(colors: [Color(0xFFACE8E8), Color(0xFF18A1A1)]),
                                           borderRadius: BorderRadius.only(topLeft: Radius.circular(4), topRight: Radius.circular(4)),
                                         ),
-                                        child: Image.asset('assets/images/calculadora.png',),
+                                        child: Image.asset('assets/images/geografia.png',),
                                       ),
                                       Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -209,7 +209,7 @@ class _ClassesPageState extends State<ClassesPage> {
                                             margin: EdgeInsets.only(top: 10.0),
                                             padding: EdgeInsets.symmetric(horizontal: 10.0),
                                             child: Text(
-                                                "Matemática",
+                                                "Geografia",
                                                 style: GoogleFonts.roboto(
                                                     color: Colors.black54,
                                                     fontWeight: FontWeight.bold
@@ -273,10 +273,10 @@ class _ClassesPageState extends State<ClassesPage> {
                                         width: 300,
                                         height: 100,
                                         decoration: BoxDecoration(
-                                          gradient: LinearGradient(colors: [AppStyle.grientCard, AppStyle.gradientCart2]),
+                                          gradient: LinearGradient(colors: [Color(0xFFFD9939), Color(0xFFFDB368)]),
                                           borderRadius: BorderRadius.only(topLeft: Radius.circular(4), topRight: Radius.circular(4)),
                                         ),
-                                        child: Image.asset('assets/images/calculadora.png',),
+                                        child: Image.asset('assets/images/ciencias.png',),
                                       ),
                                       Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -285,7 +285,7 @@ class _ClassesPageState extends State<ClassesPage> {
                                             margin: EdgeInsets.only(top: 10.0),
                                             padding: EdgeInsets.symmetric(horizontal: 10.0),
                                             child: Text(
-                                                "Matemática",
+                                                "Ciências",
                                                 style: GoogleFonts.roboto(
                                                     color: Colors.black54,
                                                     fontWeight: FontWeight.bold
@@ -349,10 +349,10 @@ class _ClassesPageState extends State<ClassesPage> {
                                         width: 300,
                                         height: 100,
                                         decoration: BoxDecoration(
-                                          gradient: LinearGradient(colors: [AppStyle.grientCard, AppStyle.gradientCart2]),
+                                          gradient: LinearGradient(colors: [Color(0xFFDBD53B), Color(0xFFF4FFB5)]),
                                           borderRadius: BorderRadius.only(topLeft: Radius.circular(4), topRight: Radius.circular(4)),
                                         ),
-                                        child: Image.asset('assets/images/calculadora.png',),
+                                        child: Image.asset('assets/images/artes.png',),
                                       ),
                                       Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -361,7 +361,7 @@ class _ClassesPageState extends State<ClassesPage> {
                                             margin: EdgeInsets.only(top: 10.0),
                                             padding: EdgeInsets.symmetric(horizontal: 10.0),
                                             child: Text(
-                                                "Matemática",
+                                                "Artes",
                                                 style: GoogleFonts.roboto(
                                                     color: Colors.black54,
                                                     fontWeight: FontWeight.bold
@@ -425,10 +425,10 @@ class _ClassesPageState extends State<ClassesPage> {
                                         width: 300,
                                         height: 100,
                                         decoration: BoxDecoration(
-                                          gradient: LinearGradient(colors: [AppStyle.grientCard, AppStyle.gradientCart2]),
+                                          gradient: LinearGradient(colors: [Color(0xFFD2CFFA), Color(0xFF615AD0)]),
                                           borderRadius: BorderRadius.only(topLeft: Radius.circular(4), topRight: Radius.circular(4)),
                                         ),
-                                        child: Image.asset('assets/images/calculadora.png',),
+                                        child: Image.asset('assets/images/portugues.png',),
                                       ),
                                       Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -437,7 +437,7 @@ class _ClassesPageState extends State<ClassesPage> {
                                             margin: EdgeInsets.only(top: 10.0),
                                             padding: EdgeInsets.symmetric(horizontal: 10.0),
                                             child: Text(
-                                                "Matemática",
+                                                "Português",
                                                 style: GoogleFonts.roboto(
                                                     color: Colors.black54,
                                                     fontWeight: FontWeight.bold
@@ -501,10 +501,10 @@ class _ClassesPageState extends State<ClassesPage> {
                                         width: 300,
                                         height: 100,
                                         decoration: BoxDecoration(
-                                          gradient: LinearGradient(colors: [AppStyle.grientCard, AppStyle.gradientCart2]),
+                                          gradient: LinearGradient(colors: [Color(0xFFFC79BA), Color(0xFFFFB1FF)]),
                                           borderRadius: BorderRadius.only(topLeft: Radius.circular(4), topRight: Radius.circular(4)),
                                         ),
-                                        child: Image.asset('assets/images/calculadora.png',),
+                                        child: Image.asset('assets/images/historia.png',),
                                       ),
                                       Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -513,7 +513,7 @@ class _ClassesPageState extends State<ClassesPage> {
                                             margin: EdgeInsets.only(top: 10.0),
                                             padding: EdgeInsets.symmetric(horizontal: 10.0),
                                             child: Text(
-                                                "Matemática",
+                                                "História",
                                                 style: GoogleFonts.roboto(
                                                     color: Colors.black54,
                                                     fontWeight: FontWeight.bold
@@ -696,9 +696,10 @@ class _ClassesPageState extends State<ClassesPage> {
                                       width: 300,
                                       height: 100,
                                       decoration: BoxDecoration(
+                                        gradient: LinearGradient(colors: [Color(0xFFD2CFFA), Color(0xFF615AD0)]),
                                         borderRadius: BorderRadius.only(topLeft: Radius.circular(4), topRight: Radius.circular(4)),
                                       ),
-                                      child: Image.asset('assets/images/port.jpg',),
+                                      child: Image.asset('assets/images/portugues.png',),
                                     ),
                                     Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -771,9 +772,10 @@ class _ClassesPageState extends State<ClassesPage> {
                                         width: 300,
                                         height: 100,
                                         decoration: BoxDecoration(
+                                          gradient: LinearGradient(colors: [Color(0xFFDBD53B), Color(0xFFF4FFB5)]),
                                           borderRadius: BorderRadius.only(topLeft: Radius.circular(4), topRight: Radius.circular(4)),
                                         ),
-                                        child: Image.asset('assets/images/artes.jpg',),
+                                        child: Image.asset('assets/images/artes.png',),
                                       ),
                                       Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -847,10 +849,10 @@ class _ClassesPageState extends State<ClassesPage> {
                                         width: 300,
                                         height: 100,
                                         decoration: BoxDecoration(
-
+                                          gradient: LinearGradient(colors: [Color(0xFFFD9939), Color(0xFFFDB368)]),
                                           borderRadius: BorderRadius.only(topLeft: Radius.circular(4), topRight: Radius.circular(4)),
                                         ),
-                                        child: Image.asset('assets/images/ciencia.png',),
+                                        child: Image.asset('assets/images/ciencias.png',),
                                       ),
                                       Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -924,10 +926,10 @@ class _ClassesPageState extends State<ClassesPage> {
                                         width: 300,
                                         height: 100,
                                         decoration: BoxDecoration(
-
+                                          gradient: LinearGradient(colors: [Color(0xFFACE8E8), Color(0xFF18A1A1)]),
                                           borderRadius: BorderRadius.only(topLeft: Radius.circular(4), topRight: Radius.circular(4)),
                                         ),
-                                        child: Image.asset('assets/images/geo.jpg',),
+                                        child: Image.asset('assets/images/geografia.png',),
                                       ),
                                       Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1001,9 +1003,10 @@ class _ClassesPageState extends State<ClassesPage> {
                                         width: 300,
                                         height: 100,
                                         decoration: BoxDecoration(
+                                          gradient: LinearGradient(colors: [Color(0xFFFC79BA), Color(0xFFFFB1FF)]),
                                           borderRadius: BorderRadius.only(topLeft: Radius.circular(4), topRight: Radius.circular(4)),
                                         ),
-                                        child: Image.asset('assets/images/histo.jpg',),
+                                        child: Image.asset('assets/images/historia.png',),
                                       ),
                                       Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,

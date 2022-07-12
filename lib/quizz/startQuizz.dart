@@ -131,25 +131,27 @@ class _StartQuizzState extends State<StartQuizz> {
                         SizedBox(height: 15),
                         Image.asset("assets/images/banner.png"),
                         SizedBox(height: 15),
-                        Row(
-                          children: [
-                            SizedBox(width: 20),
-                            Text("Pronto para praticar?",
-                              style: GoogleFonts.roboto(
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.w500,
-                                  color: AppStyle.secondColor
+                        Center(
+                          child: Column(
+                            children: [
+                              SizedBox(width: 20),
+                              Text("Pronto para praticar?",
+                                style: GoogleFonts.roboto(
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.w500,
+                                    color: AppStyle.secondColor
+                                ),
                               ),
-                            ),
-                            SizedBox(width: 50),
-                            Text("2 questões",
-                              style: GoogleFonts.roboto(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w300,
-                                  color: AppStyle.secondColor
+                              SizedBox(height: 5),
+                              Text("2 questões",
+                                style: GoogleFonts.roboto(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w300,
+                                    color: AppStyle.secondColor
+                                ),
                               ),
-                            )
-                          ],
+                            ],
+                          ),
                         ),
                         SizedBox(height: 20),
                       ],

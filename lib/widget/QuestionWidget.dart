@@ -1,5 +1,6 @@
 import 'package:page_transition/page_transition.dart';
 import 'package:resposividade/pages/bottomNavPages/perfil_page.dart';
+import 'package:resposividade/pages/quali_page.dart';
 import 'package:resposividade/quizz/model.dart';
 import 'package:resposividade/style/app_style.dart';
 import 'package:flutter/material.dart';
@@ -357,7 +358,7 @@ class ResultPage extends StatelessWidget {
                 height: 55,
                 child: TextButton(onPressed: (){
                   Navigator.push(context, PageTransition(
-                      child: QuestionWidget(),
+                      child: QualiPage(),
                       type:  PageTransitionType.fade,
                       duration: const Duration(milliseconds: 10)
                   )

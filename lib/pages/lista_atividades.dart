@@ -92,7 +92,7 @@ class _ListaAtividadesState extends State<ListaAtividades> {
             ),
           ),
           SingleChildScrollView(
-            child: ExpansionWid(),
+           child: ExpansionWid(),
           ),
         ],
       ),

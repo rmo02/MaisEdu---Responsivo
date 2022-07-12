@@ -643,7 +643,7 @@ class _CalanderPageState extends State<CalanderPage> {
         onPressed: () {
           showModalBottomSheet(
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30)
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30))
             ),
             backgroundColor: Color(0xffF1F3F5),
             isScrollControlled: true,
@@ -668,7 +668,6 @@ class _CalanderPageState extends State<CalanderPage> {
                         ),
                         SizedBox(
                           child: TextField(
-                            autofocus: true,
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                               enabledBorder: OutlineInputBorder(
