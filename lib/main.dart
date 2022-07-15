@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         builder: (context, orientation, screenType) {
           return MaterialApp(
               debugShowCheckedModeBanner: false,
-              home: LoginPage()
+              home: LoginPage(),
           );
         }
     );
