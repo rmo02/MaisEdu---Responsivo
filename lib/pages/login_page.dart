@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:resposividade/pages/bar_item_page.dart';
 import '../style/app_style.dart';
+import 'package:elegant_notification/elegant_notification.dart';
 
 
 class LoginPage extends StatefulWidget {
@@ -36,16 +37,23 @@ class _LoginPageState extends State<LoginPage> {
       );
 
       if(response.statusCode == 200){
-
         var data = jsonDecode(response.body.toString());
+        data = data!;
+        print(data);
         Navigator.push(context, PageTransition(child: BarItemPage(),
             type: PageTransitionType.fade,
             duration: const Duration(milliseconds: 10)
         ));
-        print('Login successfully');
+        ElegantNotification.success(
+            title:  Text("Update"),
+            description:  Text("Your data has been updated")
+        ).show(context);
 
       }else {
-        print('failed');
+        ElegantNotification.error(
+            title:  Text("Error"),
+            description:  Text("Usuário ou senha inválidos")
+        ).show(context);
       }
     }catch(e){
       print(e.toString());

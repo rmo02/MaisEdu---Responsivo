@@ -1,3 +1,5 @@
+import 'package:resposividade/pages/bar_item_page.dart';
+import 'package:resposividade/pages/home_page.dart';
 import 'package:resposividade/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
