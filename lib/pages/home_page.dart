@@ -18,12 +18,15 @@ class _HomePageState extends State<HomePage> {
   void initState(){
     super.initState();
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
+
   }
+
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-
+    final double keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -58,7 +61,7 @@ class _HomePageState extends State<HomePage> {
           if(constraints.maxWidth < 389) {
             return Container(
               width: constraints.maxWidth,
-              height: constraints.maxHeight,
+              height: constraints.maxHeight - keyboardHeight,
               child: Stack(
                 children: [
                   Container(
@@ -79,7 +82,7 @@ class _HomePageState extends State<HomePage> {
                     child: GestureDetector(
                       child: Container(
                         padding: EdgeInsets.all(10),
-                        margin: EdgeInsets.only(bottom: 50),
+                        margin: EdgeInsets.only(bottom: 50 - keyboardHeight),
                         child: Image.asset('assets/images/banner.png',),
                       ),
                     ),
@@ -236,11 +239,9 @@ class _HomePageState extends State<HomePage> {
                           borderRadius: BorderRadius.only(bottomLeft: Radius.circular(28), bottomRight: Radius.circular(28))
                       ),
                       child:
-                      GestureDetector(
-                        child: Container(
-                          margin: EdgeInsets.only(bottom: constraints.maxHeight / 6),
-                          child: Image.asset('assets/images/banner.png'),
-                        ),
+                      Container(
+                        margin: EdgeInsets.only(bottom: constraints.maxHeight / 6),
+                        child: Image.asset('assets/images/banner.png'),
                       ),
                     ),
                     Container(
