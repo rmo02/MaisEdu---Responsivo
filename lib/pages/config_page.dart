@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:resposividade/pages/idoma_page.dart';
 import 'package:resposividade/pages/password_page.dart';
 import 'package:resposividade/style/app_style.dart';
@@ -152,11 +152,13 @@ class _ConfigPageState extends State<ConfigPage> {
                               Container(
                                 margin: EdgeInsets.only(top: 20),
                                 alignment: Alignment.center,
-                                child: ElevatedButton(onPressed: () => Navigator.push(context, PageTransition(
-                                    child: const ConfigPage(),
-                                    type: PageTransitionType.fade,
-                                    duration: const Duration(milliseconds: 10)
-                                )),
+                                child: ElevatedButton(
+                                    onPressed: () async {
+                                      bool exit = await logout();
+                                      if(exit) {
+                                        Navigator.pushReplacementNamed(context, '/splash');
+                                      }
+                                    },
                                     style: ElevatedButton.styleFrom(
                                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
                                       fixedSize: Size(350, 50), primary: Color(0xff00A1A1),
@@ -303,4 +305,11 @@ class _ConfigPageState extends State<ConfigPage> {
       ),
     );
   }
+
+  Future<bool> logout() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    await sharedPreferences.clear();
+    return true;
+  }
+
 }
