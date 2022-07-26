@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pod_player/pod_player.dart';
+import 'package:resposividade/pages/bar_item_page.dart';
+import 'package:resposividade/pages/login_page.dart';
 import 'package:resposividade/style/app_style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -15,11 +17,19 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     super.initState();
       verificarToken().then((value) {
-        Duration(seconds: 3);
+        Duration(seconds: 10);
        if(value){
-         Navigator.pushReplacementNamed(context, '/home');
+         Navigator.pushReplacement(
+           context, MaterialPageRoute(
+             builder: (context) => BarItemPage(),
+           )
+         );
        }else{
-         Navigator.pushReplacementNamed(context, '/login');
+         Navigator.pushReplacement(
+             context, MaterialPageRoute(
+           builder: (context) => LoginPage(),
+         )
+         );
        }
      });
 

@@ -64,130 +64,133 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppStyle.secondColor,
-      body: Form(
-        key: _formKey,
-        child: LayoutBuilder(
-            builder: (_,constraints) {
-              return Container(
-                width: constraints.maxWidth,
-                height: constraints.maxHeight,
-                child: Center(
-                  child: Container(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(bottom: 50.0),
-                          child: Image.asset("assets/images/logo-educacao.png"),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 30.0, bottom: 10.0, left: 30.0, right: 30.0),
-                          child: TextFormField(
-                            controller: _matController,
-                            validator: (matricula){
-                              if (matricula == null || matricula.isEmpty){
-                                return 'Por favor, digite sua matrícula';
-                              }
-                              return null;
-                            },
-                            decoration: InputDecoration(
-                              fillColor: Colors.white,
-                              filled: true,
-                              hintText: "753.145.574-01",
-                              labelStyle: TextStyle(
-                                  fontSize: 24,
-                                  color: Colors.black26
-                              ),
-                              border: UnderlineInputBorder(
-                                  borderRadius:BorderRadius.circular(8.0)),
-                            ),
-                            obscureText: false,
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        backgroundColor: AppStyle.secondColor,
+        body: Form(
+          key: _formKey,
+          child: LayoutBuilder(
+              builder: (_,constraints) {
+                return Container(
+                  width: constraints.maxWidth,
+                  height: constraints.maxHeight,
+                  child: Center(
+                    child: Container(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(bottom: 50.0),
+                            child: Image.asset("assets/images/logo-educacao.png"),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10.0, bottom: 10.0, left: 30.0, right: 30.0),
-                          child: TextFormField(
-                            controller: _passwordController,
-                            validator: (senha){
-                              if(senha == null || senha.isEmpty){
-                                return "Por favor, digite sua senha";
-                              }
-                              return null;
-                            },
-                            decoration: InputDecoration(
-                              fillColor: Colors.white,
-                              filled: true,
-                              hintText: "*******************",
-                              labelStyle: TextStyle(
-                                  fontSize: 28 ,
-                                  color: Colors.black26
-                              ),
-                              border: UnderlineInputBorder(
-                                  borderRadius:BorderRadius.circular(8.0)),
-                            ),
-                            obscureText: true,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        SizedBox(
-                          height: 20,
-                          child: Text(
-                            "Esqueceu sua senha?",
-                            style: GoogleFonts.roboto(
-                                color: Colors.white70
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Container(
-                          width: constraints.maxWidth * 0.70,
-                          height: constraints.maxHeight * 0.07,
-                          child: ElevatedButton(
-                            onPressed: () async {
-                              FocusScopeNode currentFocus = FocusScope.of(context);
-                              if(_formKey.currentState!.validate()){
-                                bool confirm = await login();
-                                if(!currentFocus.hasPrimaryFocus){
-                                  currentFocus.unfocus();
+                          Padding(
+                            padding: const EdgeInsets.only(top: 30.0, bottom: 10.0, left: 30.0, right: 30.0),
+                            child: TextFormField(
+                              controller: _matController,
+                              validator: (matricula){
+                                if (matricula == null || matricula.isEmpty){
+                                  return 'Por favor, digite sua matrícula';
                                 }
-                                if(confirm){
-                                  Navigator.push(context, PageTransition(child: BarItemPage(),
-                                      type: PageTransitionType.fade,
-                                      duration: const Duration(milliseconds: 10)
-                                  )
-                                  );
-                                } else {
-                                  _passwordController.clear();
-                                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                                }
-                              }
-                            },
-                            style: ElevatedButton.styleFrom(
-                                primary: Color(0xff364fc7)
-                            ),
-                            child: Container(
-                              child: Text("Entrar", style: GoogleFonts.roboto(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 18
-                              ),),
+                                return null;
+                              },
+                              decoration: InputDecoration(
+                                fillColor: Colors.white,
+                                filled: true,
+                                hintText: "753.145.574-01",
+                                labelStyle: TextStyle(
+                                    fontSize: 24,
+                                    color: Colors.black26
+                                ),
+                                border: UnderlineInputBorder(
+                                    borderRadius:BorderRadius.circular(8.0)),
+                              ),
+                              obscureText: false,
                             ),
                           ),
-                        )
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10.0, bottom: 10.0, left: 30.0, right: 30.0),
+                            child: TextFormField(
+                              controller: _passwordController,
+                              validator: (senha){
+                                if(senha == null || senha.isEmpty){
+                                  return "Por favor, digite sua senha";
+                                }
+                                return null;
+                              },
+                              decoration: InputDecoration(
+                                fillColor: Colors.white,
+                                filled: true,
+                                hintText: "*******************",
+                                labelStyle: TextStyle(
+                                    fontSize: 28 ,
+                                    color: Colors.black26
+                                ),
+                                border: UnderlineInputBorder(
+                                    borderRadius:BorderRadius.circular(8.0)),
+                              ),
+                              obscureText: true,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          SizedBox(
+                            height: 20,
+                            child: Text(
+                              "Esqueceu sua senha?",
+                              style: GoogleFonts.roboto(
+                                  color: Colors.white70
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Container(
+                            width: constraints.maxWidth * 0.70,
+                            height: constraints.maxHeight * 0.07,
+                            child: ElevatedButton(
+                              onPressed: () async {
+                                FocusScopeNode currentFocus = FocusScope.of(context);
+                                if(_formKey.currentState!.validate()){
+                                  bool confirm = await login();
+                                  if(!currentFocus.hasPrimaryFocus){
+                                    currentFocus.unfocus();
+                                  }
+                                  if(confirm){
+                                    Navigator.pushReplacement(
+                                        context, MaterialPageRoute(
+                                      builder: (context) => BarItemPage(),
+                                    )
+                                    );
+                                  } else {
+                                    _passwordController.clear();
+                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                  }
+                                }
+                              },
+                              style: ElevatedButton.styleFrom(
+                                  primary: Color(0xff364fc7)
+                              ),
+                              child: Container(
+                                child: Text("Entrar", style: GoogleFonts.roboto(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 18
+                                ),),
+                              ),
+                            ),
+                          )
 
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                ),
 
-              );
-            }
+                );
+              }
+          ),
         ),
       ),
     );

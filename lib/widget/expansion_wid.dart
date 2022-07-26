@@ -9,6 +9,7 @@ import 'package:resposividade/quizz/startQuizz.dart';
 import 'package:resposividade/style/app_style.dart';
 import '../interfaces/atv.dart';
 import 'package:pod_player/pod_player.dart';
+import 'package:better_player/better_player.dart';
 
 
 class ExpansionWid extends StatefulWidget {
@@ -21,23 +22,24 @@ class ExpansionWid extends StatefulWidget {
 }
 
 class _ExpansionWidState extends State<ExpansionWid> {
-  late final PodPlayerController controller;
+  late final BetterPlayerController _betterPlayerController;
 
   @override
   void initState() {
-    controller = PodPlayerController(
-      playVideoFrom: PlayVideoFrom.network(
-        'https://cdn.jmvstream.com/vod/vod_10807/f/q0yj22rl2jc56df/h/4/playlist.m3u8',
-      ),
-    )..initialise();
     super.initState();
+    BetterPlayerDataSource betterPlayerDataSource = BetterPlayerDataSource(
+        BetterPlayerDataSourceType.network,
+        notificationConfiguration: BetterPlayerNotificationConfiguration(
+          showNotification: true,
+          activityName: 'MainActivy',
+          imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/African_Bush_Elephant.jpg/1200px-African_Bush_Elephant.jpg',
+        ),
+        "https://cdn.jmvstream.com/vod/vod_10807/f/q0yj22rl2jc56df/h/4/playlist.m3u8");
+    _betterPlayerController = BetterPlayerController(
+        BetterPlayerConfiguration(),
+        betterPlayerDataSource: betterPlayerDataSource);
   }
 
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
 
   List<Atv> atvs = [
     Atv(1, "Aula 1", "Aula 1 sobre matemática básica", false),
@@ -104,7 +106,12 @@ class _ExpansionWidState extends State<ExpansionWid> {
                       SizedBox(
                         height: MediaQuery.of(context).size.height * .37,
                         width: MediaQuery.of(context).size.width,
-                       child: PodVideoPlayer(controller: controller),
+                       child: AspectRatio(
+                         aspectRatio: 16 / 9,
+                         child: BetterPlayer(
+                           controller: _betterPlayerController,
+                         ),
+                       ),
                       ),
                       SizedBox(height: 5),
                       Container(
