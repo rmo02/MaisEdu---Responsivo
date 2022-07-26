@@ -15,8 +15,6 @@ class AnotationPage extends StatefulWidget {
 }
 
 class _AnotationPageState extends State<AnotationPage> {
-
-
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -26,152 +24,146 @@ class _AnotationPageState extends State<AnotationPage> {
         backgroundColor: AppStyle.secondColor,
         elevation: 0,
         actions: [
-          IconButton(onPressed: (){}, icon: Icon(Icons.search,
-            size: 25,
-            color: Colors.white,
+          IconButton(
+            onPressed: () {},
+            icon: Icon(
+              Icons.search,
+              size: 25,
+              color: Colors.white,
+            ),
           ),
+          IconButton(
+            onPressed: () {},
+            icon: Icon(
+              Icons.notifications_none_outlined,
+              size: 25,
+              color: Colors.white,
+            ),
           ),
-
-          IconButton(onPressed: (){}, icon: Icon(Icons.notifications_none_outlined,
-            size: 25,
-            color: Colors.white,
-          ),
-          ),
-          IconButton(onPressed: () => Navigator.push(context, PageTransition(
-              child: LoginPage(),
-              type: PageTransitionType.fade,
-              duration: const Duration(milliseconds: 10)
-          )), icon: Icon(Icons.person,
-            size: 25,
-            color: Colors.white,
-          ),
+          IconButton(
+            onPressed: () => Navigator.push(
+                context,
+                PageTransition(
+                    child: LoginPage(),
+                    type: PageTransitionType.fade,
+                    duration: const Duration(milliseconds: 10))),
+            icon: Icon(
+              Icons.person,
+              size: 25,
+              color: Colors.white,
+            ),
           ),
         ],
       ),
       backgroundColor: AppStyle.mainColor,
-      body: LayoutBuilder(
-        builder: (_, constraints) {
-          return Container(
-            width: constraints.maxWidth,
-            height: constraints.maxHeight,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  height: 15,
-                  decoration: BoxDecoration(
-                    color: AppStyle.secondColor,
-                    borderRadius: BorderRadius.only(bottomRight: Radius.circular(30), bottomLeft: Radius.circular(30)),
-                    boxShadow: [
-                      BoxShadow(
-                          color: AppStyle.shadowMainColor,
-                          spreadRadius: 2,
-                          blurRadius: 1,
-                          offset: Offset(0.0, 2.0)
-                      ),
-                    ],
-                  ),
+      body: LayoutBuilder(builder: (_, constraints) {
+        return Container(
+          width: constraints.maxWidth,
+          height: constraints.maxHeight,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                height: 15,
+                decoration: BoxDecoration(
+                  color: AppStyle.secondColor,
+                  borderRadius: BorderRadius.only(
+                      bottomRight: Radius.circular(30),
+                      bottomLeft: Radius.circular(30)),
+                  boxShadow: [
+                    BoxShadow(
+                        color: AppStyle.shadowMainColor,
+                        spreadRadius: 2,
+                        blurRadius: 1,
+                        offset: Offset(0.0, 2.0)),
+                  ],
                 ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 20.0),
-                  child: AutoSizeText(
-                    "Minhas Anotações",
-                    style: GoogleFonts.roboto(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 22,
-                        color: AppStyle.titleColor
-                    ),
-                  ),
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 20.0),
+                child: AutoSizeText(
+                  "Minhas Anotações",
+                  style: GoogleFonts.roboto(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 22,
+                      color: AppStyle.titleColor),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Container(
-                      width: constraints.maxWidth,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(12)
-                      ),
-                      padding: EdgeInsets.only(left: 20.0, top: 20.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          AutoSizeText(
-                            "O triângulo é uma figura 2D com\n 3 lados",
-                            style: GoogleFonts.roboto(
-                                fontSize: 18,
-                                color: Colors.black54
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Container(
+                    width: constraints.maxWidth,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12)),
+                    padding: EdgeInsets.only(left: 20.0, top: 20.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        AutoSizeText(
+                          "O triângulo é uma figura 2D com\n 3 lados",
+                          style: GoogleFonts.roboto(
+                              fontSize: 18, color: Colors.black54),
+                        ),
+                        Row(
+                          children: [
+                            SizedBox(width: constraints.maxWidth * 0.1),
+                            TextButton(
+                              onPressed: () {},
+                              child: Container(
+                                child: Text("Matemática",
+                                    style: GoogleFonts.roboto(
+                                        fontSize: 12,
+                                        color: Color(0xFF4263EB))),
+                              ),
+                              style: TextButton.styleFrom(
+                                  backgroundColor: Colors.white,
+                                  primary: Color(0xFF4263EB)),
                             ),
-                          ),
-                          Row(
-                            children: [
-                              SizedBox(width: constraints.maxWidth * 0.1),
-                              TextButton(
-                                onPressed: (){},
-                                child: Container(
-                                  child: Text("Matemática",
-                                      style: GoogleFonts.roboto(
-                                          fontSize: 12,
-                                          color: Color(0xFF4263EB)
-                                      )
-                                  ),
-                                ),
-                                style: TextButton.styleFrom(
-                                    backgroundColor: Colors.white,
-                                    primary: Color(0xFF4263EB)
-                                ),
+                            TextButton(
+                              onPressed: () {},
+                              child: Container(
+                                child: Text("Trigonometria",
+                                    style: GoogleFonts.roboto(
+                                        fontSize: 12,
+                                        color: Color(0xFF4263EB))),
                               ),
-                              TextButton(
-                                onPressed: (){},
-                                child: Container(
-                                  child: Text("Trigonometria",
-                                      style: GoogleFonts.roboto(
-                                          fontSize: 12,
-                                          color: Color(0xFF4263EB)
-                                      )
-                                  ),
-                                ),
-                                style: TextButton.styleFrom(
-                                    backgroundColor: Colors.white,
-                                    primary: Color(0xFF4263EB)
-                                ),
+                              style: TextButton.styleFrom(
+                                  backgroundColor: Colors.white,
+                                  primary: Color(0xFF4263EB)),
+                            ),
+                            TextButton(
+                              onPressed: () {},
+                              child: Container(
+                                child: Text("Aula 1",
+                                    style: GoogleFonts.roboto(
+                                        fontSize: 12,
+                                        color: Color(0xFF4263EB))),
                               ),
-                              TextButton(
-                                onPressed: (){},
-                                child: Container(
-                                  child: Text("Aula 1",
-                                      style: GoogleFonts.roboto(
-                                          fontSize: 12,
-                                          color: Color(0xFF4263EB)
-                                      )
-                                  ),
-                                ),
-                                style: TextButton.styleFrom(
-                                    backgroundColor: Colors.white,
-                                    primary: Color(0xFF4263EB)
-                                ),
-                              )
-                            ],
-                          )
-                        ],
-                      )
-                  ),
-                )
-              ],
-            ),
-          );
-        }
-      ),
+                              style: TextButton.styleFrom(
+                                  backgroundColor: Colors.white,
+                                  primary: Color(0xFF4263EB)),
+                            )
+                          ],
+                        )
+                      ],
+                    )),
+              )
+            ],
+          ),
+        );
+      }),
       floatingActionButton: FloatingActionButton(
         focusColor: AppStyle.secondColor,
         backgroundColor: AppStyle.secondColor,
         elevation: 2,
-        onPressed: (){
-          Navigator.push(context, PageTransition(
-              child: CreateAnotation(),
-              type:  PageTransitionType.fade,
-              duration: const Duration(milliseconds: 10)
-          )
-          );
+        onPressed: () {
+          Navigator.push(
+              context,
+              PageTransition(
+                  child: CreateAnotation(),
+                  type: PageTransitionType.fade,
+                  duration: const Duration(milliseconds: 10)));
         },
         child: Icon(Icons.add),
       ),

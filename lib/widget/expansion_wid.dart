@@ -1,21 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart';
 import 'package:like_button/like_button.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:resposividade/interfaces/atv.dart';
 import 'package:resposividade/pages/Comentarios.dart';
 import 'package:resposividade/pages/bottomNavPages/anotations_page.dart';
 import 'package:resposividade/quizz/startQuizz.dart';
 import 'package:resposividade/style/app_style.dart';
-import '../interfaces/atv.dart';
-import 'package:pod_player/pod_player.dart';
 import 'package:better_player/better_player.dart';
 
-
 class ExpansionWid extends StatefulWidget {
-
-
-
   const ExpansionWid({Key? key}) : super(key: key);
   @override
   State<ExpansionWid> createState() => _ExpansionWidState();
@@ -32,7 +28,8 @@ class _ExpansionWidState extends State<ExpansionWid> {
         notificationConfiguration: BetterPlayerNotificationConfiguration(
           showNotification: true,
           activityName: 'MainActivy',
-          imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/African_Bush_Elephant.jpg/1200px-African_Bush_Elephant.jpg',
+          imageUrl:
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/African_Bush_Elephant.jpg/1200px-African_Bush_Elephant.jpg',
         ),
         "https://cdn.jmvstream.com/vod/vod_10807/f/q0yj22rl2jc56df/h/4/playlist.m3u8");
     _betterPlayerController = BetterPlayerController(
@@ -40,11 +37,9 @@ class _ExpansionWidState extends State<ExpansionWid> {
         betterPlayerDataSource: betterPlayerDataSource);
   }
 
-
   List<Atv> atvs = [
     Atv(1, "Aula 1", "Aula 1 sobre matemática básica", false),
     Atv(2, "Aula 2", "Aula 2 sobre a trigonometria", false),
-
   ];
 
   final ScrollController _scrollController = ScrollController();
@@ -52,11 +47,10 @@ class _ExpansionWidState extends State<ExpansionWid> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      physics: BouncingScrollPhysics(),
       child: ExpansionPanelList.radio(
         elevation: 1,
         children: atvs.map((atv) {
-            return ExpansionPanelRadio(
+          return ExpansionPanelRadio(
             backgroundColor: AppStyle.mainColor,
             canTapOnHeader: true,
             value: atv.id,
@@ -100,18 +94,19 @@ class _ExpansionWidState extends State<ExpansionWid> {
                                 PageTransition(
                                     child: StartQuizz(),
                                     type: PageTransitionType.fade,
-                                    duration: const Duration(milliseconds: 10)));
+                                    duration:
+                                        const Duration(milliseconds: 10)));
                           },
                           child: Text("Atividade 1")),
                       SizedBox(
                         height: MediaQuery.of(context).size.height * .37,
                         width: MediaQuery.of(context).size.width,
-                       child: AspectRatio(
-                         aspectRatio: 16 / 9,
-                         child: BetterPlayer(
-                           controller: _betterPlayerController,
-                         ),
-                       ),
+                        child: AspectRatio(
+                          aspectRatio: 16 / 9,
+                          child: BetterPlayer(
+                            controller: _betterPlayerController,
+                          ),
+                        ),
                       ),
                       SizedBox(height: 5),
                       Container(
@@ -122,12 +117,12 @@ class _ExpansionWidState extends State<ExpansionWid> {
                             ElevatedButton(
                               onPressed: () {
                                 Navigator.push(
-                                    context, PageTransition(
-                                    child: Comentarios(),
-                                    type: PageTransitionType.fade,
-                                duration: const Duration(milliseconds: 10)
-                                )
-                                );
+                                    context,
+                                    PageTransition(
+                                        child: Comentarios(),
+                                        type: PageTransitionType.fade,
+                                        duration:
+                                            const Duration(milliseconds: 10)));
                               },
                               child: Row(
                                 children: [
@@ -165,7 +160,8 @@ class _ExpansionWidState extends State<ExpansionWid> {
                                     context: context,
                                     builder: (BuildContext) {
                                       return Container(
-                                        width: MediaQuery.of(context).size.width,
+                                        width:
+                                            MediaQuery.of(context).size.width,
                                         decoration: BoxDecoration(
                                             color: Colors.white,
                                             borderRadius: BorderRadius.only(
@@ -174,9 +170,12 @@ class _ExpansionWidState extends State<ExpansionWid> {
                                         child: FractionallySizedBox(
                                           child: Container(
                                             decoration: BoxDecoration(
-                                              color: AppStyle.mainColor,
-                                              borderRadius: BorderRadius.only(topRight: Radius.circular(28), topLeft: Radius.circular(28))
-                                            ),
+                                                color: AppStyle.mainColor,
+                                                borderRadius: BorderRadius.only(
+                                                    topRight:
+                                                        Radius.circular(28),
+                                                    topLeft:
+                                                        Radius.circular(28))),
                                             child: Column(
                                               children: [
                                                 SizedBox(
@@ -197,7 +196,8 @@ class _ExpansionWidState extends State<ExpansionWid> {
                                                     Text(
                                                       "Anotações",
                                                       style: TextStyle(
-                                                        color: Color(0xff868E96),
+                                                        color:
+                                                            Color(0xff868E96),
                                                       ),
                                                     )
                                                   ],
@@ -207,66 +207,95 @@ class _ExpansionWidState extends State<ExpansionWid> {
                                                 ),
                                                 Expanded(
                                                     child: Padding(
-                                                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                                                      child: Container(
-                                                        padding: EdgeInsets.only(left: 10.0),
-                                                        decoration: BoxDecoration(
-                                                            color: Colors.white,
-                                                            borderRadius: BorderRadius.circular(20)
-                                                        ),
-                                                        child: TextField(
-                                                          expands: true,
-                                                          maxLines: null,
-                                                          autofocus: true,
-                                                          decoration: InputDecoration(
-                                                            enabledBorder: InputBorder.none,
-                                                            errorBorder: InputBorder.none,
-                                                            disabledBorder: InputBorder.none,
-                                                            focusedBorder: InputBorder.none,
-                                                            focusColor: AppStyle.titleColor,
-                                                            fillColor: AppStyle.titleColor,
-                                                          ),
-                                                        ),
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
+                                                      horizontal: 20.0),
+                                                  child: Container(
+                                                    padding: EdgeInsets.only(
+                                                        left: 10.0),
+                                                    decoration: BoxDecoration(
+                                                        color: Colors.white,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(20)),
+                                                    child: TextField(
+                                                      expands: true,
+                                                      maxLines: null,
+                                                      autofocus: true,
+                                                      decoration:
+                                                          InputDecoration(
+                                                        enabledBorder:
+                                                            InputBorder.none,
+                                                        errorBorder:
+                                                            InputBorder.none,
+                                                        disabledBorder:
+                                                            InputBorder.none,
+                                                        focusedBorder:
+                                                            InputBorder.none,
+                                                        focusColor:
+                                                            AppStyle.titleColor,
+                                                        fillColor:
+                                                            AppStyle.titleColor,
                                                       ),
-                                                    )
-                                                ),
+                                                    ),
+                                                  ),
+                                                )),
                                                 Container(
                                                   decoration: BoxDecoration(
-                                                      color: AppStyle.mainColor
-                                                  ),
+                                                      color:
+                                                          AppStyle.mainColor),
                                                   child: Row(
-                                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment.end,
                                                     children: [
-                                                      SizedBox(width: MediaQuery.of(context).size.width * .25),
+                                                      SizedBox(
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              .25),
                                                     ],
                                                   ),
                                                 ),
                                                 Container(
                                                   padding: EdgeInsets.only(
-                                                      right: MediaQuery.of(context)
-                                                              .size
-                                                              .width *
-                                                          0.47),
+                                                      right:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.47),
                                                   child: ElevatedButton.icon(
-                                                    style: ElevatedButton.styleFrom(
-                                                      primary: AppStyle.mainColor,
-                                                      shape: RoundedRectangleBorder(
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      primary:
+                                                          AppStyle.mainColor,
+                                                      shape:
+                                                          RoundedRectangleBorder(
                                                         borderRadius:
-                                                            BorderRadius.circular(28),
+                                                            BorderRadius
+                                                                .circular(28),
                                                       ),
                                                     ),
                                                     onPressed: () {
-                                                      Navigator.push(context, PageTransition(
-                                                          child: AnotationPage(),
-                                                      type:  PageTransitionType.fade,
-                                                      duration: const Duration(milliseconds: 10)
-                                                      ),
+                                                      Navigator.push(
+                                                        context,
+                                                        PageTransition(
+                                                            child:
+                                                                AnotationPage(),
+                                                            type:
+                                                                PageTransitionType
+                                                                    .fade,
+                                                            duration:
+                                                                const Duration(
+                                                                    milliseconds:
+                                                                        10)),
                                                       );
                                                     },
                                                     label: Text(
                                                       'Minhas anotações',
                                                       style: GoogleFonts.roboto(
-                                                        color: Color(0xff4263EB),
+                                                        color:
+                                                            Color(0xff4263EB),
                                                       ),
                                                     ),
                                                     icon: Icon(
@@ -275,7 +304,6 @@ class _ExpansionWidState extends State<ExpansionWid> {
                                                     ),
                                                   ),
                                                 ),
-
                                               ],
                                             ),
                                           ),
@@ -309,32 +337,31 @@ class _ExpansionWidState extends State<ExpansionWid> {
                               width: 6,
                             ),
                             ElevatedButton(
-                               style: ElevatedButton.styleFrom(
-                                 primary: AppStyle.mainColor,
-                                 elevation: 1,
-                                 shape: RoundedRectangleBorder(
-                                   borderRadius: BorderRadius.circular(28)
-                                 )
-                               ),
-                                onPressed: () {}, child: Row(
+                                style: ElevatedButton.styleFrom(
+                                    primary: AppStyle.mainColor,
+                                    elevation: 1,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(28))),
+                                onPressed: () {},
+                                child: Row(
                                   children: [
                                     LikeButton(
-                              size: 25,
-                            ),
-                                    Text('Favoritos', style: TextStyle(color: Color(0xff4263EB)),)
+                                      size: 25,
+                                    ),
+                                    Text(
+                                      'Favoritos',
+                                      style:
+                                          TextStyle(color: Color(0xff4263EB)),
+                                    )
                                   ],
-
-                                )
-                            )
-
+                                ))
                           ],
                         ),
                       ),
                       SizedBox(
                         height: 5,
                       ),
-
-
                     ],
                   ),
                 ),
@@ -345,4 +372,7 @@ class _ExpansionWidState extends State<ExpansionWid> {
       ),
     );
   }
+  
+
+  
 }

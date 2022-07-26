@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pod_player/pod_player.dart';
 import 'package:resposividade/pages/bar_item_page.dart';
 import 'package:resposividade/pages/login_page.dart';
 import 'package:resposividade/style/app_style.dart';
