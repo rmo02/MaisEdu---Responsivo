@@ -17,15 +17,14 @@ class ClassesPage extends StatefulWidget {
 }
 
 class _ClassesPageState extends State<ClassesPage> {
-
   var _disciplina = [];
 
-   GetDisciplinas() async {
+  GetDisciplinas() async {
     var url = Uri.parse('http://192.168.6.20:3010/disciplinas');
     var resposta = await http.get(url);
     if (resposta.statusCode == 200) {
       Map<String, dynamic> map = jsonDecode(resposta.body);
-      List<dynamic>data = map["disciplinas"];
+      List<dynamic> data = map["disciplinas"];
       setState(() {
         _disciplina = data;
       });
@@ -35,12 +34,9 @@ class _ClassesPageState extends State<ClassesPage> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery
-        .of(context)
-        .size;
+    var size = MediaQuery.of(context).size;
     return Scaffold(
         appBar: AppBar(
           title: Container(
@@ -70,13 +66,12 @@ class _ClassesPageState extends State<ClassesPage> {
               ),
             ),
             IconButton(
-              onPressed: () =>
-                  Navigator.push(
-                      context,
-                      PageTransition(
-                          child: LoginPage(),
-                          type: PageTransitionType.fade,
-                          duration: const Duration(milliseconds: 10))),
+              onPressed: () => Navigator.push(
+                  context,
+                  PageTransition(
+                      child: LoginPage(),
+                      type: PageTransitionType.fade,
+                      duration: const Duration(milliseconds: 10))),
               icon: Icon(
                 Icons.person,
                 size: 25,
@@ -86,691 +81,777 @@ class _ClassesPageState extends State<ClassesPage> {
           ],
         ),
         backgroundColor: AppStyle.mainColor,
-        body: LayoutBuilder(
-            builder: (_, constraints) {
-              if (constraints.maxWidth < 400) {
-                return Container(
-                  height: constraints.maxHeight,
-                  width: constraints.maxWidth,
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          height: 15,
-                          decoration: BoxDecoration(
-                            color: AppStyle.secondColor,
-                            borderRadius: BorderRadius.only(bottomRight: Radius
-                                .circular(30), bottomLeft: Radius.circular(30)),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: AppStyle.shadowMainColor,
-                                  spreadRadius: 2,
-                                  blurRadius: 1,
-                                  offset: Offset(0.0, 2.0)
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 30.0, left: 10.0),
-                          child: Text(
-                              "Minhas Matérias",
-                              style: GoogleFonts.roboto(
-                                  color: AppStyle.titleColor,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 22
-                              )
-                          ),
-                        ),
-                        SizedBox(height: 10.0,),
-                        Container(
-                          height: 165,
-                          child: Center(
-                            child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                padding: EdgeInsets.only(
-                                    left: MediaQuery
-                                        .of(context)
-                                        .size
-                                        .width * 0.000,
-                                    right: MediaQuery
-                                        .of(context)
-                                        .size
-                                        .width * 0.2),
-                                itemCount: 2,
-                                itemBuilder: (context, index) =>
-                                    Container(
-                                      height: 125,
-                                      width: 170,
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                              8),
-                                          color: Colors.white
-                                      ),
-                                      margin: EdgeInsets.all(5),
-                                      child: ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                            padding: EdgeInsets.all(0.0),
-                                            primary: Colors.white
-                                        ),
-                                        child: Container(
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment
-                                                .start,
+        body: LayoutBuilder(builder: (_, constraints) {
+          if (constraints.maxWidth < 400) {
+            return Container(
+              height: constraints.maxHeight,
+              width: constraints.maxWidth,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: 15,
+                      decoration: BoxDecoration(
+                        color: AppStyle.secondColor,
+                        borderRadius: BorderRadius.only(
+                            bottomRight: Radius.circular(30),
+                            bottomLeft: Radius.circular(30)),
+                        boxShadow: [
+                          BoxShadow(
+                              color: AppStyle.shadowMainColor,
+                              spreadRadius: 2,
+                              blurRadius: 1,
+                              offset: Offset(0.0, 2.0)),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 30.0, left: 10.0),
+                      child: Text("Minhas Matérias",
+                          style: GoogleFonts.roboto(
+                              color: AppStyle.titleColor,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 22)),
+                    ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    Container(
+                      height: 165,
+                      child: Center(
+                        child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            padding: EdgeInsets.only(
+                                left: MediaQuery.of(context).size.width * 0.000,
+                                right: MediaQuery.of(context).size.width * 0.2),
+                            itemCount: 2,
+                            itemBuilder: (context, index) => Container(
+                                  height: 125,
+                                  width: 170,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      color: Colors.white),
+                                  margin: EdgeInsets.all(5),
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        padding: EdgeInsets.all(0.0),
+                                        primary: Colors.white),
+                                    child: Container(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            width: 300,
+                                            height: 100,
+                                            decoration: BoxDecoration(
+                                              gradient: LinearGradient(colors: [
+                                                AppStyle.grientCard,
+                                                AppStyle.gradientCart2
+                                              ]),
+                                              borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(4),
+                                                  topRight: Radius.circular(4)),
+                                            ),
+                                            child: Image.asset(
+                                              'assets/images/calculadora.png',
+                                            ),
+                                          ),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
                                               Container(
-                                                width: 300,
-                                                height: 100,
-                                                decoration: BoxDecoration(
-                                                  gradient: LinearGradient(
-                                                      colors: [
-                                                        AppStyle.grientCard,
-                                                        AppStyle.gradientCart2
-                                                      ]),
-                                                  borderRadius: BorderRadius
-                                                      .only(
-                                                      topLeft: Radius.circular(
-                                                          4),
-                                                      topRight: Radius.circular(
-                                                          4)),
-                                                ),
-                                                child: Image.asset(
-                                                  'assets/images/calculadora.png',),
+                                                margin:
+                                                    EdgeInsets.only(top: 10.0),
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 10.0),
+                                                child: Text("Matemática",
+                                                    style: GoogleFonts.roboto(
+                                                        color: Colors.black54,
+                                                        fontWeight:
+                                                            FontWeight.bold)),
                                               ),
-                                              Column(
-                                                crossAxisAlignment: CrossAxisAlignment
-                                                    .start,
-                                                children: [
-                                                  Container(
-                                                    margin: EdgeInsets.only(
-                                                        top: 10.0),
-                                                    padding: EdgeInsets
-                                                        .symmetric(
-                                                        horizontal: 10.0),
-                                                    child: Text(
-                                                        "Matemática",
-                                                        style: GoogleFonts
-                                                            .roboto(
-                                                            color: Colors
-                                                                .black54,
-                                                            fontWeight: FontWeight
-                                                                .bold
-                                                        )
-                                                    ),
-                                                  ),
-                                                  SizedBox(height: 5.0,),
-                                                  Container(
-                                                    padding: EdgeInsets
-                                                        .symmetric(
-                                                        horizontal: 12.0),
-                                                    child: Text(
-                                                        "19 aulas",
-                                                        style: GoogleFonts
-                                                            .roboto(
-                                                            color: Colors
-                                                                .black26,
-                                                            fontSize: 11
-                                                        )
-                                                    ),
-                                                  ),
-                                                ],
+                                              SizedBox(
+                                                height: 5.0,
+                                              ),
+                                              Container(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 12.0),
+                                                child: Text("19 aulas",
+                                                    style: GoogleFonts.roboto(
+                                                        color: Colors.black26,
+                                                        fontSize: 11)),
                                               ),
                                             ],
                                           ),
-                                        ),
-                                        onPressed: () {
-                                          Navigator.push(
-                                              context, PageTransition(
+                                        ],
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          PageTransition(
                                               child: ListaAtividades(),
                                               type: PageTransitionType.fade,
                                               duration: const Duration(
-                                                  milliseconds: 10)
+                                                  milliseconds: 10)));
+                                    },
+                                  ),
+                                )),
+                      ),
+                    ),
+                    Container(
+                      height: 165,
+                      child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          padding: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width * 0.000,
+                              right: MediaQuery.of(context).size.width * 0.000),
+                          itemCount: 2,
+                          itemBuilder: (context, index) => Container(
+                                height: 125,
+                                width: 170,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: Colors.white),
+                                margin: EdgeInsets.all(5),
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      padding: EdgeInsets.all(0.0),
+                                      primary: Colors.white),
+                                  child: Container(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          width: 300,
+                                          height: 100,
+                                          decoration: BoxDecoration(
+                                            gradient: LinearGradient(colors: [
+                                              Color(0xFFACE8E8),
+                                              Color(0xFF18A1A1)
+                                            ]),
+                                            borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(4),
+                                                topRight: Radius.circular(4)),
+                                          ),
+                                          child: Image.asset(
+                                            'assets/images/geografia.png',
+                                          ),
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              margin:
+                                                  EdgeInsets.only(top: 10.0),
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 10.0),
+                                              child: Text("Geografia",
+                                                  style: GoogleFonts.roboto(
+                                                      color: Colors.black54,
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                            ),
+                                            SizedBox(
+                                              height: 5.0,
+                                            ),
+                                            Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 12.0),
+                                              child: Text("19 aulas",
+                                                  style: GoogleFonts.roboto(
+                                                      color: Colors.black26,
+                                                      fontSize: 11)),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        PageTransition(
+                                            child: ListaAtividades(),
+                                            type: PageTransitionType.fade,
+                                            duration: const Duration(
+                                                milliseconds: 10)));
+                                  },
+                                ),
+                              )),
+                    ),
+                    Container(
+                      height: 165,
+                      child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          padding: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width * 0.000,
+                              right: MediaQuery.of(context).size.width * 0.000),
+                          itemCount: 2,
+                          itemBuilder: (context, index) => Container(
+                                height: 125,
+                                width: 170,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: Colors.white),
+                                margin: EdgeInsets.all(5),
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      padding: EdgeInsets.all(0.0),
+                                      primary: Colors.white),
+                                  child: Container(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          width: 300,
+                                          height: 100,
+                                          decoration: BoxDecoration(
+                                            gradient: LinearGradient(colors: [
+                                              Color(0xFFFD9939),
+                                              Color(0xFFFDB368)
+                                            ]),
+                                            borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(4),
+                                                topRight: Radius.circular(4)),
+                                          ),
+                                          child: Image.asset(
+                                            'assets/images/ciencias.png',
+                                          ),
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              margin:
+                                                  EdgeInsets.only(top: 10.0),
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 10.0),
+                                              child: Text("Ciências",
+                                                  style: GoogleFonts.roboto(
+                                                      color: Colors.black54,
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                            ),
+                                            SizedBox(
+                                              height: 5.0,
+                                            ),
+                                            Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 12.0),
+                                              child: Text("19 aulas",
+                                                  style: GoogleFonts.roboto(
+                                                      color: Colors.black26,
+                                                      fontSize: 11)),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        PageTransition(
+                                            child: ListaAtividades(),
+                                            type: PageTransitionType.fade,
+                                            duration: const Duration(
+                                                milliseconds: 10)));
+                                  },
+                                ),
+                              )),
+                    ),
+                    Container(
+                      height: 165,
+                      child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          padding: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width * 0.000,
+                              right: MediaQuery.of(context).size.width * 0.000),
+                          itemCount: 2,
+                          itemBuilder: (context, index) => Container(
+                                height: 125,
+                                width: 170,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: Colors.white),
+                                margin: EdgeInsets.all(5),
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      padding: EdgeInsets.all(0.0),
+                                      primary: Colors.white),
+                                  child: Container(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          width: 300,
+                                          height: 100,
+                                          decoration: BoxDecoration(
+                                            gradient: LinearGradient(colors: [
+                                              Color(0xFFDBD53B),
+                                              Color(0xFFF4FFB5)
+                                            ]),
+                                            borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(4),
+                                                topRight: Radius.circular(4)),
+                                          ),
+                                          child: Image.asset(
+                                            'assets/images/artes.png',
+                                          ),
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              margin:
+                                                  EdgeInsets.only(top: 10.0),
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 10.0),
+                                              child: Text("Artes",
+                                                  style: GoogleFonts.roboto(
+                                                      color: Colors.black54,
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                            ),
+                                            SizedBox(
+                                              height: 5.0,
+                                            ),
+                                            Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 12.0),
+                                              child: Text("19 aulas",
+                                                  style: GoogleFonts.roboto(
+                                                      color: Colors.black26,
+                                                      fontSize: 11)),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        PageTransition(
+                                            child: ListaAtividades(),
+                                            type: PageTransitionType.fade,
+                                            duration: const Duration(
+                                                milliseconds: 10)));
+                                  },
+                                ),
+                              )),
+                    ),
+                    Container(
+                      height: 165,
+                      child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          padding: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width * 0.000,
+                              right: MediaQuery.of(context).size.width * 0.000),
+                          itemCount: 2,
+                          itemBuilder: (context, index) => Container(
+                                height: 125,
+                                width: 170,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: Colors.white),
+                                margin: EdgeInsets.all(5),
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      padding: EdgeInsets.all(0.0),
+                                      primary: Colors.white),
+                                  child: Container(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          width: 300,
+                                          height: 100,
+                                          decoration: BoxDecoration(
+                                            gradient: LinearGradient(colors: [
+                                              Color(0xFFD2CFFA),
+                                              Color(0xFF615AD0)
+                                            ]),
+                                            borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(4),
+                                                topRight: Radius.circular(4)),
+                                          ),
+                                          child: Image.asset(
+                                            'assets/images/portugues.png',
+                                          ),
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              margin:
+                                                  EdgeInsets.only(top: 10.0),
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 10.0),
+                                              child: Text("Português",
+                                                  style: GoogleFonts.roboto(
+                                                      color: Colors.black54,
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                            ),
+                                            SizedBox(
+                                              height: 5.0,
+                                            ),
+                                            Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 12.0),
+                                              child: Text("19 aulas",
+                                                  style: GoogleFonts.roboto(
+                                                      color: Colors.black26,
+                                                      fontSize: 11)),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        PageTransition(
+                                            child: ListaAtividades(),
+                                            type: PageTransitionType.fade,
+                                            duration: const Duration(
+                                                milliseconds: 10)));
+                                  },
+                                ),
+                              )),
+                    ),
+                    Container(
+                      height: 165,
+                      child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          padding: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width * 0.000,
+                              right: MediaQuery.of(context).size.width * 0.000),
+                          itemCount: 2,
+                          itemBuilder: (context, index) => Container(
+                                height: 125,
+                                width: 170,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: Colors.white),
+                                margin: EdgeInsets.all(5),
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      padding: EdgeInsets.all(0.0),
+                                      primary: Colors.white),
+                                  child: Container(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          width: 300,
+                                          height: 100,
+                                          decoration: BoxDecoration(
+                                            gradient: LinearGradient(colors: [
+                                              Color(0xFFFC79BA),
+                                              Color(0xFFFFB1FF)
+                                            ]),
+                                            borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(4),
+                                                topRight: Radius.circular(4)),
+                                          ),
+                                          child: Image.asset(
+                                            'assets/images/historia.png',
+                                          ),
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              margin:
+                                                  EdgeInsets.only(top: 10.0),
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 10.0),
+                                              child: Text("História",
+                                                  style: GoogleFonts.roboto(
+                                                      color: Colors.black54,
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                            ),
+                                            SizedBox(
+                                              height: 5.0,
+                                            ),
+                                            Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 12.0),
+                                              child: Text("19 aulas",
+                                                  style: GoogleFonts.roboto(
+                                                      color: Colors.black26,
+                                                      fontSize: 11)),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        PageTransition(
+                                            child: ListaAtividades(),
+                                            type: PageTransitionType.fade,
+                                            duration: const Duration(
+                                                milliseconds: 10)));
+                                  },
+                                ),
+                              )),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          } else {
+            return FutureBuilder<dynamic>(
+              future: GetDisciplinas(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return ListView.builder(
+                      itemCount: snapshot.data.length,
+                      itemBuilder: (context, index) {
+                        var disciplinas = snapshot.data![index];
+                        return Container(
+                          width: 170,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: Colors.transparent),
+                          margin: EdgeInsets.all(5),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 100),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                disciplinas["name"] == "Matemática"
+                                    ? Column(
+                                        children: [
+                                          Container(
+                                            width: 300,
+                                            height: 100,
+                                            decoration: BoxDecoration(
+                                                gradient: LinearGradient(
+                                                    colors: [
+                                                      AppStyle.grientCard,
+                                                      AppStyle.gradientCart2
+                                                    ]),
+                                                borderRadius:
+                                                    BorderRadius.circular(8)),
+                                            child: Container(
+                                                child: Image.asset(
+                                              'assets/images/calculadora.png',
+                                            )),
+                                          ),
+                                          Container(
+                                            child: Text('Matemática'),
                                           )
-                                          );
-                                        },
-                                      ),
-                                    )
-                            ),
-                          ),
-                        ),
-                        Container(
-                          height: 165,
-                          child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              padding: EdgeInsets.only(
-                                  left: MediaQuery
-                                      .of(context)
-                                      .size
-                                      .width * 0.000,
-                                  right: MediaQuery
-                                      .of(context)
-                                      .size
-                                      .width * 0.000),
-                              itemCount: 2,
-                              itemBuilder: (context, index) =>
-                                  Container(
-                                    height: 125,
-                                    width: 170,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(8),
-                                        color: Colors.white
-                                    ),
-                                    margin: EdgeInsets.all(5),
-                                    child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                          padding: EdgeInsets.all(0.0),
-                                          primary: Colors.white
-                                      ),
-                                      child: Container(
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment
-                                              .start,
-                                          children: [
-                                            Container(
-                                              width: 300,
-                                              height: 100,
-                                              decoration: BoxDecoration(
-                                                gradient: LinearGradient(
-                                                    colors: [
-                                                      Color(0xFFACE8E8),
-                                                      Color(0xFF18A1A1)
-                                                    ]),
-                                                borderRadius: BorderRadius.only(
-                                                    topLeft: Radius.circular(4),
-                                                    topRight: Radius.circular(
-                                                        4)),
-                                              ),
-                                              child: Image.asset(
-                                                'assets/images/geografia.png',),
-                                            ),
-                                            Column(
-                                              crossAxisAlignment: CrossAxisAlignment
-                                                  .start,
-                                              children: [
-                                                Container(
-                                                  margin: EdgeInsets.only(
-                                                      top: 10.0),
-                                                  padding: EdgeInsets.symmetric(
-                                                      horizontal: 10.0),
-                                                  child: Text(
-                                                      "Geografia",
-                                                      style: GoogleFonts.roboto(
-                                                          color: Colors.black54,
-                                                          fontWeight: FontWeight
-                                                              .bold
-                                                      )
-                                                  ),
-                                                ),
-                                                SizedBox(height: 5.0,),
-                                                Container(
-                                                  padding: EdgeInsets.symmetric(
-                                                      horizontal: 12.0),
-                                                  child: Text(
-                                                      "19 aulas",
-                                                      style: GoogleFonts.roboto(
-                                                          color: Colors.black26,
-                                                          fontSize: 11
-                                                      )
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      onPressed: () {
-                                        Navigator.push(context, PageTransition(
-                                            child: ListaAtividades(),
-                                            type: PageTransitionType.fade,
-                                            duration: const Duration(
-                                                milliseconds: 10)
-                                        )
-                                        );
-                                      },
-                                    ),
-                                  )
-                          ),
-                        ),
-                        Container(
-                          height: 165,
-                          child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              padding: EdgeInsets.only(
-                                  left: MediaQuery
-                                      .of(context)
-                                      .size
-                                      .width * 0.000,
-                                  right: MediaQuery
-                                      .of(context)
-                                      .size
-                                      .width * 0.000),
-                              itemCount: 2,
-                              itemBuilder: (context, index) =>
-                                  Container(
-                                    height: 125,
-                                    width: 170,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(8),
-                                        color: Colors.white
-                                    ),
-                                    margin: EdgeInsets.all(5),
-                                    child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                          padding: EdgeInsets.all(0.0),
-                                          primary: Colors.white
-                                      ),
-                                      child: Container(
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment
-                                              .start,
-                                          children: [
-                                            Container(
-                                              width: 300,
-                                              height: 100,
-                                              decoration: BoxDecoration(
-                                                gradient: LinearGradient(
-                                                    colors: [
-                                                      Color(0xFFFD9939),
-                                                      Color(0xFFFDB368)
-                                                    ]),
-                                                borderRadius: BorderRadius.only(
-                                                    topLeft: Radius.circular(4),
-                                                    topRight: Radius.circular(
-                                                        4)),
-                                              ),
-                                              child: Image.asset(
-                                                'assets/images/ciencias.png',),
-                                            ),
-                                            Column(
-                                              crossAxisAlignment: CrossAxisAlignment
-                                                  .start,
-                                              children: [
-                                                Container(
-                                                  margin: EdgeInsets.only(
-                                                      top: 10.0),
-                                                  padding: EdgeInsets.symmetric(
-                                                      horizontal: 10.0),
-                                                  child: Text(
-                                                      "Ciências",
-                                                      style: GoogleFonts.roboto(
-                                                          color: Colors.black54,
-                                                          fontWeight: FontWeight
-                                                              .bold
-                                                      )
-                                                  ),
-                                                ),
-                                                SizedBox(height: 5.0,),
-                                                Container(
-                                                  padding: EdgeInsets.symmetric(
-                                                      horizontal: 12.0),
-                                                  child: Text(
-                                                      "19 aulas",
-                                                      style: GoogleFonts.roboto(
-                                                          color: Colors.black26,
-                                                          fontSize: 11
-                                                      )
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      onPressed: () {
-                                        Navigator.push(context, PageTransition(
-                                            child: ListaAtividades(),
-                                            type: PageTransitionType.fade,
-                                            duration: const Duration(
-                                                milliseconds: 10)
-                                        )
-                                        );
-                                      },
-                                    ),
-                                  )
-                          ),
-                        ),
-                        Container(
-                          height: 165,
-                          child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              padding: EdgeInsets.only(
-                                  left: MediaQuery
-                                      .of(context)
-                                      .size
-                                      .width * 0.000,
-                                  right: MediaQuery
-                                      .of(context)
-                                      .size
-                                      .width * 0.000),
-                              itemCount: 2,
-                              itemBuilder: (context, index) =>
-                                  Container(
-                                    height: 125,
-                                    width: 170,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(8),
-                                        color: Colors.white
-                                    ),
-                                    margin: EdgeInsets.all(5),
-                                    child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                          padding: EdgeInsets.all(0.0),
-                                          primary: Colors.white
-                                      ),
-                                      child: Container(
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment
-                                              .start,
-                                          children: [
-                                            Container(
-                                              width: 300,
-                                              height: 100,
-                                              decoration: BoxDecoration(
-                                                gradient: LinearGradient(
-                                                    colors: [
-                                                      Color(0xFFDBD53B),
-                                                      Color(0xFFF4FFB5)
-                                                    ]),
-                                                borderRadius: BorderRadius.only(
-                                                    topLeft: Radius.circular(4),
-                                                    topRight: Radius.circular(
-                                                        4)),
-                                              ),
-                                              child: Image.asset(
-                                                'assets/images/artes.png',),
-                                            ),
-                                            Column(
-                                              crossAxisAlignment: CrossAxisAlignment
-                                                  .start,
-                                              children: [
-                                                Container(
-                                                  margin: EdgeInsets.only(
-                                                      top: 10.0),
-                                                  padding: EdgeInsets.symmetric(
-                                                      horizontal: 10.0),
-                                                  child: Text(
-                                                      "Artes",
-                                                      style: GoogleFonts.roboto(
-                                                          color: Colors.black54,
-                                                          fontWeight: FontWeight
-                                                              .bold
-                                                      )
-                                                  ),
-                                                ),
-                                                SizedBox(height: 5.0,),
-                                                Container(
-                                                  padding: EdgeInsets.symmetric(
-                                                      horizontal: 12.0),
-                                                  child: Text(
-                                                      "19 aulas",
-                                                      style: GoogleFonts.roboto(
-                                                          color: Colors.black26,
-                                                          fontSize: 11
-                                                      )
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      onPressed: () {
-                                        Navigator.push(context, PageTransition(
-                                            child: ListaAtividades(),
-                                            type: PageTransitionType.fade,
-                                            duration: const Duration(
-                                                milliseconds: 10)
-                                        )
-                                        );
-                                      },
-                                    ),
-                                  )
-                          ),
-                        ),
-                        Container(
-                          height: 165,
-                          child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              padding: EdgeInsets.only(
-                                  left: MediaQuery
-                                      .of(context)
-                                      .size
-                                      .width * 0.000,
-                                  right: MediaQuery
-                                      .of(context)
-                                      .size
-                                      .width * 0.000),
-                              itemCount: 2,
-                              itemBuilder: (context, index) =>
-                                  Container(
-                                    height: 125,
-                                    width: 170,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(8),
-                                        color: Colors.white
-                                    ),
-                                    margin: EdgeInsets.all(5),
-                                    child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                          padding: EdgeInsets.all(0.0),
-                                          primary: Colors.white
-                                      ),
-                                      child: Container(
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment
-                                              .start,
-                                          children: [
-                                            Container(
-                                              width: 300,
-                                              height: 100,
-                                              decoration: BoxDecoration(
-                                                gradient: LinearGradient(
-                                                    colors: [
-                                                      Color(0xFFD2CFFA),
-                                                      Color(0xFF615AD0)
-                                                    ]),
-                                                borderRadius: BorderRadius.only(
-                                                    topLeft: Radius.circular(4),
-                                                    topRight: Radius.circular(
-                                                        4)),
-                                              ),
-                                              child: Image.asset(
-                                                'assets/images/portugues.png',),
-                                            ),
-                                            Column(
-                                              crossAxisAlignment: CrossAxisAlignment
-                                                  .start,
-                                              children: [
-                                                Container(
-                                                  margin: EdgeInsets.only(
-                                                      top: 10.0),
-                                                  padding: EdgeInsets.symmetric(
-                                                      horizontal: 10.0),
-                                                  child: Text(
-                                                      "Português",
-                                                      style: GoogleFonts.roboto(
-                                                          color: Colors.black54,
-                                                          fontWeight: FontWeight
-                                                              .bold
-                                                      )
-                                                  ),
-                                                ),
-                                                SizedBox(height: 5.0,),
-                                                Container(
-                                                  padding: EdgeInsets.symmetric(
-                                                      horizontal: 12.0),
-                                                  child: Text(
-                                                      "19 aulas",
-                                                      style: GoogleFonts.roboto(
-                                                          color: Colors.black26,
-                                                          fontSize: 11
-                                                      )
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      onPressed: () {
-                                        Navigator.push(context, PageTransition(
-                                            child: ListaAtividades(),
-                                            type: PageTransitionType.fade,
-                                            duration: const Duration(
-                                                milliseconds: 10)
-                                        )
-                                        );
-                                      },
-                                    ),
-                                  )
-                          ),
-                        ),
-                        Container(
-                          height: 165,
-                          child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              padding: EdgeInsets.only(
-                                  left: MediaQuery
-                                      .of(context)
-                                      .size
-                                      .width * 0.000,
-                                  right: MediaQuery
-                                      .of(context)
-                                      .size
-                                      .width * 0.000),
-                              itemCount: 2,
-                              itemBuilder: (context, index) =>
-                                  Container(
-                                    height: 125,
-                                    width: 170,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(8),
-                                        color: Colors.white
-                                    ),
-                                    margin: EdgeInsets.all(5),
-                                    child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                          padding: EdgeInsets.all(0.0),
-                                          primary: Colors.white
-                                      ),
-                                      child: Container(
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment
-                                              .start,
-                                          children: [
-                                            Container(
-                                              width: 300,
-                                              height: 100,
-                                              decoration: BoxDecoration(
+                                        ],
+                                      )
+                                    : disciplinas["name"] == "História"
+                                        ? Container(
+                                            width: 300,
+                                            height: 100,
+                                            decoration: BoxDecoration(
                                                 gradient: LinearGradient(
                                                     colors: [
                                                       Color(0xFFFC79BA),
                                                       Color(0xFFFFB1FF)
                                                     ]),
-                                                borderRadius: BorderRadius.only(
-                                                    topLeft: Radius.circular(4),
-                                                    topRight: Radius.circular(
-                                                        4)),
-                                              ),
-                                              child: Image.asset(
-                                                'assets/images/historia.png',),
+                                                borderRadius:
+                                                    BorderRadius.circular(8)),
+                                            child: Image.asset(
+                                              'assets/images/historia.png',
                                             ),
-                                            Column(
-                                              crossAxisAlignment: CrossAxisAlignment
-                                                  .start,
-                                              children: [
-                                                Container(
-                                                  margin: EdgeInsets.only(
-                                                      top: 10.0),
-                                                  padding: EdgeInsets.symmetric(
-                                                      horizontal: 10.0),
-                                                  child: Text(
-                                                      "História",
-                                                      style: GoogleFonts.roboto(
-                                                          color: Colors.black54,
-                                                          fontWeight: FontWeight
-                                                              .bold
-                                                      )
-                                                  ),
+                                          )
+                                        : disciplinas["name"] == "Artes"
+                                            ? Container(
+                                                width: 300,
+                                                height: 100,
+                                                decoration: BoxDecoration(
+                                                    gradient: LinearGradient(
+                                                        colors: [
+                                                          Color(0xFFDBD53B),
+                                                          Color(0xFFF4FFB5)
+                                                        ]),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8)),
+                                                child: Image.asset(
+                                                  'assets/images/artes.png',
                                                 ),
-                                                SizedBox(height: 5.0,),
-                                                Container(
-                                                  padding: EdgeInsets.symmetric(
-                                                      horizontal: 12.0),
-                                                  child: Text(
-                                                      "19 aulas",
-                                                      style: GoogleFonts.roboto(
-                                                          color: Colors.black26,
-                                                          fontSize: 11
+                                              )
+                                            : disciplinas["name"] == "Ciências"
+                                                ? Container(
+                                                    width: 300,
+                                                    height: 100,
+                                                    decoration: BoxDecoration(
+                                                        gradient:
+                                                            LinearGradient(
+                                                                colors: [
+                                                              Color(0xFFFD9939),
+                                                              Color(0xFFFDB368)
+                                                            ]),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8)),
+                                                    child: Image.asset(
+                                                      'assets/images/ciencias.png',
+                                                    ),
+                                                  )
+                                                : disciplinas["name"] ==
+                                                        "Geografia"
+                                                    ? Container(
+                                                        width: 300,
+                                                        height: 100,
+                                                        decoration: BoxDecoration(
+                                                            gradient:
+                                                                LinearGradient(
+                                                                    colors: [
+                                                                  Color(
+                                                                      0xFFACE8E8),
+                                                                  Color(
+                                                                      0xFF18A1A1)
+                                                                ]),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        8)),
+                                                        child: Image.asset(
+                                                          'assets/images/geografia.png',
+                                                        ),
                                                       )
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      onPressed: () {
-                                        Navigator.push(context, PageTransition(
-                                            child: ListaAtividades(),
-                                            type: PageTransitionType.fade,
-                                            duration: const Duration(
-                                                milliseconds: 10)
-                                        )
-                                        );
-                                      },
-                                    ),
-                                  )
+                                                    : disciplinas["name"] ==
+                                                            "Português"
+                                                        ? Container(
+                                                            width: 300,
+                                                            height: 100,
+                                                            decoration: BoxDecoration(
+                                                                gradient:
+                                                                    LinearGradient(
+                                                                        colors: [
+                                                                      Color(
+                                                                          0xFFD2CFFA),
+                                                                      Color(
+                                                                          0xFF615AD0)
+                                                                    ]),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8)),
+                                                            child: Image.asset(
+                                                              'assets/images/portugues.png',
+                                                            ),
+                                                          )
+                                                        : disciplinas["name"] ==
+                                                                "Química"
+                                                            ? Container(
+                                                                width: 300,
+                                                                height: 100,
+                                                                decoration: BoxDecoration(
+                                                                    gradient:
+                                                                        LinearGradient(
+                                                                            colors: [
+                                                                          Color(
+                                                                              0xff005B97),
+                                                                          Color(
+                                                                              0xFFF76C1FF)
+                                                                        ]),
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            8)),
+                                                                child:
+                                                                    Image.asset(
+                                                                  'assets/images/Quimica.png',
+                                                                ),
+                                                              )
+                                                            : disciplinas[
+                                                                        "name"] ==
+                                                                    "Ed. Física"
+                                                                ? Container(
+                                                                    width: 300,
+                                                                    height: 100,
+                                                                    decoration: BoxDecoration(
+                                                                        gradient:
+                                                                            LinearGradient(
+                                                                                colors: [
+                                                                              Color(0xFFEA8028),
+                                                                              Color(0xFFFFDFAB)
+                                                                            ]),
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(8)),
+                                                                    child: Image
+                                                                        .asset(
+                                                                      'assets/images/EDF.png',
+                                                                    ),
+                                                                  )
+                                                                : disciplinas[
+                                                                            "name"] ==
+                                                                        "Inglês"
+                                                                    ? Container(
+                                                                        width:
+                                                                            300,
+                                                                        height:
+                                                                            100,
+                                                                        decoration: BoxDecoration(
+                                                                            gradient:
+                                                                                LinearGradient(colors: [
+                                                                              Color(0xFF37820B),
+                                                                              Color(0xFF8DAF72)
+                                                                            ]),
+                                                                            borderRadius:
+                                                                                BorderRadius.circular(8)),
+                                                                        child: Image
+                                                                            .asset(
+                                                                          'assets/images/Ingles.png',
+                                                                        ),
+                                                                      )
+                                                                    : disciplinas["name"] ==
+                                                                            "Física"
+                                                                        ? Container(
+                                                                            width:
+                                                                                300,
+                                                                            height:
+                                                                                100,
+                                                                            decoration: BoxDecoration(
+                                                                                gradient: LinearGradient(colors: [
+                                                                                  Color(0xFFD84A7D),
+                                                                                  Color(0xFFFFA9FF)
+                                                                                ]),
+                                                                                borderRadius: BorderRadius.circular(8)),
+                                                                            child:
+                                                                                Image.asset(
+                                                                              'assets/images/Fisica.png',
+                                                                            ),
+                                                                          )
+                                                                        : Container()
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              } else {
-                return FutureBuilder<dynamic>(
-                  future: GetDisciplinas(),
-                  builder: (context, snapshot){
-                    if(snapshot.hasData){
-                      return ListView.builder(
-                          itemCount: snapshot.data.length,
-                          itemBuilder: (context, index){
-                            var usuario = snapshot.data![index];
-                            return Text('${usuario["name"]}');
-                          });
-                    }
-                    return Center(
-                        child: CircularProgressIndicator());
-                  },
-                );
-
-                            }
-            }
-        )
-    );
-  }
-
-
-  Widget _createGifTable(BuildContext context, AsyncSnapshot snapshot){
-    return ListView.builder(
-        padding: EdgeInsets.all(10.0),
-        itemCount: _disciplina.length,
-        itemBuilder: (context, index){
-            return Container(
-              child: Text('AAAA')
-
-
-
+                        );
+                      });
+                }
+                return Center(child: CircularProgressIndicator());
+              },
             );
-
-        }
-    );
+          }
+        }));
   }
-
 }
-
-
-
-
-
