@@ -79,6 +79,7 @@ dependencies:
   shared_preferences: ^2.0.15
   better_player: ^0.0.83
   rounded_expansion_tile: ^0.0.13
+  expansion_tile_card: ^2.0.0
 
 
 

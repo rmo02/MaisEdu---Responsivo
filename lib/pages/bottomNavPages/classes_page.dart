@@ -5,6 +5,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:resposividade/pages/lista_atividades.dart';
 import 'package:resposividade/pages/login_page.dart';
 import 'package:http/http.dart' as http;
+import 'package:resposividade/widget/aulas.dart';
 import '../../style/app_style.dart';
 import 'dart:convert';
 import 'dart:async';
@@ -25,9 +26,7 @@ class _ClassesPageState extends State<ClassesPage> {
     if (resposta.statusCode == 200) {
       Map<String, dynamic> map = jsonDecode(resposta.body);
       List<dynamic> data = map["disciplinas"];
-      setState(() {
         _disciplina = data;
-      });
       return data;
     } else {
       throw Exception('Nao foi possivel carregar usuários');
@@ -644,103 +643,123 @@ class _ClassesPageState extends State<ClassesPage> {
                                 disciplinas["name"] == "Matemática"
                                     ? Column(
                                         children: [
-                                          Container(
-                                            width: 300,
-                                            height: 100,
-                                            decoration: BoxDecoration(
-                                                gradient: LinearGradient(
-                                                    colors: [
-                                                      AppStyle.grientCard,
-                                                      AppStyle.gradientCart2
-                                                    ]),
-                                                borderRadius:
-                                                    BorderRadius.circular(8)),
+                                          InkWell(
+                                            onTap: (){
+                                              Navigator.push(context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) => Aulas()
+                                                  ));
+                                            },
                                             child: Container(
-                                                child: Image.asset(
-                                              'assets/images/calculadora.png',
-                                            )),
+                                              width: 300,
+                                              height: 100,
+                                              decoration: BoxDecoration(
+                                                  gradient: LinearGradient(
+                                                      colors: [
+                                                        AppStyle.grientCard,
+                                                        AppStyle.gradientCart2
+                                                      ]),
+                                                  borderRadius:
+                                                      BorderRadius.circular(8)),
+                                              child: Container(
+                                                  child: Image.asset(
+                                                'assets/images/calculadora.png',
+                                              )),
+                                            ),
                                           ),
                                           Container(
-                                            child: Text('Matemática'),
+                                            child: Text('Matemática', style: GoogleFonts.roboto(
+                                                color: Colors.black54,
+                                                fontWeight:
+                                                FontWeight.bold),),
                                           )
                                         ],
                                       )
                                     : disciplinas["name"] == "História"
-                                        ? Container(
-                                            width: 300,
-                                            height: 100,
-                                            decoration: BoxDecoration(
-                                                gradient: LinearGradient(
-                                                    colors: [
-                                                      Color(0xFFFC79BA),
-                                                      Color(0xFFFFB1FF)
-                                                    ]),
-                                                borderRadius:
-                                                    BorderRadius.circular(8)),
-                                            child: Image.asset(
-                                              'assets/images/historia.png',
-                                            ),
-                                          )
-                                        : disciplinas["name"] == "Artes"
-                                            ? Container(
+                                        ? Column(
+                                          children: [
+                                            Container(
                                                 width: 300,
                                                 height: 100,
                                                 decoration: BoxDecoration(
                                                     gradient: LinearGradient(
                                                         colors: [
-                                                          Color(0xFFDBD53B),
-                                                          Color(0xFFF4FFB5)
+                                                          Color(0xFFFC79BA),
+                                                          Color(0xFFFFB1FF)
                                                         ]),
                                                     borderRadius:
-                                                        BorderRadius.circular(
-                                                            8)),
+                                                        BorderRadius.circular(8)),
                                                 child: Image.asset(
-                                                  'assets/images/artes.png',
+                                                  'assets/images/historia.png',
                                                 ),
-                                              )
-                                            : disciplinas["name"] == "Ciências"
-                                                ? Container(
+                                              ),
+                                            Container(
+                                              child: Text('História', style: GoogleFonts.roboto(
+                                                  color: Colors.black54,
+                                                  fontWeight:
+                                                  FontWeight.bold)),
+                                            )
+                                          ],
+                                        )
+                                        : disciplinas["name"] == "Artes"
+                                            ? Column(
+                                              children: [
+                                                Container(
                                                     width: 300,
                                                     height: 100,
                                                     decoration: BoxDecoration(
-                                                        gradient:
-                                                            LinearGradient(
-                                                                colors: [
-                                                              Color(0xFFFD9939),
-                                                              Color(0xFFFDB368)
+                                                        gradient: LinearGradient(
+                                                            colors: [
+                                                              Color(0xFFDBD53B),
+                                                              Color(0xFFF4FFB5)
                                                             ]),
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(8)),
+                                                            BorderRadius.circular(
+                                                                8)),
                                                     child: Image.asset(
-                                                      'assets/images/ciencias.png',
+                                                      'assets/images/artes.png',
                                                     ),
-                                                  )
-                                                : disciplinas["name"] ==
-                                                        "Geografia"
-                                                    ? Container(
+                                                  ),
+                                                Container(
+                                                  child: Text('Artes', style: GoogleFonts.roboto(
+                                                      color: Colors.black54,
+                                                      fontWeight:
+                                                      FontWeight.bold)),
+                                                )
+                                              ],
+                                            )
+                                            : disciplinas["name"] == "Ciências"
+                                                ? Column(
+                                                  children: [
+                                                    Container(
                                                         width: 300,
                                                         height: 100,
                                                         decoration: BoxDecoration(
                                                             gradient:
                                                                 LinearGradient(
                                                                     colors: [
-                                                                  Color(
-                                                                      0xFFACE8E8),
-                                                                  Color(
-                                                                      0xFF18A1A1)
+                                                                  Color(0xFFFD9939),
+                                                                  Color(0xFFFDB368)
                                                                 ]),
                                                             borderRadius:
                                                                 BorderRadius
-                                                                    .circular(
-                                                                        8)),
+                                                                    .circular(8)),
                                                         child: Image.asset(
-                                                          'assets/images/geografia.png',
+                                                          'assets/images/ciencias.png',
                                                         ),
-                                                      )
-                                                    : disciplinas["name"] ==
-                                                            "Português"
-                                                        ? Container(
+                                                      ),
+                                                    Container(
+                                                      child: Text('Ciências', style: GoogleFonts.roboto(
+                                                          color: Colors.black54,
+                                                          fontWeight:
+                                                          FontWeight.bold)),
+                                                    )
+                                                  ],
+                                                )
+                                                : disciplinas["name"] == "Geografia"
+                                                    ? Column(
+                                                      children: [
+                                                        Container(
                                                             width: 300,
                                                             height: 100,
                                                             decoration: BoxDecoration(
@@ -748,21 +767,30 @@ class _ClassesPageState extends State<ClassesPage> {
                                                                     LinearGradient(
                                                                         colors: [
                                                                       Color(
-                                                                          0xFFD2CFFA),
+                                                                          0xFFACE8E8),
                                                                       Color(
-                                                                          0xFF615AD0)
+                                                                          0xFF18A1A1)
                                                                     ]),
                                                                 borderRadius:
                                                                     BorderRadius
                                                                         .circular(
                                                                             8)),
                                                             child: Image.asset(
-                                                              'assets/images/portugues.png',
+                                                              'assets/images/geografia.png',
                                                             ),
-                                                          )
-                                                        : disciplinas["name"] ==
-                                                                "Química"
-                                                            ? Container(
+                                                          ),
+                                                        Container(
+                                                          child: Text('Geografia', style: GoogleFonts.roboto(
+                                                              color: Colors.black54,
+                                                              fontWeight:
+                                                              FontWeight.bold)),
+                                                        )
+                                                      ],
+                                                    )
+                                                    : disciplinas["name"] == "Português"
+                                                        ? Column(
+                                                          children: [
+                                                            Container(
                                                                 width: 300,
                                                                 height: 100,
                                                                 decoration: BoxDecoration(
@@ -770,77 +798,141 @@ class _ClassesPageState extends State<ClassesPage> {
                                                                         LinearGradient(
                                                                             colors: [
                                                                           Color(
-                                                                              0xff005B97),
+                                                                              0xFFD2CFFA),
                                                                           Color(
-                                                                              0xFFF76C1FF)
+                                                                              0xFF615AD0)
                                                                         ]),
                                                                     borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            8)),
-                                                                child:
-                                                                    Image.asset(
-                                                                  'assets/images/Quimica.png',
+                                                                        BorderRadius
+                                                                            .circular(
+                                                                                8)),
+                                                                child: Image.asset(
+                                                                  'assets/images/portugues.png',
                                                                 ),
-                                                              )
-                                                            : disciplinas[
-                                                                        "name"] ==
-                                                                    "Ed. Física"
-                                                                ? Container(
+                                                              ),
+                                                            Container(
+                                                              child: Text('Português', style: GoogleFonts.roboto(
+                                                                  color: Colors.black54,
+                                                                  fontWeight:
+                                                                  FontWeight.bold)),
+                                                            )
+                                                          ],
+                                                        )
+                                                        : disciplinas["name"] == "Química"
+                                                            ? Column(
+                                                              children: [
+                                                                Container(
                                                                     width: 300,
                                                                     height: 100,
                                                                     decoration: BoxDecoration(
                                                                         gradient:
                                                                             LinearGradient(
                                                                                 colors: [
-                                                                              Color(0xFFEA8028),
-                                                                              Color(0xFFFFDFAB)
+                                                                              Color(
+                                                                                  0xff005B97),
+                                                                              Color(
+                                                                                  0xFFF76C1FF)
                                                                             ]),
                                                                         borderRadius:
-                                                                            BorderRadius.circular(8)),
-                                                                    child: Image
-                                                                        .asset(
-                                                                      'assets/images/EDF.png',
+                                                                            BorderRadius.circular(
+                                                                                8)),
+                                                                    child:
+                                                                        Image.asset(
+                                                                      'assets/images/Quimica.png',
                                                                     ),
-                                                                  )
-                                                                : disciplinas[
-                                                                            "name"] ==
-                                                                        "Inglês"
-                                                                    ? Container(
-                                                                        width:
-                                                                            300,
-                                                                        height:
-                                                                            100,
+                                                                  ),
+                                                                Container(
+                                                                  child: Text('Quimíca', style: GoogleFonts.roboto(
+                                                                      color: Colors.black54,
+                                                                      fontWeight:
+                                                                      FontWeight.bold)),
+                                                                )
+                                                              ],
+                                                            )
+                                                            : disciplinas["name"] == "Ed. Física"
+                                                                ? Column(
+                                                                  children: [
+                                                                    Container(
+                                                                        width: 300,
+                                                                        height: 100,
                                                                         decoration: BoxDecoration(
                                                                             gradient:
-                                                                                LinearGradient(colors: [
-                                                                              Color(0xFF37820B),
-                                                                              Color(0xFF8DAF72)
-                                                                            ]),
+                                                                                LinearGradient(
+                                                                                    colors: [
+                                                                                  Color(0xFFEA8028),
+                                                                                  Color(0xFFFFDFAB)
+                                                                                ]),
                                                                             borderRadius:
                                                                                 BorderRadius.circular(8)),
                                                                         child: Image
                                                                             .asset(
-                                                                          'assets/images/Ingles.png',
+                                                                          'assets/images/EDF.png',
                                                                         ),
-                                                                      )
-                                                                    : disciplinas["name"] ==
-                                                                            "Física"
-                                                                        ? Container(
+                                                                      ),
+                                                                    Container(
+                                                                      child: Text('Ed. Física', style: GoogleFonts.roboto(
+                                                                          color: Colors.black54,
+                                                                          fontWeight:
+                                                                          FontWeight.bold)),
+                                                                    )
+                                                                  ],
+                                                                )
+                                                                : disciplinas["name"] == "Inglês"
+                                                                    ? Column(
+                                                                      children: [
+                                                                        Container(
                                                                             width:
                                                                                 300,
                                                                             height:
                                                                                 100,
                                                                             decoration: BoxDecoration(
-                                                                                gradient: LinearGradient(colors: [
-                                                                                  Color(0xFFD84A7D),
-                                                                                  Color(0xFFFFA9FF)
+                                                                                gradient:
+                                                                                    LinearGradient(colors: [
+                                                                                  Color(0xFF37820B),
+                                                                                  Color(0xFF8DAF72)
                                                                                 ]),
-                                                                                borderRadius: BorderRadius.circular(8)),
-                                                                            child:
-                                                                                Image.asset(
-                                                                              'assets/images/Fisica.png',
+                                                                                borderRadius:
+                                                                                    BorderRadius.circular(8)),
+                                                                            child: Image
+                                                                                .asset(
+                                                                              'assets/images/Ingles.png',
                                                                             ),
-                                                                          )
+                                                                          ),
+                                                                        Container(
+                                                                          child: Text('Inglês', style: GoogleFonts.roboto(
+                                                                              color: Colors.black54,
+                                                                              fontWeight:
+                                                                              FontWeight.bold)),
+                                                                        )
+                                                                      ],
+                                                                    )
+                                                                    : disciplinas["name"] == "Física"
+                                                                        ? Column(
+                                                                          children: [
+                                                                            Container(
+                                                                                width:
+                                                                                    300,
+                                                                                height:
+                                                                                    100,
+                                                                                decoration: BoxDecoration(
+                                                                                    gradient: LinearGradient(colors: [
+                                                                                      Color(0xFFD84A7D),
+                                                                                      Color(0xFFFFA9FF)
+                                                                                    ]),
+                                                                                    borderRadius: BorderRadius.circular(8)),
+                                                                                child:
+                                                                                    Image.asset(
+                                                                                  'assets/images/Fisica.png',
+                                                                                ),
+                                                                              ),
+                                                                            Container(
+                                                                              child: Text('Física', style: GoogleFonts.roboto(
+                                                                                  color: Colors.black54,
+                                                                                  fontWeight:
+                                                                                  FontWeight.bold)),
+                                                                            )
+                                                                          ],
+                                                                        )
                                                                         : Container()
                               ],
                             ),

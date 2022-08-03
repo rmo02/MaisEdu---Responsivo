@@ -211,6 +211,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.0-dev.5"
+  expansion_tile_card:
+    dependency: "direct main"
+    description:
+      name: expansion_tile_card
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
   extended_image:
     dependency: transitive
     description:
