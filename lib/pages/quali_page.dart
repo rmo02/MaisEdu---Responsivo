@@ -29,19 +29,6 @@ class _QualiPageState extends State<QualiPage> {
           ),
           backgroundColor: AppStyle.secondColor,
           elevation: 0,
-          actions: [
-
-            IconButton(onPressed: (){}, icon: const Icon(Icons.notifications_none_outlined,
-              size: 25,
-              color: Colors.white,
-            ),
-            ),
-            IconButton(onPressed: (){}, icon: const Icon(Icons.person,
-              size: 25,
-              color: Colors.white,
-            ),
-            ),
-          ],
         ),
         backgroundColor: AppStyle.mainColor,
         body: LayoutBuilder(
@@ -807,7 +794,7 @@ class _QualiPageState extends State<QualiPage> {
                     Container(
                       padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.03,
                           left: 20),
-                      child: Text("Classificação",
+                      child: Text("Classificação:",
                         style: GoogleFonts.roboto(
                             color: Color(0xff403B91),
                             fontSize: 18,
@@ -820,6 +807,26 @@ class _QualiPageState extends State<QualiPage> {
                       children: [
                         Stack(
                           children: [
+                            Container(
+                              padding: EdgeInsets.only(
+                                  top: MediaQuery.of(context).size.height * 0.035,
+                                  left: MediaQuery.of(context).size.width * 0.5) ,
+                              child: AnimatedTextKit(
+                                animatedTexts: [
+                                  FadeAnimatedText('Escola',
+                                    textStyle: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500,
+                                      color: Color(0xff403B91),
+                                    ),
+                                  ),
+                                  ScaleAnimatedText(
+                                      'Escola',
+                                      duration: Duration(milliseconds: 4000)
+                                  )
+                                ],
+                              ),
+                            ),
                             Container(
                               padding: EdgeInsets.only(
                                   top: MediaQuery.of(context).size.height * 0.08,
@@ -1037,6 +1044,26 @@ class _QualiPageState extends State<QualiPage> {
                         ),
                         Stack(
                           children: [
+                            Container(
+                              padding: EdgeInsets.only(
+                                  top: MediaQuery.of(context).size.height * 0.035,
+                                  left: MediaQuery.of(context).size.width * 0.5) ,
+                              child: AnimatedTextKit(
+                                animatedTexts: [
+                                  FadeAnimatedText('Série',
+                                    textStyle: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500,
+                                      color: Color(0xff403B91),
+                                    ),
+                                  ),
+                                  ScaleAnimatedText(
+                                      'Série',
+                                      duration: Duration(milliseconds: 4000)
+                                  )
+                                ],
+                              ),
+                            ),
                             Container(
                               padding: EdgeInsets.only(
                                   top: MediaQuery.of(context).size.height * 0.08,
@@ -1275,6 +1302,26 @@ class _QualiPageState extends State<QualiPage> {
                         ),
                         Stack(
                           children: [
+                            Container(
+                              padding: EdgeInsets.only(
+                                  top: MediaQuery.of(context).size.height * 0.035,
+                                  left: MediaQuery.of(context).size.width * 0.5) ,
+                              child: AnimatedTextKit(
+                                animatedTexts: [
+                                  FadeAnimatedText('Sala',
+                                    textStyle: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500,
+                                      color: Color(0xff403B91),
+                                    ),
+                                  ),
+                                  ScaleAnimatedText(
+                                      'Sala',
+                                      duration: Duration(milliseconds: 4000)
+                                  )
+                                ],
+                              ),
+                            ),
                             Container(
                               padding: EdgeInsets.only(
                                   top: MediaQuery.of(context).size.height * 0.08,

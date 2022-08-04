@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:resposividade/pages/lista_atividades.dart';
@@ -8,7 +7,6 @@ import 'package:http/http.dart' as http;
 import 'package:resposividade/widget/aulas.dart';
 import '../../style/app_style.dart';
 import 'dart:convert';
-import 'dart:async';
 
 class ClassesPage extends StatefulWidget {
   const ClassesPage({Key? key}) : super(key: key);
@@ -18,7 +16,6 @@ class ClassesPage extends StatefulWidget {
 }
 
 class _ClassesPageState extends State<ClassesPage> {
-  var _disciplina = [];
 
   GetDisciplinas() async {
     var url = Uri.parse('http://192.168.6.20:3010/disciplinas');
@@ -26,7 +23,6 @@ class _ClassesPageState extends State<ClassesPage> {
     if (resposta.statusCode == 200) {
       Map<String, dynamic> map = jsonDecode(resposta.body);
       List<dynamic> data = map["disciplinas"];
-        _disciplina = data;
       return data;
     } else {
       throw Exception('Nao foi possivel carregar usuários');
@@ -629,7 +625,6 @@ class _ClassesPageState extends State<ClassesPage> {
                     child: ListView.builder(
                         itemCount: snapshot.data.length,
                         itemBuilder: (context, index) {
-
                           var disciplinas = snapshot.data![index];
                           return Container(
                             width: 170,

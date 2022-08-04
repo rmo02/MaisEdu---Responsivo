@@ -1,5 +1,5 @@
+import 'package:get/get.dart';
 import 'package:resposividade/pages/bar_item_page.dart';
-import 'package:resposividade/pages/home_page.dart';
 import 'package:resposividade/pages/splash_page.dart';
 import 'package:resposividade/pages/login_page.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: '/splash',
       routes: {

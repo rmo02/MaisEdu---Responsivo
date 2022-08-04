@@ -46,6 +46,7 @@ dependencies:
   syncfusion_flutter_calendar: ^20.1.59
   percent_indicator: ^4.2.2
   auto_size_text: ^3.0.0
+  get: ^4.6.5
   list_tile_switch: ^1.0.0
   boxy: ^2.0.6+1
   video_player: ^2.4.4
@@ -68,7 +69,6 @@ dependencies:
   bottom_bar_with_sheet: ^2.4.0
   sliding_sheet: ^0.5.2
   comment_box: ^0.0.17
-  get: any
   elegant_notification: ^1.6.0
   expandable_tree_menu: ^0.1.0-dev.5
   chat_list: ^2.0.0

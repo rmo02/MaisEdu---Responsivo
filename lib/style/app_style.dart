@@ -9,6 +9,6 @@ class AppStyle {
   static Color titleColor = Color(0xFF403B91);
   static Color bottomBarNavigation = Color(0xFFF8F9FA);
   static Color grientCard = Color(0xFF3B5BDB);
-  static Color gradientCart2 = Color(0xFFBAC8FD);
+  static Color gradientCart2 = Color(0xFF7089FF);
   static Color labelFilosofo = Color(0xFF78B5FC);
 }
