@@ -1,47 +1,70 @@
 import 'dart:convert';
+import 'dart:async';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:better_player/better_player.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:resposividade/interfaces/atv.dart';
+import 'package:resposividade/interfaces/disciplina.dart';
 import 'package:resposividade/style/app_style.dart';
 import 'package:video_player/video_player.dart';
 
 class Aulas extends StatefulWidget {
-  const Aulas({Key? key}) : super(key: key);
+   final String id;
+  // Aulas({required this.id});
+  const Aulas({Key? key, required this.id}) : super(key: key);
 
   @override
-  State<Aulas> createState() => _AulasState();
+   State<Aulas> createState() => _AulasState();
 }
 
 class _AulasState extends State<Aulas> {
   List _aulas = [];
 
-  _pegarAulas() async {
-    var url = Uri.parse(
-        'http://192.168.6.20:3010/aulas/series/2c4c4950-8bad-41ed-970d-d32546baea2c/31d9ef2d-0dc8-4108-8549-ddd6d117e7c5');
+
+  Future<Disciplina>_GetDisciplinas() async {
+    var id = this.widget.id;
+    var disciplinas = "http://192.168.6.20:3010/disciplinas/${id}";
+    var url = Uri.parse(disciplinas);
     var resposta = await http.get(url);
     if (resposta.statusCode == 200) {
-      Map<String, dynamic> map = jsonDecode(resposta.body);
-      List<dynamic> data = map["aulas"];
-        setState(() {
-          _aulas = data;
-        });
-      print(_aulas);
-      return data;
+      Map r = jsonDecode(resposta.body)["disciplina"];
+      print(r);
+      return Disciplina.fromJson(jsonDecode(resposta.body)["disciplina"]);
+      // setState(() {
+      //   _disciplina = data;
+      // });
+      // print(_disciplina);
+      // return data;
     } else {
       throw Exception('Nao foi possivel carregar usuários');
     }
   }
 
+  _pegarAulas() async {
+    var disciplinas = "http://192.168.6.20:3010/aulas/series/986e85fc-0a5f-457e-9b18-bacc4e01ba6e/${widget.id}";
+    var url = Uri.parse(disciplinas);
+    var resposta = await http.get(url);
+    if (resposta.statusCode == 200) {
+      Map<String, dynamic> map = jsonDecode(resposta.body);
+      List<dynamic> data = map["aulas_final"];
+        setState(() {
+          _aulas = data;
+        });
+      return data;
+    } else {
+      throw Exception('Nao foi possivel carregar usuários');
+    }
+  }
+  late Future<Disciplina> futureDisciplina;
   @override
   void initState(){
     super.initState();
     _pegarAulas();
+    futureDisciplina = _GetDisciplinas();
   }
+
 
 
 
@@ -49,6 +72,9 @@ class _AulasState extends State<Aulas> {
     Atv(1, "Aula 1", "Aula 1 sobre matemática básica", false),
     Atv(2, "Aula 2", "Aula 2 sobre a trigonometria", false),
   ];
+
+
+
 
   bool _playArea = false;
   VideoPlayerController? _controller;
@@ -61,16 +87,11 @@ class _AulasState extends State<Aulas> {
           decoration: _playArea==false?BoxDecoration(
             color: AppStyle.secondColor
           ): BoxDecoration(
-              gradient: LinearGradient(
-                  colors: [
-                    AppStyle.grientCard,
-                    AppStyle.gradientCart2
-                ]
-              )
+             color: Colors.black
           ),
           child: Column(
             children: [
-              _playArea==false?Container(
+              if (_playArea==false) Container(
                 padding: const EdgeInsets.only(top: 70, left: 30, right: 30),
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height * 0.3,
@@ -96,16 +117,27 @@ class _AulasState extends State<Aulas> {
                     SizedBox(
                       height: 30,
                     ),
-                    Text("Matemática",
-                      style: GoogleFonts.roboto(
-                          fontSize: 25,
-                          color: Colors.white
-                      ),
+                    FutureBuilder<Disciplina>(
+                      future: futureDisciplina,
+                      builder: (context, snapshot) {
+                          if (snapshot.hasData){
+                            return Text(snapshot.data!.name, style: GoogleFonts.roboto(
+                              fontSize: 24,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white
+                            ),);
+                          }else if (snapshot.hasError){
+                            return Text('Ta errado');
+                          }
+                      return CircularProgressIndicator();
+                      }
+
                     ),
+
                     SizedBox(height: 5,),
                   ],
                 ),
-              ): Container(
+              ) else Container(
                 child: Column(
                   children: [
                     Container(
@@ -115,6 +147,10 @@ class _AulasState extends State<Aulas> {
                         children: [
                           InkWell(
                             onTap: (){
+                              setState(() {
+                                _isPlaying=false;
+                              });
+                              _controller?.pause();
                               Get.back();
                             },
                             child: Icon(Icons.arrow_back_ios,
@@ -128,7 +164,8 @@ class _AulasState extends State<Aulas> {
                       ),
                     ),
                     _playView(context),
-                    _controlView(context),
+                    SizedBox(height: 15,)
+                    // _controlView(context),
                   ],
                 ),
               ),

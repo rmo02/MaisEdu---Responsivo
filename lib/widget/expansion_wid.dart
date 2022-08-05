@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart';
 import 'package:like_button/like_button.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:resposividade/interfaces/atv.dart';
