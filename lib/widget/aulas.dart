@@ -8,12 +8,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:resposividade/interfaces/atv.dart';
 import 'package:resposividade/interfaces/disciplina.dart';
+import 'package:resposividade/quizz/startQuizz.dart';
 import 'package:resposividade/style/app_style.dart';
 import 'package:video_player/video_player.dart';
 
 class Aulas extends StatefulWidget {
   final String id;
-
   const Aulas({Key? key, required this.id}) : super(key: key);
 
   @override
@@ -23,6 +23,7 @@ class Aulas extends StatefulWidget {
 class _AulasState extends State<Aulas> {
   List _aulas = [];
 
+  //get disciplinas por id
   Future<Disciplina> _GetDisciplinas() async {
     var id = this.widget.id;
     var disciplinas = "http://192.168.6.20:3010/disciplinas/${id}";
@@ -42,6 +43,7 @@ class _AulasState extends State<Aulas> {
     }
   }
 
+  //get aulas
   _pegarAulas() async {
     var disciplinas =
         "http://192.168.6.20:3010/aulas/series/986e85fc-0a5f-457e-9b18-bacc4e01ba6e/${widget.id}";
@@ -81,20 +83,19 @@ class _AulasState extends State<Aulas> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-      //height: MediaQuery.of(context).size.height/2,
-      decoration: _playArea == false
+            decoration: _playArea == false
           ? BoxDecoration(color: AppStyle.secondColor)
           : BoxDecoration(color: Colors.black),
-      child: Column(
-        children: [
-          if (_playArea == false)
-            Container(
-              padding: const EdgeInsets.only(top: 70, left: 30, right: 30),
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.3,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+          child: Column(
+            children: [
+            if (_playArea == false)
+              Container(
+                padding: const EdgeInsets.only(top: 70, left: 30, right: 30),
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height * 0.3,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
                   Row(
                     children: [
                       InkWell(
@@ -130,7 +131,7 @@ class _AulasState extends State<Aulas> {
                                 color: Colors.white),
                           );
                         } else if (snapshot.hasError) {
-                          return Text('Ta errado');
+                          return Text('Sem aulas');
                         }
                         return CircularProgressIndicator();
                       }),
@@ -195,6 +196,7 @@ class _AulasState extends State<Aulas> {
     ));
   }
 
+  //inicializar o vídeo
   Widget _playView(BuildContext context) {
     final controller = _controller;
     if (controller != null && controller.value.isInitialized) {
@@ -276,6 +278,8 @@ class _AulasState extends State<Aulas> {
               ),
             ],
           ),
+
+          //tracejado
           Row(
             children: [
               for (int i = 0; i < 110; i++)
@@ -293,7 +297,8 @@ class _AulasState extends State<Aulas> {
                         color: Colors.white,
                       )
             ],
-          )
+          ),
+
         ],
       ),
     );
