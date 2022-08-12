@@ -11,6 +11,7 @@ class SplashPage extends StatefulWidget {
   State<SplashPage> createState() => _SplashPageState();
 }
 
+
 class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
@@ -31,10 +32,6 @@ class _SplashPageState extends State<SplashPage> {
          );
        }
      });
-
-    //Future.delayed(Duration(seconds: 3)).
-    //then((_) => Navigator.of(context).pushReplacementNamed('/login'));
-
   }
 
   @override
@@ -65,10 +62,10 @@ class _SplashPageState extends State<SplashPage> {
       ),
     );
   }
-
   Future <bool> verificarToken() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     if(sharedPreferences.getString('token') != null){
+      // print(sharedPreferences.getString('token'));
       return true;
     }else {
       return false;

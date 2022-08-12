@@ -1,12 +1,14 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:resposividade/pages/config_page.dart';
-import 'package:resposividade/pages/login_page.dart';
 import 'package:resposividade/pages/minhas_notas.dart';
 import 'package:resposividade/pages/quali_page.dart';
 import 'package:resposividade/style/app_style.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PerfilPage extends StatefulWidget {
   const PerfilPage({Key? key}) : super(key: key);
@@ -15,10 +17,38 @@ class PerfilPage extends StatefulWidget {
   State<PerfilPage> createState() => _PerfilPageState();
 }
 
+
+
 class _PerfilPageState extends State<PerfilPage> {
+
+
+var _aluno;
+
+  _GetAluno() async {
+    SharedPreferences idALuno = await SharedPreferences.getInstance();
+    String id = idALuno.getString('id')!;
+
+    List<dynamic> values = id.split("Id ");
+    var url = Uri.parse('http://192.168.6.20:3010/escolas/users/alunos/${values[0]}');
+    var resposta = await http.get(url);
+
+    if (resposta.statusCode == 200) {
+      Map<String, dynamic> map = new Map<String, dynamic>.from(jsonDecode(resposta.body)["aluno"]);
+      print(_aluno);
+      setState(() {
+         _aluno = map;
+         print(_aluno);
+      });
+      return map;
+    } else {
+      throw Exception('Nao foi possivel carregar usuários');
+    }
+  }
+
   @override
   void initState() {
     super.initState();
+    _GetAluno();
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   }
 
@@ -56,136 +86,145 @@ class _PerfilPageState extends State<PerfilPage> {
         ],
       ),
       extendBody: true,
-      body: LayoutBuilder(builder: (_, constraints) {
+      body: LayoutBuilder(
+          builder: (_, constraints) {
         return Container(
           height: constraints.maxHeight,
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  width: size.width,
-                  height: 220,
-                  child: Container(
-                    child: Column(
-                      children: [
-                        Stack(
-                          children: [
-                            Container(
-                              child: Image.asset(
-                                "assets/images/moldura.png",
-                                height: 150,
-                                width: 250,
-                              ),
-                              margin: EdgeInsets.only(top: 20, right: 210),
-                            ),
-                            Container(
-                              child: Image.asset(
-                                "assets/images/person.png",
-                                height: 150,
-                                width: 200,
-                              ),
-                              margin: EdgeInsets.only(top: 1, right: 210),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(left: 130, top: 18),
-                              child: Text(
-                                "Vinicius Travincas",
-                                style: GoogleFonts.roboto(
-                                    color: Colors.white,
-                                    fontSize: 21,
-                                    fontWeight: FontWeight.w400),
-                              ),
-                            ),
-                            Container(
-                              width: 110,
-                              height: 26,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  color: Color(0xff364FC7)),
-                              margin: EdgeInsets.only(left: 130, top: 70),
-                              child: Center(
-                                child: Text(
-                                  "C.E.M PERDIGÂO",
-                                  style: GoogleFonts.roboto(
-                                      color: Colors.white,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w400),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              width: 55,
-                              height: 26,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  color: Color(0xff364FC7)),
-                              margin: EdgeInsets.only(left: 250, top: 70),
-                              child: Center(
-                                child: Text(
-                                  "9º C",
-                                  style: GoogleFonts.roboto(
-                                      color: Colors.white,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w400),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              width: 110,
-                              height: 26,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  color: Color(0xff364FC7)),
-                              margin: EdgeInsets.only(left: 130, top: 100),
-                              child: Center(
-                                child: Text(
-                                  "20180002878",
-                                  style: GoogleFonts.roboto(
-                                      color: Colors.white,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              width: 50,
-                              height: 24,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  color: Color(0xff00A1A1)),
-                              margin: EdgeInsets.only(left: 250, top: 100),
-                              child: Center(
-                                child: Text(
-                                  "150",
-                                  style: GoogleFonts.roboto(
-                                    color: Colors.white,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold,
+                FutureBuilder(
+                  future: _GetAluno(),
+                    builder: (context, snapshot){
+                      return Container(
+                        width: size.width,
+                        height: 220,
+                        child: Container(
+                          child: Column(
+                            children: [
+                              Stack(
+                                children: [
+                                  Container(
+                                    child: Image.asset(
+                                      "assets/images/moldura.png",
+                                      height: 150,
+                                      width: 250,
+                                    ),
+                                    margin: EdgeInsets.only(top: 20, right: 210),
                                   ),
-                                ),
+                                  Container(
+                                    child: Image.asset(
+                                      "assets/images/person.png",
+                                      height: 150,
+                                      width: 200,
+                                    ),
+                                    margin: EdgeInsets.only(top: 1, right: 210),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(left: 130, top: 18),
+                                    child: Text(
+                                      _aluno['name'],
+                                      style: GoogleFonts.roboto(
+                                          color: Colors.white,
+                                          fontSize: 21,
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 110,
+                                    height: 26,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        color: Color(0xff364FC7)),
+                                    margin: EdgeInsets.only(left: 130, top: 70),
+                                    child: Center(
+                                      child: Text(
+                                        _aluno['mat'],
+                                        style: GoogleFonts.roboto(
+                                            color: Colors.white,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400),
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 55,
+                                    height: 26,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        color: Color(0xff364FC7)),
+                                    margin: EdgeInsets.only(left: 250, top: 70),
+                                    child: Center(
+                                      child: Text(
+                                        "jsdgbhkdj",
+                                        style: GoogleFonts.roboto(
+                                            color: Colors.white,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400),
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 110,
+                                    height: 26,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        color: Color(0xff364FC7)),
+                                    margin: EdgeInsets.only(left: 130, top: 100),
+                                    child: Center(
+                                      child: Text(
+                                        "ljafdb",
+                                        style: GoogleFonts.roboto(
+                                            color: Colors.white,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 50,
+                                    height: 24,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        color: Color(0xff00A1A1)),
+                                    margin: EdgeInsets.only(left: 250, top: 100),
+                                    child: Center(
+                                      child: Text(
+                                        "150",
+                                        style: GoogleFonts.roboto(
+                                          color: Colors.white,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ],
-                    ),
-                  ),
-                  padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                            color: AppStyle.shadowMainColor,
-                            spreadRadius: 2,
-                            blurRadius: 1,
-                            offset: Offset(0.0, 2.0)),
-                      ],
-                      color: AppStyle.secondColor,
-                      borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(28),
-                          bottomRight: Radius.circular(28))),
+                        padding: const EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                  color: AppStyle.shadowMainColor,
+                                  spreadRadius: 2,
+                                  blurRadius: 1,
+                                  offset: Offset(0.0, 2.0)),
+                            ],
+                            color: AppStyle.secondColor,
+                            borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(28),
+                                bottomRight: Radius.circular(28))),
+                      );
+                    }
                 ),
-                SizedBox(
+
+
+
+               SizedBox(
                   height: 13,
                 ),
 

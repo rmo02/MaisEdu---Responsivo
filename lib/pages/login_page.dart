@@ -6,8 +6,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../style/app_style.dart';
 
-
-
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -19,47 +17,6 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController _matController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
-
-  // void login(String mat , password) async {
-  //
-  //   try{
-  //
-  //     Response response = await post(
-  //       Uri.parse('http://192.168.6.20:3010/escolas/users/login'),
-  //       headers: <String, String>{
-  //         'Content-Type': 'application/json',
-  //         'Accept': 'application/json'
-  //       },
-  //       body: jsonEncode(<String, String>{
-  //         'mat' : mat,
-  //         'password' : password
-  //       }),
-  //     );
-  //
-  //     if(response.statusCode == 200){
-  //       var data = jsonDecode(response.body.toString());
-  //       data = data!;
-  //       print(data);
-  //       Navigator.push(context, PageTransition(child: BarItemPage(),
-  //           type: PageTransitionType.fade,
-  //           duration: const Duration(milliseconds: 10)
-  //       ));
-  //       ElegantNotification.success(
-  //           title:  Text("Update"),
-  //           description:  Text("Your data has been updated")
-  //       ).show(context);
-  //
-  //     }else {
-  //       ElegantNotification.error(
-  //           title:  Text("Error"),
-  //           description:  Text("Usuário ou senha inválidos")
-  //       ).show(context);
-  //     }
-  //   } catch(e){
-  //     print(e.toString());
-  //   }
-  // }
-
 
   @override
   Widget build(BuildContext context) {
@@ -202,6 +159,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<bool> login () async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    SharedPreferences idAluno = await SharedPreferences.getInstance();
 
     Response response = await post(
       Uri.parse('http://192.168.6.20:3010/escolas/users/login'),
@@ -216,6 +174,7 @@ class _LoginPageState extends State<LoginPage> {
     );
     if (response.statusCode == 200){
       await sharedPreferences.setString('token', "Token ${jsonDecode(response.body)['token']}");
+      await idAluno.setString('id', jsonDecode(response.body)['user']["id"]);
       return true;
     } else {
       return false;

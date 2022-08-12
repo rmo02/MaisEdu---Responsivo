@@ -33,11 +33,6 @@ class _AulasState extends State<Aulas> {
       Map r = jsonDecode(resposta.body)["disciplina"];
       print(r);
       return Disciplina.fromJson(jsonDecode(resposta.body)["disciplina"]);
-      // setState(() {
-      //   _disciplina = data;
-      // });
-      // print(_disciplina);
-      // return data;
     } else {
       throw Exception('Nao foi possivel carregar usuários');
     }

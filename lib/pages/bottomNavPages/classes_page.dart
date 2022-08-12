@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:resposividade/pages/bottomNavPages/perfil_page.dart';
 import 'package:resposividade/pages/lista_atividades.dart';
-import 'package:resposividade/pages/login_page.dart';
 import 'package:http/http.dart' as http;
 import 'package:resposividade/widget/aulas.dart';
 import '../../style/app_style.dart';
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ClassesPage extends StatefulWidget {
   const ClassesPage({Key? key}) : super(key: key);
@@ -19,12 +20,17 @@ class _ClassesPageState extends State<ClassesPage> {
 
   List _disciplinas = [];
 
+
   _GetDisciplinas() async {
-    var url = Uri.parse('http://192.168.6.20:3010/disciplinas');
+    SharedPreferences idALuno = await SharedPreferences.getInstance();
+    String id = idALuno.getString('id')!;
+    List<dynamic> values = id.split("Id ");
+    var url = Uri.parse('http://192.168.6.20:3010/disciplinasAluno/${values[0]}');
     var resposta = await http.get(url);
     if (resposta.statusCode == 200) {
       Map<String, dynamic> map = jsonDecode(resposta.body);
       List<dynamic> data = map["disciplinas"];
+      print(data);
       setState(() {
         _disciplinas = data;
       });
@@ -42,7 +48,6 @@ class _ClassesPageState extends State<ClassesPage> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return Scaffold(
         appBar: AppBar(
           title: Container(
@@ -75,7 +80,7 @@ class _ClassesPageState extends State<ClassesPage> {
               onPressed: () => Navigator.push(
                   context,
                   PageTransition(
-                      child: LoginPage(),
+                      child: PerfilPage(),
                       type: PageTransitionType.fade,
                       duration: const Duration(milliseconds: 10))),
               icon: Icon(
@@ -628,10 +633,16 @@ class _ClassesPageState extends State<ClassesPage> {
               ),
             );
           } else {
-            return  OverflowBox(
+            return  MediaQuery.removePadding(
+              context: context,
+              removeTop: true,
               child: GridView.builder(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: 200,
+                      childAspectRatio: 3 / 2.5,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 0),
                   itemCount: _disciplinas.length,
                   itemBuilder: (context, int index) {
                     return Container(
@@ -669,7 +680,7 @@ class _ClassesPageState extends State<ClassesPage> {
                                         ),
                                       ),
                                       Container(
-                                        child: Text(_disciplinas[index]['name'],
+                                        child: Text(_disciplinas[index]["disciplina"]['name'],
                                           style: GoogleFonts.roboto(
                                             color: Colors.black54,
                                             fontWeight: FontWeight.bold),
