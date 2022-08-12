@@ -1,12 +1,14 @@
+import 'dart:convert';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:page_transition/page_transition.dart';
+import 'package:http/http.dart';
 import 'package:resposividade/modules/tag_state.dart';
-import 'package:resposividade/pages/login_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../style/app_style.dart';
+
 
 var suggestTag = [
   "Matemática",
@@ -28,7 +30,10 @@ class CreateAnotation extends StatefulWidget {
 
 class _CreateAnotationState extends State<CreateAnotation> {
   final controller = Get.put(TagStateController());
-  final textController = TextEditingController();
+  TextEditingController textController = TextEditingController();
+  // TextEditingController TagStateController = TextEditingController();
+
+  TextEditingController _anotacoesController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -55,12 +60,7 @@ class _CreateAnotationState extends State<CreateAnotation> {
             ),
           ),
           IconButton(
-            onPressed: () => Navigator.push(
-                context,
-                PageTransition(
-                    child: LoginPage(),
-                    type: PageTransitionType.fade,
-                    duration: const Duration(milliseconds: 10))),
+            onPressed: () {},
             icon: Icon(
               Icons.person,
               size: 25,
@@ -106,13 +106,14 @@ class _CreateAnotationState extends State<CreateAnotation> {
               ),
               Expanded(
                   child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Container(
-                  padding: EdgeInsets.only(left: 10.0),
-                  decoration: BoxDecoration(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Container(
+                    padding: EdgeInsets.only(left: 10.0),
+                    decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20)),
                   child: TextField(
+                    controller: _anotacoesController,
                     expands: true,
                     maxLines: null,
                     autofocus: true,
@@ -177,8 +178,7 @@ class _CreateAnotationState extends State<CreateAnotation> {
                                                     TextFieldConfiguration(
                                                   controller: textController,
                                                   onEditingComplete: () {
-                                                    controller.ListTags.add(
-                                                        textController.text);
+                                                    controller.ListTags.add(textController.text);
                                                     textController.clear();
                                                   },
                                                   autofocus: false,
@@ -289,7 +289,9 @@ class _CreateAnotationState extends State<CreateAnotation> {
                           primary: Color(0xFF4263EB)),
                     ),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        postAnotacoes();
+                      },
                       child: Row(
                         children: [
                           Icon(Icons.add),
@@ -312,5 +314,30 @@ class _CreateAnotationState extends State<CreateAnotation> {
         );
       }),
     );
+  }
+
+  Future<bool> postAnotacoes() async {
+    SharedPreferences idALuno = await SharedPreferences.getInstance();
+    String id = idALuno.getString('id')!;
+    List<dynamic> values = id.split("Id ");
+
+    var response = await post(
+      Uri.parse('http://192.168.6.20:3010/anotacoes'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: jsonEncode(<String, String>{
+        "descricao" : _anotacoesController.text,
+        "id_aluno" : "${values[0]}",
+        "array_tags": "[${TagStateController}]"
+      }),
+    );
+    if (response.statusCode == 200){
+
+      return true;
+    } else {
+      return false;
+    }
   }
 }

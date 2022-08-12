@@ -1,8 +1,11 @@
-
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:resposividade/style/app_style.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PasswordPage extends StatefulWidget {
+
   const PasswordPage({Key? key}) : super(key: key);
 
   @override
@@ -10,6 +13,12 @@ class PasswordPage extends StatefulWidget {
 }
 
 class _PasswordPageState extends State<PasswordPage> {
+
+  TextEditingController _novoPassword1 = TextEditingController();
+  TextEditingController _novoPassword2 = TextEditingController();
+  TextEditingController _atualPassword = TextEditingController();
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,6 +95,7 @@ class _PasswordPageState extends State<PasswordPage> {
                     height: 50,
                     width: 380,
                     child: TextField(
+                      controller: _atualPassword,
                       decoration: InputDecoration(
                         hintText: "**********",
                         enabledBorder: OutlineInputBorder(
@@ -116,6 +126,7 @@ class _PasswordPageState extends State<PasswordPage> {
                     height: 50,
                     width: 380,
                     child: TextField(
+                      controller: _novoPassword1,
                       decoration: InputDecoration(
                         hintText: "**********",
                         enabledBorder: OutlineInputBorder(
@@ -145,7 +156,15 @@ class _PasswordPageState extends State<PasswordPage> {
                   child: SizedBox(
                     height: 50,
                     width: 380,
-                    child: TextField(
+                    child: TextFormField(
+                      validator: (senha){
+                        if (_novoPassword1 != _novoPassword2) {
+                          return "Por favor, revise sua senha";
+                         } else {
+                          return null;
+                        }
+                        },
+                      controller: _novoPassword2,
                       decoration: InputDecoration(
                         hintText: "**********",
                         enabledBorder: OutlineInputBorder(
@@ -192,4 +211,30 @@ class _PasswordPageState extends State<PasswordPage> {
       ),
     );
   }
+
+Future<bool> changePassword () async {
+  SharedPreferences idSenha = await SharedPreferences.getInstance();
+  String id = idSenha.getString('id')!;
+  List<dynamic> values = id.split("Id ");
+
+  Response response = await post(
+    Uri.parse('http://192.168.6.20:3010/escolas/users/change_password'),
+    headers: <String, String>{
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    body: jsonEncode(<String, String>{
+      "actual_password": _atualPassword.text,
+      "new_password": _novoPassword2.text,
+      "id_user": "${values[0]}"
+    }),
+  );
+  if (response.statusCode == 200){
+    print('Deu certo');
+    return true;
+  } else {
+    return false;
+  }
+}
+
 }

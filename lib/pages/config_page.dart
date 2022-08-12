@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:resposividade/pages/bar_item_page.dart';
 import 'package:resposividade/pages/login_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:resposividade/pages/idoma_page.dart';
@@ -37,7 +38,9 @@ class _ConfigPageState extends State<ConfigPage> {
           elevation: 0,
           actions: [
 
-            IconButton(onPressed: (){}, icon: const Icon(Icons.notifications_none_outlined,
+            IconButton(onPressed: (){
+              BarItemPage();
+            }, icon: const Icon(Icons.notifications_none_outlined,
               size: 25,
               color: Colors.white,
             ),

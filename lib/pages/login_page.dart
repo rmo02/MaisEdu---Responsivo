@@ -160,6 +160,7 @@ class _LoginPageState extends State<LoginPage> {
   Future<bool> login () async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     SharedPreferences idAluno = await SharedPreferences.getInstance();
+    SharedPreferences idSenha = await SharedPreferences.getInstance();
 
     Response response = await post(
       Uri.parse('http://192.168.6.20:3010/escolas/users/login'),
@@ -175,6 +176,7 @@ class _LoginPageState extends State<LoginPage> {
     if (response.statusCode == 200){
       await sharedPreferences.setString('token', "Token ${jsonDecode(response.body)['token']}");
       await idAluno.setString('id', jsonDecode(response.body)['user']["id"]);
+      await idSenha.setString('id_senha', jsonDecode(response.body)['user']["id_senha"]);
       return true;
     } else {
       return false;
