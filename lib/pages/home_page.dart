@@ -63,173 +63,155 @@ class _HomePageState extends State<HomePage> {
       body: LayoutBuilder(builder: (context, constraints) {
         if (constraints.maxWidth < 389) {
           return Container(
-            width: constraints.maxWidth,
-            height: constraints.maxHeight,
-            child: Stack(
-              children: [
-                Container(
-                  width: constraints.maxWidth,
-                  height: constraints.maxHeight * 0.47,
-                  decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                            color: AppStyle.shadowMainColor,
-                            spreadRadius: 2,
-                            blurRadius: 1,
-                            offset: Offset(0.0, 2.0)),
-                      ],
-                      color: AppStyle.secondColor,
-                      borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(28),
-                          bottomRight: Radius.circular(28))),
-                  child: GestureDetector(
-                    child: Container(
-                      padding: EdgeInsets.all(10),
-                      margin: EdgeInsets.only(bottom: 50),
-                      child: Image.asset(
-                        'assets/images/banner.png',
-                      ),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 260),
-                    child: Container(
-                      height: constraints.maxHeight,
-                      width: constraints.maxWidth,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  top:
-                                      MediaQuery.of(context).size.height * 0.01,
-                                  left:
-                                      MediaQuery.of(context).size.width * 0.05),
-                              child: Text("Últimas Aulas",
-                                  style: GoogleFonts.roboto(
-                                      color: AppStyle.titleColor,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500)),
-                            ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.only(),
-                            height: 120,
-                            child: ListView(
-                              scrollDirection: Axis.horizontal,
-                              padding: EdgeInsets.only(
-                                  left: 30, right: 3, bottom: 5),
-                              children: [
-                                Container(
-                                  height: 120,
-                                  width: 170,
-                                  margin: EdgeInsets.all(4),
-                                  child: Center(
-                                    child:
-                                        Image.asset('assets/images/biomas.png'),
-                                  ),
-                                ),
-                                Container(
-                                  height: 120,
-                                  width: 170,
-                                  margin: EdgeInsets.all(4),
-                                  child: Center(
-                                    child: Image.asset(
-                                        'assets/images/angulos.png'),
-                                  ),
-                                ),
-                                Container(
-                                  height: 120,
-                                  width: 170,
-                                  margin: EdgeInsets.all(4),
-                                  child: Center(
-                                    child: Image.asset(
-                                        'assets/images/adverbio.png'),
-                                  ),
-                                ),
-                                Container(
-                                  width: 185,
-                                  child: Center(
-                                    child: Image.asset(
-                                      'assets/images/banner2.png',
-                                      height: 170,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  top: MediaQuery.of(context).size.height *
-                                      0.001,
-                                  left:
-                                      MediaQuery.of(context).size.width * 0.05),
-                              child: Text("Meus Favoritos",
-                                  style: GoogleFonts.roboto(
-                                      color: AppStyle.titleColor,
-                                      fontSize: 17.5,
-                                      fontWeight: FontWeight.w500)),
-                            ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.only(top: 1, bottom: 1),
-                            height: 120,
-                            child: ListView(
-                              scrollDirection: Axis.horizontal,
-                              padding: EdgeInsets.only(left: 30, right: 3),
-                              children: [
-                                Container(
-                                  height: 120,
-                                  width: 170,
-                                  margin: EdgeInsets.all(4),
-                                  child: Center(
-                                    child:
-                                        Image.asset('assets/images/biomas.png'),
-                                  ),
-                                ),
-                                Container(
-                                  height: 120,
-                                  width: 170,
-                                  margin: EdgeInsets.all(4),
-                                  child: Center(
-                                    child: Image.asset(
-                                        'assets/images/angulos.png'),
-                                  ),
-                                ),
-                                Container(
-                                  height: 120,
-                                  width: 170,
-                                  margin: EdgeInsets.all(4),
-                                  child: Center(
-                                    child: Image.asset(
-                                        'assets/images/adverbio.png'),
-                                  ),
-                                ),
-                                Container(
-                                  width: 185,
-                                  child: Center(
-                                    child: Image.asset(
-                                      'assets/images/banner2.png',
-                                      height: 170,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+              width: constraints.maxWidth,
+              height: constraints.maxHeight,
+              child: Stack(
+                children: [
+                  Container(
+                    width: size.width,
+                    height: size.height * 0.40,
+                    decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                              color: AppStyle.shadowMainColor,
+                              spreadRadius: 2,
+                              blurRadius: 1,
+                              offset: Offset(0.0, 2.0)),
                         ],
+                        color: AppStyle.secondColor,
+                        borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(28),
+                            bottomRight: Radius.circular(28))),
+                    child: GestureDetector(
+                      child: Container(
+                        margin:
+                        EdgeInsets.only(bottom: constraints.maxHeight / 6.5),
+                        child: Image.asset('assets/images/banner.png'),
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          );
+                  Container(
+                    padding: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.height / 2.5),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 18.0, vertical: 3.0),
+                          child: Text("Aulas",
+                              style: GoogleFonts.roboto(
+                                  color: AppStyle.titleColor,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500)),
+                        ),
+                        Container(
+                          height: 100,
+                          child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            padding: EdgeInsets.only(left: 30, right: 3),
+                            children: [
+                              Container(
+                                height: 125,
+                                width: 170,
+                                margin: EdgeInsets.all(5),
+                                child: Center(
+                                  child:
+                                  Image.asset('assets/images/biomas.png'),
+                                ),
+                              ),
+                              Container(
+                                height: 125,
+                                width: 170,
+                                margin: EdgeInsets.all(5),
+                                child: Center(
+                                  child:
+                                  Image.asset('assets/images/angulos.png'),
+                                ),
+                              ),
+                              Container(
+                                height: 125,
+                                width: 170,
+                                margin: EdgeInsets.all(5),
+                                child: Center(
+                                  child:
+                                  Image.asset('assets/images/adverbio.png'),
+                                ),
+                              ),
+                              Container(
+                                width: 185,
+                                child: Center(
+                                  child: Image.asset(
+                                    'assets/images/banner2.png',
+                                    height: 170,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 18.0, vertical: 3.0),
+                          child: Text("Meus Favoritos",
+                              style: GoogleFonts.roboto(
+                                  color: AppStyle.titleColor,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500)),
+                        ),
+                        Container(
+                          height: 100,
+                          child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            padding: EdgeInsets.only(left: 30, right: 3),
+                            children: [
+                              Container(
+                                height: 125,
+                                width: 170,
+                                margin: EdgeInsets.all(5),
+                                child: Center(
+                                  child:
+                                  Image.asset('assets/images/adverbio.png'),
+                                ),
+                              ),
+                              Container(
+                                width: 185,
+                                child: Center(
+                                  child: Image.asset(
+                                    'assets/images/banner2.png',
+                                    height: 165,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                height: 125,
+                                width: 170,
+                                margin: EdgeInsets.all(5),
+                                child: Center(
+                                  child:
+                                  Image.asset('assets/images/angulos.png'),
+                                ),
+                              ),
+                              Container(
+                                height: 125,
+                                width: 170,
+                                margin: EdgeInsets.all(5),
+                                child: Center(
+                                  child:
+                                  Image.asset('assets/images/biomas.png'),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ));
         } else {
           return Container(
               width: constraints.maxWidth,

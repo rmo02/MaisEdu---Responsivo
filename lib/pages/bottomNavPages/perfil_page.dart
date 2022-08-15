@@ -10,6 +10,24 @@ import 'package:resposividade/style/app_style.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+// class User {
+//   String? id;
+//   String? name;
+//   String? mat;
+//   String? escola_name;
+//   String? turma_name;
+//
+//   User({this.id,  this.name,  this.mat,  this.escola_name,  this.turma_name});
+//
+//   User.fromJson(Map<String, dynamic> json) {
+//     id = json['id'];
+//     name = json['name'];
+//     mat = json['mat'];
+//     escola_name = json['escola_name'];
+//     turma_name = json['turma_name'];
+//   }
+// }
+
 class PerfilPage extends StatefulWidget {
   const PerfilPage({Key? key}) : super(key: key);
 
@@ -17,28 +35,43 @@ class PerfilPage extends StatefulWidget {
   State<PerfilPage> createState() => _PerfilPageState();
 }
 
-
-
 class _PerfilPageState extends State<PerfilPage> {
 
+  //late Future<List<User>> _model;
 
-var _aluno;
+  // Future<List<User>> _getUserData(int id) async {
+  //   SharedPreferences idALuno = await SharedPreferences.getInstance();
+  //   String id = idALuno.getString('id')!;
+  //
+  //   List<dynamic> values = id.split("Id ");
+  //   var url = Uri.parse('http://192.168.6.20:3010/escolas/users/alunos/${values[0]}');
+  //   final response = await http.get(url);
+  //
+  //   if (response.statusCode == 200) {
+  //     final jsonBody = json.decode(response.body) as List;
+  //     return jsonBody.map((data) => new User.fromJson(data)).toList();
+  //   } else
+  //     throw Exception("Unable to get Employee list");
+  // }
 
-  _GetAluno() async {
+  String? name = "";
+  String? mat = "";
+  String? escola_name = "";
+  String? turma_name = "";
+
+  _getAluno() async {
     SharedPreferences idALuno = await SharedPreferences.getInstance();
     String id = idALuno.getString('id')!;
-
     List<dynamic> values = id.split("Id ");
+
     var url = Uri.parse('http://192.168.6.20:3010/escolas/users/alunos/${values[0]}');
     var resposta = await http.get(url);
-
     if (resposta.statusCode == 200) {
-      Map<String, dynamic> map = new Map<String, dynamic>.from(jsonDecode(resposta.body)["aluno"]);
-      print(_aluno);
-      setState(() {
-         _aluno = map;
-         print(_aluno);
-      });
+      Map<String, dynamic> map = json.decode(resposta.body);
+      name = map["aluno"]["name"];
+      mat = map["aluno"]["mat"];
+      escola_name = map["aluno"]["escola_name"];
+      turma_name = map["aluno"]["turma_name"];
       return map;
     } else {
       throw Exception('Nao foi possivel carregar usuários');
@@ -48,13 +81,17 @@ var _aluno;
   @override
   void initState() {
     super.initState();
-    _GetAluno();
+    _getAluno();
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    String? _name = name;
+    String? _mat = mat;
+    String? _escola_name = escola_name;
+    String? _turma_name = turma_name;
     return Scaffold(
       appBar: AppBar(
         title: Container(
@@ -88,202 +125,194 @@ var _aluno;
       extendBody: true,
       body: LayoutBuilder(
           builder: (_, constraints) {
-        return Container(
-          height: constraints.maxHeight,
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                FutureBuilder(
-                  future: _GetAluno(),
-                    builder: (context, snapshot){
-                      return Container(
-                        width: size.width,
-                        height: 220,
-                        child: Container(
-                          child: Column(
-                            children: [
-                              Stack(
-                                children: [
-                                  Container(
-                                    child: Image.asset(
-                                      "assets/images/moldura.png",
-                                      height: 150,
-                                      width: 250,
-                                    ),
-                                    margin: EdgeInsets.only(top: 20, right: 210),
+            return Container(
+              height: constraints.maxHeight,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: size.width,
+                      height: 220,
+                      child: Container(
+                        child: Column(
+                          children: [
+                            Stack(
+                              children: [
+                                Container(
+                                  child: Image.asset(
+                                    "assets/images/moldura.png",
+                                    height: 150,
+                                    width: 250,
                                   ),
-                                  Container(
-                                    child: Image.asset(
-                                      "assets/images/person.png",
-                                      height: 150,
-                                      width: 200,
-                                    ),
-                                    margin: EdgeInsets.only(top: 1, right: 210),
+                                  margin: EdgeInsets.only(top: 20, right: 210),
+                                ),
+                                Container(
+                                  child: Image.asset(
+                                    "assets/images/person.png",
+                                    height: 150,
+                                    width: 200,
                                   ),
-                                  Container(
-                                    margin: EdgeInsets.only(left: 130, top: 18),
+                                  margin: EdgeInsets.only(top: 1, right: 210),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(left: 130, top: 18),
+                                  child: Text(
+                                    _name! != null ? _name : "A",
+                                    style: GoogleFonts.roboto(
+                                        color: Colors.white,
+                                        fontSize: 21,
+                                        fontWeight: FontWeight.w400),
+                                  ),
+                                ),
+                                Container(
+                                  width: 110,
+                                  height: 26,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      color: Color(0xff364FC7)),
+                                  margin: EdgeInsets.only(left: 130, top: 70),
+                                  child: Center(
                                     child: Text(
-                                      _aluno['name'],
+                                      _escola_name! != null ? _escola_name : "",
                                       style: GoogleFonts.roboto(
                                           color: Colors.white,
-                                          fontSize: 21,
+                                          fontSize: 12,
                                           fontWeight: FontWeight.w400),
                                     ),
                                   ),
-                                  Container(
-                                    width: 110,
-                                    height: 26,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(12),
-                                        color: Color(0xff364FC7)),
-                                    margin: EdgeInsets.only(left: 130, top: 70),
-                                    child: Center(
-                                      child: Text(
-                                        _aluno['mat'],
-                                        style: GoogleFonts.roboto(
-                                            color: Colors.white,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w400),
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 55,
-                                    height: 26,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(12),
-                                        color: Color(0xff364FC7)),
-                                    margin: EdgeInsets.only(left: 250, top: 70),
-                                    child: Center(
-                                      child: Text(
-                                        "jsdgbhkdj",
-                                        style: GoogleFonts.roboto(
-                                            color: Colors.white,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w400),
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 110,
-                                    height: 26,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(12),
-                                        color: Color(0xff364FC7)),
-                                    margin: EdgeInsets.only(left: 130, top: 100),
-                                    child: Center(
-                                      child: Text(
-                                        "ljafdb",
-                                        style: GoogleFonts.roboto(
-                                            color: Colors.white,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 50,
-                                    height: 24,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(12),
-                                        color: Color(0xff00A1A1)),
-                                    margin: EdgeInsets.only(left: 250, top: 100),
-                                    child: Center(
-                                      child: Text(
-                                        "150",
-                                        style: GoogleFonts.roboto(
+                                ),
+                                Container(
+                                  width: 55,
+                                  height: 26,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      color: Color(0xff364FC7)),
+                                  margin: EdgeInsets.only(left: 250, top: 70),
+                                  child: Center(
+                                    child: Text(
+                                      _turma_name! != null ? _turma_name : "",
+                                      style: GoogleFonts.roboto(
                                           color: Colors.white,
                                           fontSize: 12,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  width: 110,
+                                  height: 26,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      color: Color(0xff364FC7)),
+                                  margin: EdgeInsets.only(left: 130, top: 100),
+                                  child: Center(
+                                    child: Text(
+                                      _mat! != null ? _mat : "",
+                                      style: GoogleFonts.roboto(
+                                          color: Colors.white,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  width: 50,
+                                  height: 24,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      color: Color(0xff00A1A1)),
+                                  margin: EdgeInsets.only(left: 250, top: 100),
+                                  child: Center(
+                                    child: Text(
+                                      "150",
+                                      style: GoogleFonts.roboto(
+                                        color: Colors.white,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                   ),
-                                ],
-                              ),
-                            ],
-                          ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
-                        padding: const EdgeInsets.all(20),
+                      ),
+                      padding: const EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                                color: AppStyle.shadowMainColor,
+                                spreadRadius: 2,
+                                blurRadius: 1,
+                                offset: Offset(0.0, 2.0)),
+                          ],
+                          color: AppStyle.secondColor,
+                          borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(28),
+                              bottomRight: Radius.circular(28))),
+                    ),
+                    SizedBox(
+                      height: 13,
+                    ),
+
+                    Center(
+                      child: Container(
+                        width: 350,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Image.asset('assets/images/rank.png'),
+                            Text(
+                              "Você está na divisão ouro,\n"
+                                  "faça as atividades e assista\n"
+                                  "aulas para chegar ao Platina!",
+                              style: TextStyle(
+                                  color: Colors.white, fontWeight: FontWeight.bold),
+                              textAlign: TextAlign.left,
+                            ),
+                          ],
+                        ),
+                        height: 120,
                         decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                  color: AppStyle.shadowMainColor,
-                                  spreadRadius: 2,
-                                  blurRadius: 1,
-                                  offset: Offset(0.0, 2.0)),
-                            ],
-                            color: AppStyle.secondColor,
-                            borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(28),
-                                bottomRight: Radius.circular(28))),
-                      );
-                    }
-                ),
-
-
-
-               SizedBox(
-                  height: 13,
-                ),
-
-                Center(
-                  child: Container(
-                    width: 370,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Image.asset('assets/images/rank.png'),
-                        Text(
-                          "Você está na divisão ouro,\n"
-                          "faça as atividades e assista\n"
-                          "aulas para chegar ao Platina!",
-                          style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.left,
+                          color: Color(0xff91A7FF),
+                          borderRadius: BorderRadius.all(Radius.circular(28)),
+                          boxShadow: [
+                            BoxShadow(
+                                color: AppStyle.shadowMainColor,
+                                spreadRadius: 2,
+                                blurRadius: 1,
+                                offset: Offset(0.0, 2.0)),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
-                    height: 120,
-                    decoration: BoxDecoration(
-                      color: Color(0xff91A7FF),
-                      borderRadius: BorderRadius.all(Radius.circular(28)),
-                      boxShadow: [
-                        BoxShadow(
-                            color: AppStyle.shadowMainColor,
-                            spreadRadius: 2,
-                            blurRadius: 1,
-                            offset: Offset(0.0, 2.0)),
-                      ],
+                    SizedBox(
+                      height: 13,
                     ),
-                  ),
-                ),
-                SizedBox(
-                  height: 13,
-                ),
 
-                //texto
-                Container(
-                    padding: EdgeInsets.only(left: 20),
-                    child: Text(
-                      "Aulas Baixadas",
-                      style: TextStyle(color: Color(0xff403B91), fontSize: 18),
-                      textAlign: TextAlign.start,
-                    )),
-                SizedBox(
-                  height: 10,
-                ),
+                    //texto
+                    Container(
+                        padding: EdgeInsets.only(left: 20),
+                        child: Text(
+                          "Aulas Baixadas",
+                          style: TextStyle(color: Color(0xff403B91), fontSize: 18),
+                          textAlign: TextAlign.start,
+                        )),
+                    SizedBox(
+                      height: 10,
+                    ),
 
-                //lista de aulas
-                Container(
-                  height: 120,
-                  child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      padding: EdgeInsets.only(left: 30, right: 3),
-                      itemCount: 6,
-                      itemBuilder: (context, index) => Container(
+                    //lista de aulas
+                    Container(
+                      height: 120,
+                      child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          padding: EdgeInsets.only(left: 30, right: 3),
+                          itemCount: 6,
+                          itemBuilder: (context, index) => Container(
                             height: 125,
                             width: 170,
                             decoration: BoxDecoration(
@@ -294,87 +323,88 @@ var _aluno;
                               child: Text("Card $index"),
                             ),
                           )),
-                ),
+                    ),
 
-                SizedBox(
-                  height: 20,
-                ),
+                    SizedBox(
+                      height: 20,
+                    ),
 
-                //botões
-                Container(
-                  alignment: Alignment.center,
-                  child: ElevatedButton(
-                      onPressed: () => Navigator.push(
-                          context,
-                          PageTransition(
-                              child: const MinhasNotasPage(),
-                              type: PageTransitionType.fade,
-                              duration: const Duration(milliseconds: 10))),
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18)),
-                        fixedSize: Size(350, 50),
-                        primary: Color(0xff00A1A1),
+                    //botões
+                    Container(
+                      alignment: Alignment.center,
+                      child: ElevatedButton(
+                          onPressed: () => Navigator.push(
+                              context,
+                              PageTransition(
+                                  child: const MinhasNotasPage(),
+                                  type: PageTransitionType.fade,
+                                  duration: const Duration(milliseconds: 10))),
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18)),
+                            fixedSize: Size(350, 50),
+                            primary: Color(0xff00A1A1),
+                          ),
+                          child: Text(
+                            'Minhas Notas',
+                            style: TextStyle(fontSize: 18, fontFamily: 'Roboto'),
+                          )
                       ),
-                      child: Text(
-                        'Minhas Notas',
-                        style: TextStyle(fontSize: 18, fontFamily: 'Roboto'),
-                      )),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      alignment: Alignment.center,
+                      child: ElevatedButton(
+                          onPressed: () => Navigator.push(
+                              context,
+                              PageTransition(
+                                  child: const QualiPage(),
+                                  type: PageTransitionType.fade,
+                                  duration: const Duration(milliseconds: 10))),
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18)),
+                            fixedSize: Size(350, 50),
+                            primary: Color(0xff00B7B7),
+                          ),
+                          child: Text(
+                            'Classificação',
+                            style: TextStyle(fontSize: 18, fontFamily: 'Roboto'),
+                          )),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      alignment: Alignment.center,
+                      child: ElevatedButton(
+                          onPressed: () => Navigator.push(
+                              context,
+                              PageTransition(
+                                  child: const ConfigPage(),
+                                  type: PageTransitionType.fade,
+                                  duration: const Duration(milliseconds: 10))),
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18)),
+                            fixedSize: Size(350, 50),
+                            primary: Color(0xff67D4D4),
+                          ),
+                          child: Text(
+                            'Configurações',
+                            style: TextStyle(fontSize: 18, fontFamily: 'Roboto'),
+                          )),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                  ],
                 ),
-                SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  alignment: Alignment.center,
-                  child: ElevatedButton(
-                      onPressed: () => Navigator.push(
-                          context,
-                          PageTransition(
-                              child: const QualiPage(),
-                              type: PageTransitionType.fade,
-                              duration: const Duration(milliseconds: 10))),
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18)),
-                        fixedSize: Size(350, 50),
-                        primary: Color(0xff00B7B7),
-                      ),
-                      child: Text(
-                        'Classificação',
-                        style: TextStyle(fontSize: 18, fontFamily: 'Roboto'),
-                      )),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  alignment: Alignment.center,
-                  child: ElevatedButton(
-                      onPressed: () => Navigator.push(
-                          context,
-                          PageTransition(
-                              child: const ConfigPage(),
-                              type: PageTransitionType.fade,
-                              duration: const Duration(milliseconds: 10))),
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18)),
-                        fixedSize: Size(350, 50),
-                        primary: Color(0xff67D4D4),
-                      ),
-                      child: Text(
-                        'Configurações',
-                        style: TextStyle(fontSize: 18, fontFamily: 'Roboto'),
-                      )),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-              ],
-            ),
-          ),
-        );
-      }),
+              ),
+            );
+          }),
     );
   }
 }

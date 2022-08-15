@@ -78,19 +78,19 @@ class _AulasState extends State<Aulas> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-            decoration: _playArea == false
+          decoration: _playArea == false
           ? BoxDecoration(color: AppStyle.secondColor)
           : BoxDecoration(color: Colors.black),
-          child: Column(
-            children: [
-            if (_playArea == false)
-              Container(
-                padding: const EdgeInsets.only(top: 70, left: 30, right: 30),
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.3,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+      child: Column(
+        children: [
+          if (_playArea == false)
+            Container(
+              padding: const EdgeInsets.only(top: 70, left: 30, right: 30),
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.3,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
                   Row(
                     children: [
                       InkWell(
@@ -203,6 +203,7 @@ class _AulasState extends State<Aulas> {
     }
   }
 
+  //controller do VídeoPlayer
   _onTapVideo(int index) {
     final controller = VideoPlayerController.network(_aulas[index]["file"]);
     _controller = controller;
@@ -223,11 +224,13 @@ class _AulasState extends State<Aulas> {
         videoPlayerController: controller);
   }
 
+  //Listando todas as disciplinas
   _listViewCard() {
     return Expanded(
       child: ListView.builder(
           itemCount: _aulas.length,
           itemBuilder: (context, int index) {
+            //Definindo a area do player de vídeo.
             return GestureDetector(
               onTap: () {
                 _onTapVideo(index);
@@ -244,6 +247,7 @@ class _AulasState extends State<Aulas> {
     );
   }
 
+  //Colocando Thumb e Título nos vídeos
   _buildCard(int index) {
     return Container(
       width: 200,
@@ -293,7 +297,6 @@ class _AulasState extends State<Aulas> {
                       )
             ],
           ),
-
         ],
       ),
     );

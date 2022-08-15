@@ -24,14 +24,17 @@ var suggestTag = [
 class CreateAnotation extends StatefulWidget {
   const CreateAnotation({Key? key}) : super(key: key);
 
+
+
   @override
   State<CreateAnotation> createState() => _CreateAnotationState();
 }
 
 class _CreateAnotationState extends State<CreateAnotation> {
+  List tags = [];
   final controller = Get.put(TagStateController());
   TextEditingController textController = TextEditingController();
-  // TextEditingController TagStateController = TextEditingController();
+
 
   TextEditingController _anotacoesController = TextEditingController();
 
@@ -312,11 +315,15 @@ class _CreateAnotationState extends State<CreateAnotation> {
             ],
           ),
         );
+
       }),
     );
   }
 
+
+
   Future<bool> postAnotacoes() async {
+    print("oiiii + ${TagStateController}");
     SharedPreferences idALuno = await SharedPreferences.getInstance();
     String id = idALuno.getString('id')!;
     List<dynamic> values = id.split("Id ");
@@ -330,7 +337,7 @@ class _CreateAnotationState extends State<CreateAnotation> {
       body: jsonEncode(<String, String>{
         "descricao" : _anotacoesController.text,
         "id_aluno" : "${values[0]}",
-        "array_tags": "[${TagStateController}]"
+        "array_tags": "[${textController.text}]"
       }),
     );
     if (response.statusCode == 200){

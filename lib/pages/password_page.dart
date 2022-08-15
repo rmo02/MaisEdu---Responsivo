@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:resposividade/pages/config_page.dart';
 import 'package:resposividade/style/app_style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -94,7 +95,13 @@ class _PasswordPageState extends State<PasswordPage> {
                   child: SizedBox(
                     height: 50,
                     width: 380,
-                    child: TextField(
+                    child: TextFormField(
+                      validator: (senha){
+                        if(senha == null || senha.isEmpty){
+                          return 'Por favor, Digite a senha';
+                        }
+                        return null;
+                      },
                       controller: _atualPassword,
                       decoration: InputDecoration(
                         hintText: "**********",
@@ -125,7 +132,13 @@ class _PasswordPageState extends State<PasswordPage> {
                   child: SizedBox(
                     height: 50,
                     width: 380,
-                    child: TextField(
+                    child: TextFormField(
+                      validator: (senha){
+                        if(senha == null || senha.isEmpty){
+                          return 'Por favor, Digite a senha';
+                        }
+                        return null;
+                      },
                       controller: _novoPassword1,
                       decoration: InputDecoration(
                         hintText: "**********",
@@ -158,12 +171,11 @@ class _PasswordPageState extends State<PasswordPage> {
                     width: 380,
                     child: TextFormField(
                       validator: (senha){
-                        if (_novoPassword1 != _novoPassword2) {
-                          return "Por favor, revise sua senha";
-                         } else {
-                          return null;
+                        if(senha == null || senha.isEmpty){
+                          return 'Por favor, Digite a senha';
                         }
-                        },
+                        return null;
+                      },
                       controller: _novoPassword2,
                       decoration: InputDecoration(
                         hintText: "**********",
@@ -194,9 +206,18 @@ class _PasswordPageState extends State<PasswordPage> {
                               fontSize: 18,
                               fontFamily: 'Roboto'),)),
                       SizedBox(width: 10,),
-                      ElevatedButton(onPressed: () {},
-                          style: ElevatedButton.styleFrom(
+                      ElevatedButton(
+                          onPressed: ()  {
+                            if (_novoPassword1.text == _novoPassword2.text){
+                              changePassword();
+                            }
+                            else {
+                              return print('Errad');
+                            }
 
+
+                      },
+                          style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
                             fixedSize: Size(170, 50), primary: Color(0xff4263EB),
                           ),
@@ -214,25 +235,27 @@ class _PasswordPageState extends State<PasswordPage> {
 
 Future<bool> changePassword () async {
   SharedPreferences idSenha = await SharedPreferences.getInstance();
-  String id = idSenha.getString('id')!;
+  String id = idSenha.getString('id_senha')!;
+  print(id);
   List<dynamic> values = id.split("Id ");
-
-  Response response = await post(
-    Uri.parse('http://192.168.6.20:3010/escolas/users/change_password'),
+  var url = Uri.parse('http://192.168.6.20:3010/escolas/users/change_password');
+  Response response = await put(
+    url,
     headers: <String, String>{
       'Content-Type': 'application/json',
-      'Accept': 'application/json'
+      'Accept' : 'application/json'
     },
-    body: jsonEncode(<String, String>{
-      "actual_password": _atualPassword.text,
-      "new_password": _novoPassword2.text,
-      "id_user": "${values[0]}"
+    body: jsonEncode(<String, String> {
+      'actual_password' : _atualPassword.text,
+      'new_password': _novoPassword2.text,
+      'id_user': "${values[0]}"
     }),
   );
   if (response.statusCode == 200){
-    print('Deu certo');
+  print('deu certo');
     return true;
   } else {
+    print('deu errado');
     return false;
   }
 }
