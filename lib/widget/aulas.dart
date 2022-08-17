@@ -10,6 +10,7 @@ import 'package:resposividade/interfaces/atv.dart';
 import 'package:resposividade/interfaces/disciplina.dart';
 import 'package:resposividade/quizz/startQuizz.dart';
 import 'package:resposividade/style/app_style.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
 
 class Aulas extends StatefulWidget {
@@ -22,33 +23,65 @@ class Aulas extends StatefulWidget {
 
 class _AulasState extends State<Aulas> {
   List _aulas = [];
+  List _conteudo = [];
 
   //get disciplinas por id
   Future<Disciplina> _GetDisciplinas() async {
+    //ID da matéria
     var id = this.widget.id;
-    var disciplinas = "http://192.168.6.20:3010/disciplinas/${id}";
+
+    var disciplinas = "http://192.168.6.20:3010/disciplinasAluno/${id}";
     var url = Uri.parse(disciplinas);
     var resposta = await http.get(url);
     if (resposta.statusCode == 200) {
-      Map r = jsonDecode(resposta.body)["disciplina"];
-      print(r);
-      return Disciplina.fromJson(jsonDecode(resposta.body)["disciplina"]);
+      Map r = jsonDecode(resposta.body)["disciplinas"];
+       print(r);
+      return Disciplina.fromJson(jsonDecode(resposta.body)["disciplinas"]);
     } else {
       throw Exception('Nao foi possivel carregar usuários');
     }
   }
 
   //get aulas
-  _pegarAulas() async {
-    var disciplinas =
-        "http://192.168.6.20:3010/aulas/series/986e85fc-0a5f-457e-9b18-bacc4e01ba6e/${widget.id}";
-    var url = Uri.parse(disciplinas);
+  // _pegarAulas() async {
+  //   //pegando ID do aluno
+  //   SharedPreferences idALuno = await SharedPreferences.getInstance();
+  //   String id = idALuno.getString('id')!;
+  //   List<dynamic> values = id.split("Id ");
+  //
+  //   var disciplinas =
+  //       "http://192.168.6.20:3010/aulas/series/${id}/${widget.id}";
+  //   var url = Uri.parse(disciplinas);
+  //   var resposta = await http.get(url);
+  //   if (resposta.statusCode == 200) {
+  //     Map<String, dynamic> map = jsonDecode(resposta.body);
+  //     List<dynamic> data = map["aulas_final"];
+  //     print(_aulas);
+  //     setState(() {
+  //       _aulas = data;
+  //     });
+  //     return data;
+  //   } else {
+  //     throw Exception('Nao foi possivel carregar usuários');
+  //   }
+  // }
+
+  _pegarConteudo() async {
+    //pegando ID do aluno
+    SharedPreferences idALuno = await SharedPreferences.getInstance();
+    String id = idALuno.getString('id')!;
+
+
+    var conteudo =
+        "http://192.168.6.20:3010/conteudosAluno/${id}/${widget.id}";
+    var url = Uri.parse(conteudo);
     var resposta = await http.get(url);
     if (resposta.statusCode == 200) {
       Map<String, dynamic> map = jsonDecode(resposta.body);
-      List<dynamic> data = map["aulas_final"];
+      List<dynamic> data = map["conteudo"];
+      // print(_conteudo);
       setState(() {
-        _aulas = data;
+        _conteudo = data;
       });
       return data;
     } else {
@@ -61,14 +94,11 @@ class _AulasState extends State<Aulas> {
   @override
   void initState() {
     super.initState();
-    _pegarAulas();
+     // _pegarAulas();
     futureDisciplina = _GetDisciplinas();
+    _pegarConteudo();
   }
 
-  List<Atv> atvs = [
-    Atv(1, "Aula 1", "Aula 1 sobre matemática básica", false),
-    Atv(2, "Aula 2", "Aula 2 sobre a trigonometria", false),
-  ];
 
   bool _playArea = false;
   VideoPlayerController? _controller;
@@ -78,7 +108,7 @@ class _AulasState extends State<Aulas> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-          decoration: _playArea == false
+      decoration: _playArea == false
           ? BoxDecoration(color: AppStyle.secondColor)
           : BoxDecoration(color: Colors.black),
       child: Column(

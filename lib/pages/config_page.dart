@@ -29,10 +29,18 @@ class _ConfigPageState extends State<ConfigPage> {
       child: Scaffold(
         resizeToAvoidBottomInset : false,
         appBar: AppBar(
-          title: Container(
-            width: 120,
-            height: 60,
-            child: Image.asset('assets/images/logo-educacao.png',),
+          title: InkWell(
+            onTap: (){
+              Navigator.pushReplacement(
+                  context, MaterialPageRoute(
+                  builder: (context) => BarItemPage(),
+              ));
+            },
+            child: Container(
+              width: 120,
+              height: 60,
+              child: Image.asset('assets/images/logo-educacao.png',),
+            ),
           ),
           backgroundColor: AppStyle.secondColor,
           elevation: 0,

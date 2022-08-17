@@ -4,7 +4,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:resposividade/pages/bottomNavPages/perfil_page.dart';
 import 'package:resposividade/pages/lista_atividades.dart';
 import 'package:http/http.dart' as http;
-import 'package:resposividade/widget/aulas.dart';
+import 'package:resposividade/widget/conteudo.dart';
 import '../../style/app_style.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -30,7 +30,6 @@ class _ClassesPageState extends State<ClassesPage> {
     if (resposta.statusCode == 200) {
       Map<String, dynamic> map = jsonDecode(resposta.body);
       List<dynamic> data = map["disciplinas"];
-      print(data);
       setState(() {
         _disciplinas = data;
       });
@@ -120,7 +119,7 @@ class _ClassesPageState extends State<ClassesPage> {
                                 onTap: (){
                                   Navigator.push(context,
                                       MaterialPageRoute(
-                                          builder: (context) => Aulas(id: _disciplinas[index]['id'])
+                                          builder: (context) => ConteudoPage(id: _disciplinas[index]['disciplina']['id'])
                                       ));
                                 },
                                 child: Container(
@@ -154,15 +153,17 @@ class _ClassesPageState extends State<ClassesPage> {
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ),
-                              )
+                              ),
                             ],
                           ),
 
                         ],
                       ),
+
                     );
 
                   }),
+
             );
           } else {
             return  MediaQuery.removePadding(
@@ -191,7 +192,7 @@ class _ClassesPageState extends State<ClassesPage> {
                                         onTap: (){
                                           Navigator.push(context,
                                               MaterialPageRoute(
-                                                  builder: (context) => Aulas(id: _disciplinas[index]['id'])
+                                                  builder: (context) => ConteudoPage(id: _disciplinas[index]['disciplina']['id'])
                                               ));
                                         },
                                         child: Container(
@@ -217,7 +218,8 @@ class _ClassesPageState extends State<ClassesPage> {
                                             color: Colors.black54,
                                             fontWeight: FontWeight.bold),
                                         ),
-                                      )
+                                      ),
+
                                     ],
                                   ),
 
@@ -226,10 +228,13 @@ class _ClassesPageState extends State<ClassesPage> {
                       );
 
                   }),
+
                   );
+
                 }
 
               },
+
             ),
       );
           }

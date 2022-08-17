@@ -1,7 +1,7 @@
 import 'dart:convert';
+import 'package:elegant_notification/elegant_notification.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:resposividade/pages/config_page.dart';
 import 'package:resposividade/style/app_style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -210,12 +210,8 @@ class _PasswordPageState extends State<PasswordPage> {
                           onPressed: ()  {
                             if (_novoPassword1.text == _novoPassword2.text){
                               changePassword();
-                            }
-                            else {
-                              return print('Errad');
-                            }
 
-
+                            }
                       },
                           style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
@@ -237,7 +233,7 @@ Future<bool> changePassword () async {
   SharedPreferences idSenha = await SharedPreferences.getInstance();
   String id = idSenha.getString('id_senha')!;
   print(id);
-  List<dynamic> values = id.split("Id ");
+  // List<dynamic> values = id.split("Id ");
   var url = Uri.parse('http://192.168.6.20:3010/escolas/users/change_password');
   Response response = await put(
     url,
@@ -248,14 +244,17 @@ Future<bool> changePassword () async {
     body: jsonEncode(<String, String> {
       'actual_password' : _atualPassword.text,
       'new_password': _novoPassword2.text,
-      'id_user': "${values[0]}"
+      'id_user': "${id}"
     }),
   );
   if (response.statusCode == 200){
-  print('deu certo');
+    ElegantNotification.success(description:  Text('Senha alterada com sucesso')).show(context);
+
     return true;
+
   } else {
-    print('deu errado');
+
+  ElegantNotification.error(description: Text('Senha incorreta')).show(context);
     return false;
   }
 }

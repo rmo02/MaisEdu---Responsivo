@@ -63,7 +63,6 @@ class _PerfilPageState extends State<PerfilPage> {
     SharedPreferences idALuno = await SharedPreferences.getInstance();
     String id = idALuno.getString('id')!;
     List<dynamic> values = id.split("Id ");
-
     var url = Uri.parse('http://192.168.6.20:3010/escolas/users/alunos/${values[0]}');
     var resposta = await http.get(url);
     if (resposta.statusCode == 200) {

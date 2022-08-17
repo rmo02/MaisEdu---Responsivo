@@ -177,7 +177,7 @@ class _LoginPageState extends State<LoginPage> {
       await sharedPreferences.setString('token', "Token ${jsonDecode(response.body)['token']}");
       await idAluno.setString('id', jsonDecode(response.body)['user']["id"]);
       await idSenha.setString('id_senha', jsonDecode(response.body)['user']["id_senha"]);
-      print(idSenha.getString('id_senha'));
+      // print(idSenha.getString('id_senha'));
       return true;
     } else {
       return false;

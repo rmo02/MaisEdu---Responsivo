@@ -1,10 +1,11 @@
 import 'dart:convert';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:elegant_notification/elegant_notification.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
 import 'package:resposividade/modules/tag_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../style/app_style.dart';
@@ -31,7 +32,7 @@ class CreateAnotation extends StatefulWidget {
 }
 
 class _CreateAnotationState extends State<CreateAnotation> {
-  List tags = [];
+
   final controller = Get.put(TagStateController());
   TextEditingController textController = TextEditingController();
 
@@ -40,7 +41,6 @@ class _CreateAnotationState extends State<CreateAnotation> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppStyle.secondColor,
@@ -115,7 +115,7 @@ class _CreateAnotationState extends State<CreateAnotation> {
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20)),
-                  child: TextField(
+                    child: TextField(
                     controller: _anotacoesController,
                     expands: true,
                     maxLines: null,
@@ -323,28 +323,31 @@ class _CreateAnotationState extends State<CreateAnotation> {
 
 
   Future<bool> postAnotacoes() async {
-    print("oiiii + ${TagStateController}");
+    print(controller.ListTags);
     SharedPreferences idALuno = await SharedPreferences.getInstance();
     String id = idALuno.getString('id')!;
     List<dynamic> values = id.split("Id ");
 
-    var response = await post(
-      Uri.parse('http://192.168.6.20:3010/anotacoes'),
-      headers: <String, String>{
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: jsonEncode(<String, String>{
+
+    var anotacoes = "http://192.168.6.20:3010/anotacoes";
+    var url = Uri.parse(anotacoes);
+    var resposta = await http.post(url,
+    headers: <String, String>{
+      "Content-Type": "application/json"
+    },
+      body: jsonEncode(<String,String>{
         "descricao" : _anotacoesController.text,
         "id_aluno" : "${values[0]}",
-        "array_tags": "[${textController.text}]"
-      }),
+        "array_tags": '[mtm]'
+      })
     );
-    if (response.statusCode == 200){
-
+    if (resposta.statusCode == 200){
+      ElegantNotification.success(description:Text('Anotação salva')).show(context);
       return true;
     } else {
+      ElegantNotification.error(description:Text('Erro ao salvar, revise o texto ou as tags')).show(context);
       return false;
     }
   }
 }
+
