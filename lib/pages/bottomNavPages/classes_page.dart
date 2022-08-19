@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:resposividade/pages/bottomNavPages/perfil_page.dart';
-import 'package:resposividade/pages/lista_atividades.dart';
 import 'package:http/http.dart' as http;
+import 'package:resposividade/widget/aulas.dart';
 import 'package:resposividade/widget/conteudo.dart';
 import '../../style/app_style.dart';
 import 'dart:convert';
@@ -33,6 +33,7 @@ class _ClassesPageState extends State<ClassesPage> {
       setState(() {
         _disciplinas = data;
       });
+
       return data;
     } else {
       throw Exception('Nao foi possivel carregar usuários');
@@ -59,14 +60,6 @@ class _ClassesPageState extends State<ClassesPage> {
           backgroundColor: AppStyle.secondColor,
           elevation: 0,
           actions: [
-            IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.search,
-                size: 25,
-                color: Colors.white,
-              ),
-            ),
             IconButton(
               onPressed: () {},
               icon: Icon(
@@ -119,23 +112,14 @@ class _ClassesPageState extends State<ClassesPage> {
                                 onTap: (){
                                   Navigator.push(context,
                                       MaterialPageRoute(
-                                          builder: (context) => ConteudoPage(id: _disciplinas[index]['disciplina']['id'])
+                                          builder: (context) => Aulas(id: _disciplinas[index]['disciplina']['id'])
                                       ));
                                 },
                                 child: Container(
                                   width: 150,
-                                  height: 100,
-                                  decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                          colors: [
-                                            AppStyle.grientCard,
-                                            AppStyle.gradientCart2
-                                          ]),
-                                      borderRadius:
-                                      BorderRadius.circular(8)),
                                   child: Container(
-                                      child: Image.asset(
-                                        'assets/images/calculadora.png',
+                                      child: Image.network(
+                                        _disciplinas[index]['disciplina']['icon'],
                                       )),
                                 ),
                               ),
@@ -156,7 +140,6 @@ class _ClassesPageState extends State<ClassesPage> {
                               ),
                             ],
                           ),
-
                         ],
                       ),
 
@@ -180,53 +163,51 @@ class _ClassesPageState extends State<ClassesPage> {
                   itemBuilder: (context, int index) {
                     return Container(
                       width: 170,
+                      height: 70,
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.only(topRight: Radius.circular(8), topLeft: Radius.circular(8)),
                           color: Colors.transparent),
-                      margin: EdgeInsets.all(5),
+                      margin: EdgeInsets.all(2),
                       child: Row(
-                          children: [
-                                 Column(
-                                    children: [
-                                      InkWell(
-                                        onTap: (){
-                                          Navigator.push(context,
-                                              MaterialPageRoute(
-                                                  builder: (context) => ConteudoPage(id: _disciplinas[index]['disciplina']['id'])
-                                              ));
-                                        },
-                                        child: Container(
-                                          width: 170,
-                                          height: 100,
-                                          decoration: BoxDecoration(
-                                              gradient: LinearGradient(
-                                                  colors: [
-                                                    AppStyle.grientCard,
-                                                    AppStyle.gradientCart2
-                                                  ]),
-                                              borderRadius:
-                                                  BorderRadius.circular(8)),
-                                          child: Container(
-                                              child: Image.asset(
-                                            'assets/images/calculadora.png',
-                                          )),
-                                        ),
-                                      ),
-                                      Container(
-                                        child: Text(_disciplinas[index]["disciplina"]['name'],
-                                          style: GoogleFonts.roboto(
-                                            color: Colors.black54,
-                                            fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-
-                                    ],
+                        children: [
+                          Column(
+                            children: [
+                              InkWell(
+                                onTap: (){
+                                  Navigator.push(context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Aulas(id: _disciplinas[index]['disciplina']['id'])
+                                      ));
+                                },
+                                child: Container(
+                                  width: 150,
+                                  child: Container(
+                                      child: Image.network(
+                                        _disciplinas[index]['disciplina']['icon'],
+                                      )),
+                                ),
+                              ),
+                              Container(
+                                width: 150,
+                                height: 20,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.only(bottomRight: Radius.circular(8), bottomLeft: Radius.circular(8)),
+                                    color: Colors.white
+                                ),
+                                child: Center(
+                                  child: Text(_disciplinas[index]["disciplina"]['name'],
+                                    style: GoogleFonts.roboto(
+                                        color: Colors.black54,
+                                        fontWeight: FontWeight.bold),
                                   ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
 
-                          ],
-                        ),
-                      );
-
+                    );
                   }),
 
                   );
