@@ -1,16 +1,14 @@
 import 'dart:async';
-// import 'dart:convert';
+import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:resposividade/interfaces/atv.dart';
-// import 'package:http/http.dart' as http;
+import 'package:http/http.dart' as http;
+import 'package:resposividade/pages/quali_page.dart';
+import 'package:resposividade/quizz/startQuizz.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class QuizScreeen extends StatefulWidget {
-  String id;
-
-  QuizScreeen({required this.id});
-
   @override
   State<QuizScreeen> createState() => _QuizScreeenState();
 
@@ -18,8 +16,6 @@ class QuizScreeen extends StatefulWidget {
 }
 
 class _QuizScreeenState extends State<QuizScreeen> {
-
-
 
   var currentQuestionIndex = 0;
   int seconds = 60;
@@ -43,7 +39,7 @@ class _QuizScreeenState extends State<QuizScreeen> {
   @override
   void initState() {
     super.initState();
-    quiz = getQuiz();
+     quiz = getQuiz();
     startTimer();
   }
 
@@ -83,10 +79,9 @@ class _QuizScreeenState extends State<QuizScreeen> {
 
     return Scaffold(
       body: Container(
-        margin: EdgeInsets.only(top: 30),
         width: double.infinity,
         height: double.infinity,
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.only(top:0, left: 12, right: 12, bottom: 12),
         decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topCenter,
@@ -101,15 +96,14 @@ class _QuizScreeenState extends State<QuizScreeen> {
               var data = snapshot.data["questoes"];
 
               if(isLoaded ==  false){
-                optionsList = data[currentQuestionIndex]["incorrect_answers"];
-                optionsList.add(data[currentQuestionIndex]["correct_answer"]);
-                optionsList.shuffle();
+                optionsList = data[currentQuestionIndex]["opcoes"];
                 isLoaded = true;
               }
 
               return SingleChildScrollView(
                 child: Column(
                   children: [
+                    SizedBox(height: 50,),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -120,7 +114,25 @@ class _QuizScreeenState extends State<QuizScreeen> {
                           ),
                           child: IconButton(
                               onPressed: () {
-                                Navigator.pop(context);
+                                showDialog(
+                                    context: context,
+                                  builder: (context) => AlertDialog(
+                                    title: Text("Deseja sair da atividade?"),
+                                    content: Text("Ao sair da atividade seu progresso será reiniciado"),
+                                    actions: [
+                                      TextButton(onPressed: (){
+                                        Navigator.pushReplacement(
+                                            context, MaterialPageRoute(
+                                          builder: (context) => startQuizz(),
+                                        )
+                                        );
+                                      }, child: Text('Sair')),
+                                      TextButton(onPressed: (){
+                                        Navigator.pop(context);
+                                      }, child: Text('Cancelar')),
+                                    ],
+                                  )
+                                    );
                               },
                               icon: const Icon(
                                 CupertinoIcons.xmark,
@@ -160,7 +172,9 @@ class _QuizScreeenState extends State<QuizScreeen> {
                       ],
                     ),
                     const SizedBox(height: 20,),
-                    Image.asset('assets/images/banner2.png'),
+                    Image.asset(
+                        height: 200,
+                        'assets/images/ideas.png'),
                     const SizedBox(height: 20,),
                     Align(
                       alignment: Alignment.centerLeft,
@@ -171,7 +185,7 @@ class _QuizScreeenState extends State<QuizScreeen> {
                       ),),
                     ),
                     const SizedBox(height: 20,),
-                    Text(data[currentQuestionIndex]["question"], style: GoogleFonts.roboto(
+                    Text(data[currentQuestionIndex]["title"], style: GoogleFonts.roboto(
                         fontSize: 22,
                         color: Colors.white
                     ),),
@@ -181,18 +195,18 @@ class _QuizScreeenState extends State<QuizScreeen> {
                         itemCount: optionsList.length,
                         itemBuilder:(BuildContext context, int index){
 
-                          var answer = data[currentQuestionIndex]["correct_answer"];
-
+                          //index da resposta correta
+                          var answer = data[currentQuestionIndex]["answer_index"];
 
                           return GestureDetector(
                             onTap: () {
                               setState(() {
-                                if (answer.toString() == optionsList[index].toString()) {
-                                  optionsColor[index] = Colors.green;
-
+                                if (optionsList[index] == optionsList[answer]) {
+                                  optionsColor[answer] = Colors.green;
                                   points = points + 10;
                                 } else {
                                   optionsColor[index] = Colors.red;
+                                  points = points - 2;
                                 }
 
                                 if (currentQuestionIndex < data.length - 1) {
@@ -204,8 +218,13 @@ class _QuizScreeenState extends State<QuizScreeen> {
                                     seconds = 60;
                                     startTimer();
                                   });
-                                } else {
+                                }
+
+
+
+                                else {
                                   timer!.cancel();
+                                  print(points);
                                 }
                               });
                             },
@@ -219,7 +238,7 @@ class _QuizScreeenState extends State<QuizScreeen> {
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: Text(optionsList[index].toString(), style: GoogleFonts.roboto(
-                                color: Colors.blue, fontSize: 18,
+                                color: Colors.black, fontSize: 18,
                               ),),
                             ),
                           );
@@ -239,6 +258,18 @@ class _QuizScreeenState extends State<QuizScreeen> {
     );
   }
 
+  getQuiz() async {
+    SharedPreferences idAtividade = await SharedPreferences.getInstance();
+    String id = idAtividade.getString('id')!;
+    List<dynamic> values = id.split("Id ");
+    var link = 'http://192.168.6.20:3010/atividadeQuestoes/${values[0]}';
+    var res = await http.get(Uri.parse(link));
+    if (res.statusCode == 200) {
+      var data = jsonDecode(res.body.toString());
+
+      return data;
+    }
+  }
 
 
 }

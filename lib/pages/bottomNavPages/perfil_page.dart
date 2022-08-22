@@ -10,24 +10,6 @@ import 'package:resposividade/style/app_style.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-// class User {
-//   String? id;
-//   String? name;
-//   String? mat;
-//   String? escola_name;
-//   String? turma_name;
-//
-//   User({this.id,  this.name,  this.mat,  this.escola_name,  this.turma_name});
-//
-//   User.fromJson(Map<String, dynamic> json) {
-//     id = json['id'];
-//     name = json['name'];
-//     mat = json['mat'];
-//     escola_name = json['escola_name'];
-//     turma_name = json['turma_name'];
-//   }
-// }
-
 class PerfilPage extends StatefulWidget {
   const PerfilPage({Key? key}) : super(key: key);
 
@@ -37,29 +19,12 @@ class PerfilPage extends StatefulWidget {
 
 class _PerfilPageState extends State<PerfilPage> {
 
-  //late Future<List<User>> _model;
+  String name = "";
+  String mat = "";
+  String escola_name = "";
+  String turma_name = "";
 
-  // Future<List<User>> _getUserData(int id) async {
-  //   SharedPreferences idALuno = await SharedPreferences.getInstance();
-  //   String id = idALuno.getString('id')!;
-  //
-  //   List<dynamic> values = id.split("Id ");
-  //   var url = Uri.parse('http://192.168.6.20:3010/escolas/users/alunos/${values[0]}');
-  //   final response = await http.get(url);
-  //
-  //   if (response.statusCode == 200) {
-  //     final jsonBody = json.decode(response.body) as List;
-  //     return jsonBody.map((data) => new User.fromJson(data)).toList();
-  //   } else
-  //     throw Exception("Unable to get Employee list");
-  // }
-
-  String? name = "";
-  String? mat = "";
-  String? escola_name = "";
-  String? turma_name = "";
-
-  _getAluno() async {
+  Future _getAluno() async {
     SharedPreferences idALuno = await SharedPreferences.getInstance();
     String id = idALuno.getString('id')!;
     List<dynamic> values = id.split("Id ");
@@ -67,10 +32,12 @@ class _PerfilPageState extends State<PerfilPage> {
     var resposta = await http.get(url);
     if (resposta.statusCode == 200) {
       Map<String, dynamic> map = json.decode(resposta.body);
-      name = map["aluno"]["name"];
-      mat = map["aluno"]["mat"];
-      escola_name = map["aluno"]["escola_name"];
-      turma_name = map["aluno"]["turma_name"];
+      setState(() {
+        name = map["aluno"]["name"];
+        mat = map["aluno"]["mat"];
+        escola_name = map["aluno"]["escola_name"];
+        turma_name = map["aluno"]["turma_name"];
+      });
       return map;
     } else {
       throw Exception('Nao foi possivel carregar usuários');
@@ -87,10 +54,10 @@ class _PerfilPageState extends State<PerfilPage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    String? _name = name;
-    String? _mat = mat;
-    String? _escola_name = escola_name;
-    String? _turma_name = turma_name;
+    String _name = name;
+    String _mat = mat;
+    String _escola_name = escola_name;
+    String _turma_name = turma_name;
     return Scaffold(
       appBar: AppBar(
         title: Container(
@@ -157,7 +124,7 @@ class _PerfilPageState extends State<PerfilPage> {
                                 Container(
                                   margin: EdgeInsets.only(left: 130, top: 18),
                                   child: Text(
-                                    _name! != null ? _name : "A",
+                                    _name != null ? _name : "",
                                     style: GoogleFonts.roboto(
                                         color: Colors.white,
                                         fontSize: 21,
@@ -173,7 +140,7 @@ class _PerfilPageState extends State<PerfilPage> {
                                   margin: EdgeInsets.only(left: 130, top: 70),
                                   child: Center(
                                     child: Text(
-                                      _escola_name! != null ? _escola_name : "",
+                                      _escola_name != null ? _escola_name : "",
                                       style: GoogleFonts.roboto(
                                           color: Colors.white,
                                           fontSize: 12,
@@ -190,7 +157,7 @@ class _PerfilPageState extends State<PerfilPage> {
                                   margin: EdgeInsets.only(left: 250, top: 70),
                                   child: Center(
                                     child: Text(
-                                      _turma_name! != null ? _turma_name : "",
+                                      _turma_name != null ? _turma_name : "",
                                       style: GoogleFonts.roboto(
                                           color: Colors.white,
                                           fontSize: 12,
@@ -207,7 +174,7 @@ class _PerfilPageState extends State<PerfilPage> {
                                   margin: EdgeInsets.only(left: 130, top: 100),
                                   child: Center(
                                     child: Text(
-                                      _mat! != null ? _mat : "",
+                                      _mat != null ? _mat : "",
                                       style: GoogleFonts.roboto(
                                           color: Colors.white,
                                           fontSize: 12,

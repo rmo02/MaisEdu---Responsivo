@@ -10,7 +10,6 @@ import 'package:resposividade/modules/tag_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../style/app_style.dart';
 
-
 var suggestTag = [
   "Matemática",
   "Português",
@@ -25,8 +24,6 @@ var suggestTag = [
 class CreateAnotation extends StatefulWidget {
   const CreateAnotation({Key? key}) : super(key: key);
 
-
-
   @override
   State<CreateAnotation> createState() => _CreateAnotationState();
 }
@@ -35,8 +32,6 @@ class _CreateAnotationState extends State<CreateAnotation> {
 
   final controller = Get.put(TagStateController());
   TextEditingController textController = TextEditingController();
-
-
   TextEditingController _anotacoesController = TextEditingController();
 
   @override
@@ -46,14 +41,6 @@ class _CreateAnotationState extends State<CreateAnotation> {
         backgroundColor: AppStyle.secondColor,
         elevation: 0,
         actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.search,
-              size: 25,
-              color: Colors.white,
-            ),
-          ),
           IconButton(
             onPressed: () {},
             icon: Icon(
@@ -320,28 +307,28 @@ class _CreateAnotationState extends State<CreateAnotation> {
     );
   }
 
-
-
   Future<bool> postAnotacoes() async {
-    print(controller.ListTags);
+    List _lista = controller.ListTags;
+
     SharedPreferences idALuno = await SharedPreferences.getInstance();
     String id = idALuno.getString('id')!;
     List<dynamic> values = id.split("Id ");
-
-
     var anotacoes = "http://192.168.6.20:3010/anotacoes";
     var url = Uri.parse(anotacoes);
-    var resposta = await http.post(url,
-    headers: <String, String>{
-      "Content-Type": "application/json"
-    },
-      body: jsonEncode(<String,String>{
+
+    var response = await http.post(
+        url,
+        headers: <String, String>{
+        "Content-Type": "application/json"
+       },
+      body: jsonEncode(<String, dynamic>{
         "descricao" : _anotacoesController.text,
         "id_aluno" : "${values[0]}",
-        "array_tags": '[mtm]'
+        "array_tags": _lista,
       })
     );
-    if (resposta.statusCode == 200){
+    print(response.statusCode);
+    if (response.statusCode == 201){
       ElegantNotification.success(description:Text('Anotação salva')).show(context);
       return true;
     } else {

@@ -1,20 +1,13 @@
 import 'dart:convert';
-import 'dart:async';
-import 'package:appinio_video_player/appinio_video_player.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:page_transition/page_transition.dart';
-import 'package:resposividade/interfaces/atv.dart';
-import 'package:resposividade/interfaces/disciplina.dart';
 import 'package:resposividade/pages/bottomNavPages/perfil_page.dart';
-import 'package:resposividade/quizz/startQuizz.dart';
 import 'package:resposividade/style/app_style.dart';
 import 'package:resposividade/widget/conteudo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:video_player/video_player.dart';
+
 
 class Aulas extends StatefulWidget {
   final String id;
@@ -27,17 +20,14 @@ class Aulas extends StatefulWidget {
 class _AulasState extends State<Aulas> {
   List _conteudo = [];
 
-
-
-
   _pegarConteudo() async {
     var idDisciplina = this.widget.id;
-     print(idDisciplina);
+     // print(idDisciplina);
 
     //pegando ID do aluno
     SharedPreferences idALuno = await SharedPreferences.getInstance();
     String id = idALuno.getString('id')!;
-     print(id);
+     // print(id);
 
     var conteudo =
         "http://192.168.6.20:3010/conteudosAluno/${id}/${widget.id}";
@@ -56,14 +46,12 @@ class _AulasState extends State<Aulas> {
     }
   }
 
-
   @override
   void initState() {
     super.initState();
     _pegarConteudo();
 
   }
-
 
   @override
   Widget build(BuildContext context) {

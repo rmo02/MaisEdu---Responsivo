@@ -1,8 +1,14 @@
-class Atv {
-  int id;
-  String name;
-  String description;
-  bool isExpanded;
+import 'dart:convert';
 
-  Atv(this.id,this.name, this.description, this.isExpanded);
+import 'package:http/http.dart' as http;
+
+var link = 'https://opentdb.com/api.php?amount=20';
+
+getQuiz() async {
+  var res = await http.get(Uri.parse(link));
+  if (res.statusCode == 200) {
+    var data = jsonDecode(res.body.toString());
+    // print("data is loaded");
+    return data;
+  }
 }

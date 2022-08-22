@@ -4,7 +4,6 @@ import 'package:page_transition/page_transition.dart';
 import 'package:resposividade/pages/bottomNavPages/perfil_page.dart';
 import 'package:http/http.dart' as http;
 import 'package:resposividade/widget/aulas.dart';
-import 'package:resposividade/widget/conteudo.dart';
 import '../../style/app_style.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,7 +18,6 @@ class ClassesPage extends StatefulWidget {
 class _ClassesPageState extends State<ClassesPage> {
 
   List _disciplinas = [];
-
 
   _GetDisciplinas() async {
     SharedPreferences idALuno = await SharedPreferences.getInstance();
@@ -116,12 +114,11 @@ class _ClassesPageState extends State<ClassesPage> {
                                       ));
                                 },
                                 child: Container(
-                                  width: 150,
-                                  child: Container(
-                                      child: Image.network(
-                                        _disciplinas[index]['disciplina']['icon'],
-                                      )),
-                                ),
+                                  height: 150,
+                                    child: Image.asset(
+                                        'assets/images/calculadora.png'
+                                      // _disciplinas[index]['disciplina']['icon'],
+                                    )),
                               ),
                               Container(
                                 width: 150,
@@ -180,12 +177,9 @@ class _ClassesPageState extends State<ClassesPage> {
                                       ));
                                 },
                                 child: Container(
-                                  width: 150,
-                                  child: Container(
-                                      child: Image.network(
-                                        _disciplinas[index]['disciplina']['icon'],
-                                      )),
-                                ),
+                                    child: Image.network(
+                                      _disciplinas[index]['disciplina']['icon'],
+                                    )),
                               ),
                               Container(
                                 width: 150,

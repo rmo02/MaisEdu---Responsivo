@@ -18,6 +18,7 @@ class _CalanderPageState extends State<CalanderPage> {
   CalendarFormat format = CalendarFormat.month;
   DateTime selectedDay = DateTime.now();
   DateTime focusedDay = DateTime.now();
+
   DateTime restDay = DateTime.now();
 
   TextEditingController _eventController = TextEditingController();

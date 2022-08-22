@@ -1,9 +1,12 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:resposividade/pages/anotations/create_anotation.dart';
 import 'package:resposividade/pages/login_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../style/app_style.dart';
 
@@ -12,9 +15,35 @@ class AnotationPage extends StatefulWidget {
 
   @override
   State<AnotationPage> createState() => _AnotationPageState();
+
 }
+List _anotacoes = [];
 
 class _AnotationPageState extends State<AnotationPage> {
+  _getAnotations() async {
+    SharedPreferences idALuno = await SharedPreferences.getInstance();
+    String id = idALuno.getString('id')!;
+    List<dynamic> values = id.split("Id ");
+    var url = Uri.parse('http://192.168.6.20:3010/anotacoesByAluno/${values[0]}');
+    var resposta = await http.get(url);
+    if (resposta.statusCode == 201) {
+      Map<String, dynamic> map = jsonDecode(resposta.body);
+      List<dynamic> data = map["anotacoes"];
+      setState(() {
+        _anotacoes = data;
+      });
+      print(data);
+      return data;
+    } else {
+      throw Exception('Nao foi possivel carregar usuários');
+    }
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getAnotations();
+  }
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -23,6 +52,11 @@ class _AnotationPageState extends State<AnotationPage> {
       appBar: AppBar(
         backgroundColor: AppStyle.secondColor,
         elevation: 0,
+        title: Text("Minhas Anotações", style: GoogleFonts.roboto(
+            fontSize: 18,
+          ),
+          textAlign: TextAlign.center
+        ),
         actions: [
           IconButton(
             onPressed: () {},
@@ -58,98 +92,46 @@ class _AnotationPageState extends State<AnotationPage> {
       backgroundColor: AppStyle.mainColor,
       body: LayoutBuilder(builder: (_, constraints) {
         return Container(
-          width: constraints.maxWidth,
           height: constraints.maxHeight,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                height: 15,
-                decoration: BoxDecoration(
-                  color: AppStyle.secondColor,
-                  borderRadius: BorderRadius.only(
-                      bottomRight: Radius.circular(30),
-                      bottomLeft: Radius.circular(30)),
-                  boxShadow: [
-                    BoxShadow(
-                        color: AppStyle.shadowMainColor,
-                        spreadRadius: 2,
-                        blurRadius: 1,
-                        offset: Offset(0.0, 2.0)),
+          child:  ListView.builder(
+            shrinkWrap: true,
+            itemCount: _anotacoes.length,
+            itemBuilder: (context, int index){
+              return  Column(
+                  children: [
+                    SizedBox(height: 10),
+                    InkWell(
+                      onTap: () {
+
+                      },
+                      child: Container(
+                          width: constraints.maxWidth * 0.90,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(12)),
+                          padding: EdgeInsets.only(left: 20.0, top: 20.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              AutoSizeText(
+                                _anotacoes[index]["descricao"],
+                                style: GoogleFonts.roboto(
+                                    fontSize: 18, color: Colors.black54),
+                              ),
+                              Container(
+                                child: Row(
+                                  children: [
+                                    Text(_anotacoes[index]["tags"][0]),
+
+                                  ],
+                                )
+                              )
+                            ],
+                          )),
+                    )
                   ],
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 20.0),
-                child: AutoSizeText(
-                  "Minhas Anotações",
-                  style: GoogleFonts.roboto(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 22,
-                      color: AppStyle.titleColor),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Container(
-                    width: constraints.maxWidth,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(12)),
-                    padding: EdgeInsets.only(left: 20.0, top: 20.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        AutoSizeText(
-                          "O triângulo é uma figura 2D com\n 3 lados",
-                          style: GoogleFonts.roboto(
-                              fontSize: 18, color: Colors.black54),
-                        ),
-                        Row(
-                          children: [
-                            SizedBox(width: constraints.maxWidth * 0.1),
-                            TextButton(
-                              onPressed: () {},
-                              child: Container(
-                                child: Text("Matemática",
-                                    style: GoogleFonts.roboto(
-                                        fontSize: 12,
-                                        color: Color(0xFF4263EB))),
-                              ),
-                              style: TextButton.styleFrom(
-                                  backgroundColor: Colors.white,
-                                  primary: Color(0xFF4263EB)),
-                            ),
-                            TextButton(
-                              onPressed: () {},
-                              child: Container(
-                                child: Text("Trigonometria",
-                                    style: GoogleFonts.roboto(
-                                        fontSize: 12,
-                                        color: Color(0xFF4263EB))),
-                              ),
-                              style: TextButton.styleFrom(
-                                  backgroundColor: Colors.white,
-                                  primary: Color(0xFF4263EB)),
-                            ),
-                            TextButton(
-                              onPressed: () {},
-                              child: Container(
-                                child: Text("Aula 1",
-                                    style: GoogleFonts.roboto(
-                                        fontSize: 12,
-                                        color: Color(0xFF4263EB))),
-                              ),
-                              style: TextButton.styleFrom(
-                                  backgroundColor: Colors.white,
-                                  primary: Color(0xFF4263EB)),
-                            )
-                          ],
-                        )
-                      ],
-                    )),
-              )
-            ],
+                );
+            },
           ),
         );
       }),

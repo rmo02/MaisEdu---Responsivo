@@ -18,8 +18,6 @@ class _QualiPageState extends State<QualiPage> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-
     return Scaffold(
         appBar: AppBar(
           title: Container(
