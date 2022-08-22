@@ -262,11 +262,11 @@ class _QuizScreeenState extends State<QuizScreeen> {
     SharedPreferences idAtividade = await SharedPreferences.getInstance();
     String id = idAtividade.getString('id')!;
     List<dynamic> values = id.split("Id ");
-    var link = 'http://192.168.6.20:3010/atividadeQuestoes/${values[0]}';
+    var link = 'http://192.168.6.20:3010/atividadeQuestoes/${id}';
     var res = await http.get(Uri.parse(link));
     if (res.statusCode == 200) {
       var data = jsonDecode(res.body.toString());
-
+      print(data);
       return data;
     }
   }

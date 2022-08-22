@@ -60,7 +60,7 @@ class _ConteudoPageState extends State<ConteudoPage> {
     String id = idALuno.getString('id')!;
 
     var conteudo =
-        "http://192.168.6.20:3010/${widget.id}";
+        "http://192.168.6.20:3010/conteudos/${widget.id}";
     var url = Uri.parse(conteudo);
     var resposta = await http.get(url);
     var atividade = jsonDecode(resposta.body)["conteudo"]['atividade'][0]['id'];
@@ -69,7 +69,6 @@ class _ConteudoPageState extends State<ConteudoPage> {
       Map<String, dynamic> map = jsonDecode(resposta.body);
         List <dynamic> data = map["conteudo"]['Aula'];
           setState(() {
-            // _atividade = atividade;
             _conteudo = data;
           });
 
